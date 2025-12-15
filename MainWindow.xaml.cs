@@ -16,6 +16,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Microsoft.Kinect;
+    using System.Timers;
+    using System.Windows.Threading;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -127,6 +129,24 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// </summary>
         private string statusText = null;
 
+        // Add new fields for manager, transformer and recorder
+        private KinectManager kinectManager;
+        private CoordinateTransformer transformer;
+        private TrajectoryRecorder recorder;
+        private Timer samplingTimer;
+
+        // store last seen hand positions
+        private CameraSpacePoint lastLeftHand;
+        private CameraSpacePoint lastRightHand;
+        private ulong? lastTrackingId;
+
+        // experiment params
+        private int currentMode = 1; // 1..4
+        private int currentTargetId = 1;
+
+        // Add UI timer for countdown
+        private DispatcherTimer uiTimer;
+
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
         /// </summary>
@@ -216,6 +236,95 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
             // initialize the components (controls) of the window
             this.InitializeComponent();
+
+            // --- initialize new subsystems ---
+            try
+            {
+                this.kinectManager = new KinectManager();
+                this.kinectManager.HandUpdated += KinectManager_HandUpdated;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("KinectManager init failed: " + ex.Message);
+            }
+
+            this.transformer = new CoordinateTransformer();
+            this.transformer.SetAsMaster();
+
+            this.recorder = new TrajectoryRecorder();
+            this.recorder.FrequencyHz = 20; // default
+            this.recorder.RecordingStopped += Recorder_RecordingStopped;
+
+            this.samplingTimer = new Timer(1000.0 / this.recorder.FrequencyHz);
+            this.samplingTimer.Elapsed += SamplingTimer_Elapsed;
+            this.samplingTimer.AutoReset = true;
+
+            // UI timer updates countdown and save path every 200 ms
+            this.uiTimer = new DispatcherTimer();
+            this.uiTimer.Interval = TimeSpan.FromMilliseconds(200);
+            this.uiTimer.Tick += UiTimer_Tick;
+
+            // initialize UI labels
+            this.lblKinect.Text = this.kinectSensor.IsAvailable ? "Kinect: Connected" : "Kinect: Not available";
+            this.lblBody.Text = "Body: Not tracked";
+            this.lblRecording.Text = "Recording: Inactive";
+        }
+
+        // Add handler for recorder stopped event
+        private void Recorder_RecordingStopped()
+        {
+            // ensure UI update on dispatcher
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                try
+                {
+                    this.samplingTimer?.Stop();
+                    this.uiTimer?.Stop();
+                    this.lblRecording.Text = "Recording: Inactive";
+                    this.txtCountdown.Text = "Countdown: -";
+                    this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? "-");
+                }
+                catch { }
+            }));
+        }
+
+        private void UiTimer_Tick(object sender, EventArgs e)
+        {
+            if (this.recorder == null) return;
+
+            if (!this.recorder.IsRecording)
+            {
+                // show saved path if present
+                if (!string.IsNullOrEmpty(this.recorder.CurrentFilePath))
+                {
+                    this.txtSavePath.Text = "Save path: " + this.recorder.CurrentFilePath;
+                }
+                return;
+            }
+
+            // update save path
+            this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? "-");
+
+            // compute remaining time
+            string timePart = "Time left: ∞";
+            if (this.recorder.StartTimestamp.HasValue && this.recorder.MaxTime != TimeSpan.MaxValue)
+            {
+                var elapsed = DateTime.UtcNow - this.recorder.StartTimestamp.Value;
+                var remaining = this.recorder.MaxTime - elapsed;
+                if (remaining < TimeSpan.Zero) remaining = TimeSpan.Zero;
+                timePart = string.Format(CultureInfo.InvariantCulture, "Time left: {0:F1}s", remaining.TotalSeconds);
+            }
+
+            // compute remaining frames
+            string framePart = "Frames left: ∞";
+            if (this.recorder.MaxFrames != int.MaxValue)
+            {
+                var left = this.recorder.MaxFrames - this.recorder.RecordedFrames;
+                if (left < 0) left = 0;
+                framePart = "Frames left: " + left.ToString(CultureInfo.InvariantCulture);
+            }
+
+            this.txtCountdown.Text = $"Countdown: {timePart} | {framePart}";
         }
 
         /// <summary>
@@ -285,6 +394,15 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.bodyFrameReader.Dispose();
                 this.bodyFrameReader = null;
             }
+
+            try
+            {
+                this.samplingTimer?.Stop();
+                this.samplingTimer?.Dispose();
+                this.recorder?.Dispose();
+                this.kinectManager?.Dispose();
+            }
+            catch { }
 
             if (this.kinectSensor != null)
             {
@@ -513,5 +631,152 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.StatusText = this.kinectSensor.IsAvailable ? Properties.Resources.RunningStatusText
                                                             : Properties.Resources.SensorNotAvailableStatusText;
         }
+
+        private void KinectManager_HandUpdated(HandJointUpdate update)
+        {
+            // store last seen hand positions and tracking id
+            if (update.Joint == JointType.HandLeft)
+            {
+                this.lastLeftHand = update.Position;
+            }
+            else if (update.Joint == JointType.HandRight)
+            {
+                this.lastRightHand = update.Position;
+            }
+
+            this.lastTrackingId = update.TrackingId;
+
+            // update transformer floor plane if available
+            if (this.kinectManager.FloorClipPlane.HasValue)
+            {
+                this.transformer.UpdateFloorPlane(this.kinectManager.FloorClipPlane.Value);
+            }
+
+            // update UI (marshal to UI thread)
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                // show the last right-hand world coords if possible
+                CameraSpacePoint p = update.Position;
+                var world = this.transformer.Transform(p);
+                this.txtXYZ.Text = string.Format(CultureInfo.InvariantCulture, "X: {0:F3}, Y: {1:F3}, Z: {2:F3}", world.X, world.Y, world.Z);
+
+                // update body tracked label
+                this.lblBody.Text = this.kinectManager.TrackedBodyId.HasValue ? $"Body: {this.kinectManager.TrackedBodyId.Value}" : "Body: Not tracked";
+            }));
+        }
+
+        private void SamplingTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            // sample at fixed rate: use lastRightHand as the tracked point
+            if (!this.recorder.IsRecording) return;
+
+            // ensure tracked body matches
+            if (this.kinectManager == null || !this.kinectManager.TrackedBodyId.HasValue || !this.lastTrackingId.HasValue) return;
+            if (this.kinectManager.TrackedBodyId.Value != this.lastTrackingId.Value) return;
+
+            // pick which hand to record (right prefer)
+            var camPoint = this.lastRightHand;
+
+            var world = this.transformer.Transform(camPoint);
+
+            // AppendSample: timestamp, x,y,z, joint, mode, targetId
+            try
+            {
+                this.recorder.AppendSample(DateTime.UtcNow, world.X, world.Y, world.Z, "HandRight", GetModeName(), this.currentTargetId);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Recorder append failed: " + ex.Message);
+            }
+        }
+
+        private string GetModeName()
+        {
+            switch (this.currentMode)
+            {
+                case 1: return "Free";
+                case 2: return "Obstacle";
+                case 3: return "FreeChange";
+                case 4: return "ObstacleChange";
+                default: return "Unknown";
+            }
+        }
+
+        // Button handlers wired in XAML
+        private void BtnStart_Click(object sender, RoutedEventArgs e)
+        {
+            // start recorder and sampling timer
+            try
+            {
+                // parse limits from UI
+                int maxFrames = 0;
+                double maxTimeSeconds = 0;
+                if (!int.TryParse(this.txtMaxFrames.Text, out maxFrames)) maxFrames = 0;
+                if (!double.TryParse(this.txtMaxTime.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out maxTimeSeconds)) maxTimeSeconds = 0;
+
+                this.recorder.MaxFrames = (maxFrames <= 0) ? int.MaxValue : maxFrames;
+                this.recorder.MaxTime = (maxTimeSeconds <= 0) ? TimeSpan.MaxValue : TimeSpan.FromSeconds(maxTimeSeconds);
+
+                var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "KinectTrajectories");
+                Directory.CreateDirectory(folder);
+                var filename = Path.Combine(folder, $"traj_{DateTime.Now:yyyyMMdd_HHmmss}.csv");
+                this.recorder.Start(filename);
+
+                // show path and start timers
+                this.txtSavePath.Text = "Save path: " + this.recorder.CurrentFilePath;
+                this.samplingTimer.Interval = 1000.0 / this.recorder.FrequencyHz;
+                this.samplingTimer.Start();
+                this.uiTimer.Start();
+
+                this.lblRecording.Text = "Recording: Active";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to start recorder: " + ex.Message);
+            }
+        }
+
+        private void BtnStop_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.samplingTimer.Stop();
+                this.uiTimer.Stop();
+                this.recorder.Stop();
+                this.lblRecording.Text = "Recording: Inactive";
+                this.txtCountdown.Text = "Countdown: -";
+                this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? "-");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to stop recorder: " + ex.Message);
+            }
+        }
+
+        private void BtnCalibrate_Click(object sender, RoutedEventArgs e)
+        {
+            // Set world origin to current right hand (if available) and update floor
+            if (this.lastTrackingId.HasValue && this.kinectManager.TrackedBodyId.HasValue && this.lastTrackingId == this.kinectManager.TrackedBodyId)
+            {
+                this.transformer.SetWorldOriginFromTarget(this.lastRightHand);
+                if (this.kinectManager.FloorClipPlane.HasValue)
+                {
+                    this.transformer.UpdateFloorPlane(this.kinectManager.FloorClipPlane.Value);
+                }
+
+                MessageBox.Show("Calibration set from current right hand.");
+            }
+            else
+            {
+                MessageBox.Show("No tracked body / hand available to calibrate.");
+            }
+        }
+
+        private void CboMode_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            this.currentMode = this.cboMode.SelectedIndex + 1;
+        }
+
+        // other existing methods remain unchanged
     }
 }
