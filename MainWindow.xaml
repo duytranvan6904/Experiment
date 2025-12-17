@@ -42,19 +42,22 @@
 
         <Button Name="btnCalibrate" Width="260" Margin="0 0 0 8" Click="BtnCalibrate_Click">Calibrate (set target origin)</Button>
 
-        <TextBlock Margin="0 6 0 2">Mode</TextBlock>
-        <ComboBox Name="cboMode" Width="260" SelectedIndex="0" Margin="0 0 0 8" SelectionChanged="CboMode_SelectionChanged">
-          <ComboBoxItem>Free movement</ComboBoxItem>
-          <ComboBoxItem>Obstacle</ComboBoxItem>
-          <ComboBoxItem>Free + Change target</ComboBoxItem>
-          <ComboBoxItem>Obstacle + Change target</ComboBoxItem>
-        </ComboBox>
+        <!-- New dual-camera calibration controls -->
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
+          <Button Name="btnCalCam1" Width="120" Margin="0 0 8 0" Click="BtnCalibrateCam1_Click">Calibrate Cam1</Button>
+          <Button Name="btnCalCam2" Width="120" Click="BtnCalibrateCam2_Click">Calibrate Cam2</Button>
+        </StackPanel>
 
-        <TextBlock>Target ID (1-3)</TextBlock>
-        <TextBox Name="txtTargetId" Width="60" Text="1" Margin="0 0 0 8" />
+        <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
+          <TextBlock Name="lblCam1Status" Text="Cam1 calibrated: ✘" Width="140" />
+          <TextBlock Name="lblCam2Status" Text="Cam2 calibrated: ✘" Width="140" />
+        </StackPanel>
 
         <TextBlock FontSize="14" FontWeight="Bold" Margin="0 8 0 4">Live Hand (world)</TextBlock>
         <TextBlock Name="txtXYZ" Text="X: -, Y: -, Z: -" Margin="0 0 0 8" />
+        <!-- New per-camera live displays -->
+        <TextBlock Name="txtXYZCam1" Text="Cam1: X: -, Y: -, Z: -" Margin="0 0 0 4" />
+        <TextBlock Name="txtXYZCam2" Text="Cam2: X: -, Y: -, Z: -" Margin="0 0 0 8" />
 
         <StackPanel Orientation="Vertical" Margin="0 6 0 0">
           <TextBlock Name="lblKinect" Text="Kinect: Unknown" />
