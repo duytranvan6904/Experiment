@@ -18,6 +18,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using Microsoft.Kinect;
     using System.Timers;
     using System.Windows.Threading;
+    using System.Numerics;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -132,8 +133,27 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         // Add new fields for manager, transformer and recorder
         private KinectManager kinectManager;
         private CoordinateTransformer transformer;
-        private TrajectoryRecorder recorder;
+        private TrajectoryRecorder recorder; // remains cam1 recorder
+        private TrajectoryRecorder recorderCam2;
         private Timer samplingTimer;
+
+        // Dual-camera additions
+        private DualCameraCalibrationManager calibManager;
+        private KinectSensorWrapper cam1Wrapper;
+        private KinectSensorWrapper cam2Wrapper;
+
+        // last raw (camera-space) and calibrated world-space points per camera
+        private CameraSpacePoint lastRawCam1;
+        private CameraSpacePoint lastRawCam2;
+        private CameraSpacePoint lastWorldCam1;
+        private CameraSpacePoint lastWorldCam2;
+
+        private bool cam1Calibrated = false;
+        private bool cam2Calibrated = false;
+
+        // preferred recorder target set when calibrating a specific camera ("Cam1" or "Cam2").
+        // If null/empty, Start will open both recorders (legacy behavior).
+        private string preferredRecorderTarget = null;
 
         // store last seen hand positions
         private CameraSpacePoint lastLeftHand;
@@ -255,6 +275,36 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.recorder.FrequencyHz = 20; // default
             this.recorder.RecordingStopped += Recorder_RecordingStopped;
 
+            // create second recorder for Cam2
+            this.recorderCam2 = new TrajectoryRecorder();
+            this.recorderCam2.FrequencyHz = 20;
+            this.recorderCam2.RecordingStopped += RecorderCam2_RecordingStopped;
+
+            // create calibration manager and sensor wrappers (best-effort, sensors may be on different machines)
+            try
+            {
+                this.calibManager = new DualCameraCalibrationManager();
+                try
+                {
+                    this.cam1Wrapper = new KinectSensorWrapper("Cam1", this.calibManager);
+                    this.cam1Wrapper.RawHandUpdated += Cam1_RawHandUpdated;
+                    this.cam1Wrapper.WorldHandUpdated += Cam1_WorldHandUpdated;
+                }
+                catch (Exception ex) { Debug.WriteLine("Cam1 wrapper init failed: " + ex.Message); }
+
+                try
+                {
+                    this.cam2Wrapper = new KinectSensorWrapper("Cam2", this.calibManager);
+                    this.cam2Wrapper.RawHandUpdated += Cam2_RawHandUpdated;
+                    this.cam2Wrapper.WorldHandUpdated += Cam2_WorldHandUpdated;
+                }
+                catch (Exception ex) { Debug.WriteLine("Cam2 wrapper init failed: " + ex.Message); }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Calibration manager init failed: " + ex.Message);
+            }
+
             this.samplingTimer = new Timer(1000.0 / this.recorder.FrequencyHz);
             this.samplingTimer.Elapsed += SamplingTimer_Elapsed;
             this.samplingTimer.AutoReset = true;
@@ -288,6 +338,27 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }));
         }
 
+        private void RecorderCam2_RecordingStopped()
+        {
+            // update UI when cam2 stops (keep similar behavior)
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                try
+                {
+                    // if both recorders are stopped, update labels
+                    if ((this.recorder == null || !this.recorder.IsRecording) && (this.recorderCam2 == null || !this.recorderCam2.IsRecording))
+                    {
+                        this.samplingTimer?.Stop();
+                        this.uiTimer?.Stop();
+                        this.lblRecording.Text = "Recording: Inactive";
+                        this.txtCountdown.Text = "Countdown: -";
+                        this.txtSavePath.Text = "Save path: " + (this.recorder?.CurrentFilePath ?? this.recorderCam2?.CurrentFilePath ?? "-");
+                    }
+                }
+                catch { }
+            }));
+        }
+
         private void UiTimer_Tick(object sender, EventArgs e)
         {
             if (this.recorder == null) return;
@@ -295,15 +366,15 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             if (!this.recorder.IsRecording)
             {
                 // show saved path if present
-                if (!string.IsNullOrEmpty(this.recorder.CurrentFilePath))
+                if (!string.IsNullOrEmpty(this.recorder.CurrentFilePath) || (this.recorderCam2 != null && !string.IsNullOrEmpty(this.recorderCam2.CurrentFilePath)))
                 {
-                    this.txtSavePath.Text = "Save path: " + this.recorder.CurrentFilePath;
+                    this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? this.recorderCam2.CurrentFilePath);
                 }
                 return;
             }
 
             // update save path
-            this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? "-");
+            this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? this.recorderCam2?.CurrentFilePath ?? "-");
 
             // compute remaining time
             string timePart = "Time left: ∞";
@@ -400,7 +471,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.samplingTimer?.Stop();
                 this.samplingTimer?.Dispose();
                 this.recorder?.Dispose();
+                this.recorderCam2?.Dispose();
                 this.kinectManager?.Dispose();
+                try { this.cam1Wrapper?.Dispose(); } catch { }
+                try { this.cam2Wrapper?.Dispose(); } catch { }
             }
             catch { }
 
@@ -665,24 +739,66 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }));
         }
 
+        private void Cam1_RawHandUpdated(HandJointUpdate update)
+        {
+            if (update.Joint == JointType.HandRight)
+            {
+                this.lastRawCam1 = update.Position;
+            }
+        }
+
+        private void Cam2_RawHandUpdated(HandJointUpdate update)
+        {
+            if (update.Joint == JointType.HandRight)
+            {
+                this.lastRawCam2 = update.Position;
+            }
+        }
+
+        private void Cam1_WorldHandUpdated(HandJointUpdate update)
+        {
+            if (update.Joint == JointType.HandRight)
+            {
+                this.lastWorldCam1 = update.Position;
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    this.txtXYZCam1.Text = string.Format(CultureInfo.InvariantCulture, "Cam1: X: {0:F3}, Y: {1:F3}, Z: {2:F3}", update.Position.X, update.Position.Y, update.Position.Z);
+                }));
+            }
+        }
+
+        private void Cam2_WorldHandUpdated(HandJointUpdate update)
+        {
+            if (update.Joint == JointType.HandRight)
+            {
+                this.lastWorldCam2 = update.Position;
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    this.txtXYZCam2.Text = string.Format(CultureInfo.InvariantCulture, "Cam2: X: {0:F3}, Y: {1:F3}, Z: {2:F3}", update.Position.X, update.Position.Y, update.Position.Z);
+                }));
+            }
+        }
+
+        /// <summary>
+        /// Handles the event which the sensor becomes unavailable (E.g. paused, closed, unplugged).
+        /// </summary>
+        /// <param name="sender">object sending the event</param>
+        /// <param name="e">event arguments</param>
+
         private void SamplingTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            // sample at fixed rate: use lastRightHand as the tracked point
-            if (!this.recorder.IsRecording) return;
-
-            // ensure tracked body matches
-            if (this.kinectManager == null || !this.kinectManager.TrackedBodyId.HasValue || !this.lastTrackingId.HasValue) return;
-            if (this.kinectManager.TrackedBodyId.Value != this.lastTrackingId.Value) return;
-
-            // pick which hand to record (right prefer)
-            var camPoint = this.lastRightHand;
-
-            var world = this.transformer.Transform(camPoint);
-
-            // AppendSample: timestamp, x,y,z, joint, mode, targetId
+            // sample at fixed rate: append last known world positions for both cameras
             try
             {
-                this.recorder.AppendSample(DateTime.UtcNow, world.X, world.Y, world.Z, "HandRight", GetModeName(), this.currentTargetId);
+                if (this.recorder != null && this.recorder.IsRecording && this.lastWorldCam1.Z != 0)
+                {
+                    this.recorder.AppendSample(DateTime.UtcNow, this.lastWorldCam1.X, this.lastWorldCam1.Y, this.lastWorldCam1.Z, "HandRight", GetModeName(), this.currentTargetId);
+                }
+
+                if (this.recorderCam2 != null && this.recorderCam2.IsRecording && this.lastWorldCam2.Z != 0)
+                {
+                    this.recorderCam2.AppendSample(DateTime.UtcNow, this.lastWorldCam2.X, this.lastWorldCam2.Y, this.lastWorldCam2.Z, "HandRight", GetModeName(), this.currentTargetId);
+                }
             }
             catch (Exception ex)
             {
@@ -717,13 +833,43 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.recorder.MaxFrames = (maxFrames <= 0) ? int.MaxValue : maxFrames;
                 this.recorder.MaxTime = (maxTimeSeconds <= 0) ? TimeSpan.MaxValue : TimeSpan.FromSeconds(maxTimeSeconds);
 
-                var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "KinectTrajectories");
+                // Save files into project-relative folder (under application output directory).
+                // Folders `RecordTrajectories\RawRecord` are expected to exist in the project (or as content copied to output).
+                var folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RecordTrajectories", "RawRecord");
                 Directory.CreateDirectory(folder);
-                var filename = Path.Combine(folder, $"traj_{DateTime.Now:yyyyMMdd_HHmmss}.csv");
-                this.recorder.Start(filename);
+                var filename1 = Path.Combine(folder, $"cam1_{DateTime.Now:yyyyMMdd_HHmm}.csv");
+                var filename2 = Path.Combine(folder, $"cam2_{DateTime.Now:yyyyMMdd_HHmm}.csv");
+
+                // Determine which recorder(s) to start based on preferredRecorderTarget
+                var target = this.preferredRecorderTarget; // "Cam1", "Cam2" or null for both
+                bool startBoth = string.IsNullOrEmpty(target);
+
+                if (startBoth || string.Equals(target, "Cam1", StringComparison.OrdinalIgnoreCase))
+                {
+                    this.recorder.Start(filename1, "Cam1", "1");
+                }
+
+                if (startBoth || string.Equals(target, "Cam2", StringComparison.OrdinalIgnoreCase))
+                {
+                    try { this.recorderCam2.Start(filename2, "Cam2", "1"); } catch { }
+                }
 
                 // show path and start timers
-                this.txtSavePath.Text = "Save path: " + this.recorder.CurrentFilePath;
+                string savePathDisplay = "-";
+                if (startBoth)
+                {
+                    savePathDisplay = (this.recorder.CurrentFilePath ?? "-") + " ; " + (this.recorderCam2?.CurrentFilePath ?? "-");
+                }
+                else if (string.Equals(target, "Cam1", StringComparison.OrdinalIgnoreCase))
+                {
+                    savePathDisplay = this.recorder.CurrentFilePath ?? "-";
+                }
+                else if (string.Equals(target, "Cam2", StringComparison.OrdinalIgnoreCase))
+                {
+                    savePathDisplay = this.recorderCam2?.CurrentFilePath ?? "-";
+                }
+
+                this.txtSavePath.Text = "Save path: " + savePathDisplay;
                 this.samplingTimer.Interval = 1000.0 / this.recorder.FrequencyHz;
                 this.samplingTimer.Start();
                 this.uiTimer.Start();
@@ -743,6 +889,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.samplingTimer.Stop();
                 this.uiTimer.Stop();
                 this.recorder.Stop();
+                this.recorderCam2.Stop();
                 this.lblRecording.Text = "Recording: Inactive";
                 this.txtCountdown.Text = "Countdown: -";
                 this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? "-");
@@ -772,10 +919,79 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
-        private void CboMode_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void BtnCalibrateCam1_Click(object sender, RoutedEventArgs e)
         {
-            this.currentMode = this.cboMode.SelectedIndex + 1;
+            if (this.lastRawCam1.Z == 0)
+            {
+                MessageBox.Show("No Cam1 hand available to calibrate.");
+                return;
+            }
+
+            try
+            {
+                var profile = this.calibManager.Load("Cam1");
+                // compute translation t = -R * p_target so world origin is at target
+                var R = profile.RotationMatrix;
+                var p = new Vector3(this.lastRawCam1.X, this.lastRawCam1.Y, this.lastRawCam1.Z);
+                var rotated = new Vector3(
+                    R[0] * p.X + R[1] * p.Y + R[2] * p.Z,
+                    R[3] * p.X + R[4] * p.Y + R[5] * p.Z,
+                    R[6] * p.X + R[7] * p.Y + R[8] * p.Z);
+
+                profile.Translation = -rotated;
+                this.calibManager.Save("Cam1", profile);
+                this.cam1Calibrated = true;
+                this.lblCam1Status.Text = "Cam1 calibrated: ✔";
+
+                // mark this machine to prefer saving Cam1 recordings when starting
+                this.preferredRecorderTarget = "Cam1";
+
+                MessageBox.Show("Cam1 calibration saved.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Cam1 calibration failed: " + ex.Message);
+            }
         }
+
+        private void BtnCalibrateCam2_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.lastRawCam2.Z == 0)
+            {
+                MessageBox.Show("No Cam2 hand available to calibrate.");
+                return;
+            }
+
+            try
+            {
+                var profile = this.calibManager.Load("Cam2");
+                var R = profile.RotationMatrix;
+                var p = new Vector3(this.lastRawCam2.X, this.lastRawCam2.Y, this.lastRawCam2.Z);
+                var rotated = new Vector3(
+                    R[0] * p.X + R[1] * p.Y + R[2] * p.Z,
+                    R[3] * p.X + R[4] * p.Y + R[5] * p.Z,
+                    R[6] * p.X + R[7] * p.Y + R[8] * p.Z);
+
+                profile.Translation = -rotated;
+                this.calibManager.Save("Cam2", profile);
+                this.cam2Calibrated = true;
+                this.lblCam2Status.Text = "Cam2 calibrated: ✔";
+
+                // mark this machine to prefer saving Cam2 recordings when starting
+                this.preferredRecorderTarget = "Cam2";
+
+                MessageBox.Show("Cam2 calibration saved.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Cam2 calibration failed: " + ex.Message);
+            }
+        }
+
+        //private void CboMode_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        //{
+        //    this.currentMode = this.cboMode.SelectedIndex + 1;
+        //}
 
         // other existing methods remain unchanged
     }

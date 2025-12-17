@@ -21,6 +21,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private DateTime startTime;
         private string currentFilePath;
 
+        // per-recorder identifiers
+        private string cameraId = "Cam1";
+        private string trialId = "1";
+
         public event Action RecordingStopped;
 
         public int FrequencyHz
@@ -42,14 +46,27 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         public int RecordedFrames { get { lock (sync) return recorded; } }
         public DateTime? StartTimestamp { get { lock (sync) return IsRecording ? (DateTime?)startTime : null; } }
         public string CurrentFilePath { get { lock (sync) return currentFilePath; } }
+        public string CameraId { get { lock (sync) return cameraId; } }
+        public string TrialId { get { lock (sync) return trialId; } }
 
+        // Backwards-compatible Start: defaults to Cam1/1
         public void Start(string filePath)
+        {
+            Start(filePath, "Cam1", "1");
+        }
+
+        // New Start overload allows specifying camera and trial identifiers
+        public void Start(string filePath, string cameraId, string trialId)
         {
             lock (sync)
             {
                 if (IsRecording) return;
+                this.cameraId = string.IsNullOrEmpty(cameraId) ? "Cam1" : cameraId;
+                this.trialId = string.IsNullOrEmpty(trialId) ? "1" : trialId;
+
                 this.writer = new StreamWriter(File.Open(filePath, FileMode.Create, FileAccess.Write, FileShare.Read));
-                this.writer.WriteLine("timestamp,x,y,z,joint,mode,targetId");
+                // CSV header matches required output
+                this.writer.WriteLine("Timestamp,Position_X,Position_Y,Position_Z,Camera_ID,Trial_ID,Modus,Target_ID");
                 this.cts = new CancellationTokenSource();
                 this.recorded = 0;
                 this.startTime = DateTime.UtcNow;
@@ -84,14 +101,20 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         }
 
         // Call this to append a sample (time aligned to recorder rate). This will be buffered and written by the loop.
-        public void AppendSample(DateTime timestamp, float x, float y, float z, string joint, string mode, int targetId)
+        // Extended to accept optional cameraId and trialId so a caller can override per-sample (backward compatible).
+        public void AppendSample(DateTime timestamp, float x, float y, float z, string joint, string mode, int targetId, string cameraId = null, string trialId = null)
         {
             // We write samples directly (thread-safe)
             lock (sync)
             {
                 if (!IsRecording) return;
                 var ts = timestamp.ToString("o", CultureInfo.InvariantCulture);
-                var line = string.Format(CultureInfo.InvariantCulture, "{0},{1:F6},{2:F6},{3:F6},{4},{5},{6}", ts, x, y, z, joint, mode, targetId);
+
+                // use provided per-sample identifiers or fall back to recorder's defaults
+                var cam = string.IsNullOrEmpty(cameraId) ? this.cameraId : cameraId;
+                var trial = string.IsNullOrEmpty(trialId) ? this.trialId : trialId;
+
+                var line = string.Format(CultureInfo.InvariantCulture, "{0},{1:F6},{2:F6},{3:F6},{4},{5},{6},{7}", ts, x, y, z, cam, trial, mode, targetId);
                 this.writer.WriteLine(line);
                 this.recorded++;
 

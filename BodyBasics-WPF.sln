@@ -1,7 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11304.174 d18.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodyBasics-WPF", "BodyBasics-WPF.csproj", "{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordTrajectories", "RecordTrajectories", "{FF86BE60-A22E-4853-97E2-A4E28FA57BEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RawRecord", "RawRecord", "{ACFF10C5-9463-43A7-8699-7AA65D21FB28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MergeRecord", "MergeRecord", "{01A5546F-1F97-48DE-B92D-41E357F4BEC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,5 +24,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ACFF10C5-9463-43A7-8699-7AA65D21FB28} = {FF86BE60-A22E-4853-97E2-A4E28FA57BEA}
+		{01A5546F-1F97-48DE-B92D-41E357F4BEC9} = {FF86BE60-A22E-4853-97E2-A4E28FA57BEA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {99A21D99-B1C6-4A7A-9054-1CC69DC9642C}
 	EndGlobalSection
 EndGlobal
