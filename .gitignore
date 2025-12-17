@@ -1,0 +1,7 @@
+*.db-shm
+*.db
+*.db-wal
+*.vsidx
+/.vs/BodyBasics-WPF/v18
+/.vs
+*.exe
