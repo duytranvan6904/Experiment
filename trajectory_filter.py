@@ -15,8 +15,8 @@ except Exception:
     pass
 
 # ========== PARAMETERS ==========
-RECORD_DIR = r"E:\Downloads\BodyBasics-WPF\Experiment\bin\AnyCPU\Debug\RecordTrajectories\RawRecord"
-SAVE_DIR   = r"E:\Downloads\BodyBasics-WPF\Experiment\Merged_Trajectories"
+RECORD_DIR = r"C:\Users\ASUS\OneDrive\Tài liệu\KinectTrajectories"
+SAVE_DIR   = r"C:\Users\ASUS\OneDrive\Tài liệu\KinectTrajectories"
 
 # Ngưỡng phát hiện outliers
 MAX_VELOCITY_THRESHOLD = 0.2      # 0.1m giữa 2 điểm liên tiếp (tương đương 3 m/s ở 30fps)
@@ -24,7 +24,7 @@ MAX_ACCELERATION_THRESHOLD = 0.05  # Ngưỡng gia tốc bất thường
 
 # Tham số làm mượt
 MEDIAN_FILTER_SIZE = 7             # Bộ lọc trung vị để loại bỏ nhiễu spike
-SAVGOL_WINDOW = 55              # Savitzky-Golay window (phải là số lẻ)
+SAVGOL_WINDOW = 21              # Savitzky-Golay window (phải là số lẻ)
 SAVGOL_POLYORDER = 3               # Bậc đa thức
 SPLINE_SMOOTH = 0.15               # Độ mượt của spline (0 = interpolate chính xác)
 
@@ -33,7 +33,7 @@ MIN_POINTS_REQUIRED = 10
 # ========== COLUMNS ==========
 TIME_COL = "Timestamp"
 
-TRAJ_LEADER_LEFT  = ("Position_X",	"Position_Y",	"Position_Z")
+TRAJ_LEADER_LEFT  = ("x",	"y",	"z")
 TRAJ_FOLLOWER_R   = ("Follower_HandRight_X","Follower_HandRight_Y","Follower_HandRight_Z")
 TRAJ_OBJECT       = ("Object_X",           "Object_Y",           "Object_Z")
 
