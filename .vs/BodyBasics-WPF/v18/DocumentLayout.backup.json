@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|e:\\downloads\\bodybasics-wpf\\experiment\\trajectoryrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|solutionrelative:trajectoryrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|e:\\downloads\\bodybasics-wpf\\experiment\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|E:\\Downloads\\BodyBasics-WPF\\Experiment\\MainWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|solutionrelative:MainWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|E:\\Downloads\\BodyBasics-WPF\\Experiment\\KinectManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|solutionrelative:KinectManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|E:\\Downloads\\BodyBasics-WPF\\Experiment\\CoordinateTransformer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|solutionrelative:CoordinateTransformer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TrajectoryRecord.cs",
+              "DocumentMoniker": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\TrajectoryRecord.cs",
+              "RelativeDocumentMoniker": "TrajectoryRecord.cs",
+              "ToolTip": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\TrajectoryRecord.cs*",
+              "RelativeToolTip": "TrajectoryRecord.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T04:40:02.74Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
+              "ToolTip": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\MainWindow.xaml.cs",
+              "RelativeToolTip": "MainWindow.xaml.cs",
+              "ViewState": "AgIAAJIBAAAAAAAAAAAAAJIBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T04:36:32.205Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-12-18T04:36:32.208Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "KinectManager.cs",
+              "DocumentMoniker": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\KinectManager.cs",
+              "RelativeDocumentMoniker": "KinectManager.cs",
+              "ToolTip": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\KinectManager.cs",
+              "RelativeToolTip": "KinectManager.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T04:36:32.218Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CoordinateTransformer.cs",
+              "DocumentMoniker": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\CoordinateTransformer.cs",
+              "RelativeDocumentMoniker": "CoordinateTransformer.cs",
+              "ToolTip": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\CoordinateTransformer.cs",
+              "RelativeToolTip": "CoordinateTransformer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T04:36:32.224Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 118,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
