@@ -24,7 +24,7 @@ MAX_ACCELERATION_THRESHOLD = 0.05  # Ngưỡng gia tốc bất thường
 
 # Tham số làm mượt
 MEDIAN_FILTER_SIZE = 7             # Bộ lọc trung vị để loại bỏ nhiễu spike
-SAVGOL_WINDOW = 21              # Savitzky-Golay window (phải là số lẻ)
+SAVGOL_WINDOW = 5              # Savitzky-Golay window (phải là số lẻ)
 SAVGOL_POLYORDER = 3               # Bậc đa thức
 SPLINE_SMOOTH = 0.05               # Độ mượt của spline (0 = interpolate chính xác)
 

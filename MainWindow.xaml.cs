@@ -135,9 +135,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private TrajectoryRecorder recorder;
         private Timer samplingTimer;
 
-        // store last seen hand positions
-        private CameraSpacePoint lastLeftHand;
-        private CameraSpacePoint lastRightHand;
+        // store last seen wrist positions (changed from hand to wrist)
+        private CameraSpacePoint lastLeftWrist;
+        private CameraSpacePoint lastRightWrist;
         private ulong? lastTrackingId;
 
         // experiment params
@@ -634,14 +634,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         private void KinectManager_HandUpdated(HandJointUpdate update)
         {
-            // store last seen hand positions and tracking id
-            if (update.Joint == JointType.HandLeft)
+            // store last seen wrist positions and tracking id (changed from hand to wrist)
+            if (update.Joint == JointType.WristLeft)
             {
-                this.lastLeftHand = update.Position;
+                this.lastLeftWrist = update.Position;
             }
-            else if (update.Joint == JointType.HandRight)
+            else if (update.Joint == JointType.WristRight)
             {
-                this.lastRightHand = update.Position;
+                this.lastRightWrist = update.Position;
             }
 
             this.lastTrackingId = update.TrackingId;
@@ -655,7 +655,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             // update UI (marshal to UI thread)
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
-                // show the last right-hand world coords if possible
+                // show the last right-wrist world coords if possible
                 CameraSpacePoint p = update.Position;
                 var world = this.transformer.Transform(p);
                 this.txtXYZ.Text = string.Format(CultureInfo.InvariantCulture, "X: {0:F3}, Y: {1:F3}, Z: {2:F3}", world.X, world.Y, world.Z);
@@ -667,22 +667,22 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         private void SamplingTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            // sample at fixed rate: use lastRightHand as the tracked point
+            // sample at fixed rate: use lastRightWrist as the tracked point (changed from hand to wrist)
             if (!this.recorder.IsRecording) return;
 
             // ensure tracked body matches
             if (this.kinectManager == null || !this.kinectManager.TrackedBodyId.HasValue || !this.lastTrackingId.HasValue) return;
             if (this.kinectManager.TrackedBodyId.Value != this.lastTrackingId.Value) return;
 
-            // pick which hand to record (right prefer)
-            var camPoint = this.lastRightHand;
+            // pick which wrist to record (right prefer)
+            var camPoint = this.lastRightWrist;
 
             var world = this.transformer.Transform(camPoint);
 
             // AppendSample: timestamp, x,y,z, joint, mode, targetId
             try
             {
-                this.recorder.AppendSample(DateTime.UtcNow, world.X, world.Y, world.Z, "HandRight", GetModeName(), this.currentTargetId);
+                this.recorder.AppendSample(DateTime.UtcNow, world.X, world.Y, world.Z, "WristRight", GetModeName(), this.currentTargetId);
             }
             catch (Exception ex)
             {
@@ -755,26 +755,31 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         private void BtnCalibrate_Click(object sender, RoutedEventArgs e)
         {
-            // Set world origin to current right hand (if available) and update floor
+            // Set world origin to current right wrist (if available) and update floor (changed from hand to wrist)
             if (this.lastTrackingId.HasValue && this.kinectManager.TrackedBodyId.HasValue && this.lastTrackingId == this.kinectManager.TrackedBodyId)
             {
-                this.transformer.SetWorldOriginFromTarget(this.lastRightHand);
+                this.transformer.SetWorldOriginFromTarget(this.lastRightWrist);
                 if (this.kinectManager.FloorClipPlane.HasValue)
                 {
                     this.transformer.UpdateFloorPlane(this.kinectManager.FloorClipPlane.Value);
                 }
 
-                MessageBox.Show("Calibration set from current right hand.");
+                MessageBox.Show("Calibration set from current right wrist.");
             }
             else
             {
-                MessageBox.Show("No tracked body / hand available to calibrate.");
+                MessageBox.Show("No tracked body / wrist available to calibrate.");
             }
         }
 
         private void CboMode_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             this.currentMode = this.cboMode.SelectedIndex + 1;
+        }
+
+        private void txtTargetId_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
         }
 
         // other existing methods remain unchanged

@@ -128,15 +128,15 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         this.TrackedBodyId = primary.TrackingId;
                     }
 
-                    // extract hands
+                    // extract wrists (changed from hands to wrists)
                     var joints = primary.Joints;
-                    var left = joints[JointType.HandLeft].Position;
-                    var right = joints[JointType.HandRight].Position;
+                    var left = joints[JointType.WristLeft].Position;
+                    var right = joints[JointType.WristRight].Position;
 
                     var ts = DateTime.UtcNow;
 
-                    this.HandUpdated?.Invoke(new HandJointUpdate { Timestamp = ts, TrackingId = primary.TrackingId, Joint = JointType.HandLeft, Position = left });
-                    this.HandUpdated?.Invoke(new HandJointUpdate { Timestamp = ts, TrackingId = primary.TrackingId, Joint = JointType.HandRight, Position = right });
+                    this.HandUpdated?.Invoke(new HandJointUpdate { Timestamp = ts, TrackingId = primary.TrackingId, Joint = JointType.WristLeft, Position = left });
+                    this.HandUpdated?.Invoke(new HandJointUpdate { Timestamp = ts, TrackingId = primary.TrackingId, Joint = JointType.WristRight, Position = right });
                 }
                 else
                 {
