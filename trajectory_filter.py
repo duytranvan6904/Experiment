@@ -15,8 +15,10 @@ except Exception:
     pass
 
 # ========== PARAMETERS ==========
-RECORD_DIR = r"C:\Users\ASUS\OneDrive\Tài liệu\KinectTrajectories"
-SAVE_DIR   = r"C:\Users\ASUS\OneDrive\Tài liệu\KinectTrajectories\filtered"
+# Lấy đường dẫn thư mục hiện tại (nơi file Python đang chạy)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+RECORD_DIR = os.path.join(SCRIPT_DIR, "Trajectories")
+SAVE_DIR   = os.path.join(SCRIPT_DIR, "Trajectories", "filtered")
 
 # Ngưỡng phát hiện outliers
 MAX_VELOCITY_THRESHOLD = 0.2      # 0.2m giữa 2 điểm liên tiếp
@@ -33,8 +35,8 @@ MIN_POINTS_REQUIRED = 10
 # ========== COLUMNS ==========
 TIME_COL = "timestamp"
 X_COL = "x"
-Y_COL = "y"
-Z_COL = "z"
+Y_COL = "z"
+Z_COL = "y"
 
 # ========== HELPERS ==========
 def find_latest_csv(folder):
@@ -181,10 +183,9 @@ def clean_and_smooth_trajectory(df, cols, time_col=TIME_COL):
     
     arr = df[list(cols)].to_numpy(dtype=float)
     
-    if time_col in df.columns:
-        time_axis = df[time_col].to_numpy()
-    else:
-        time_axis = np.arange(len(arr))
+    # Sử dụng index số thay vì timestamp string để tránh lỗi interpolation
+    # (np.interp không thể xử lý datetime string)
+    time_axis = np.arange(len(arr))
     
     # Phát hiện outliers
     outlier_mask = detect_outliers_advanced(arr, MAX_VELOCITY_THRESHOLD, MAX_ACCELERATION_THRESHOLD)
@@ -234,9 +235,10 @@ def calculate_smoothness_metrics(arr3):
     
     return metrics
 
-def set_axes_equal(ax):
+def set_axes_equal(ax, z_min_limit=-0.01):
     """
     Đặt tỉ lệ các trục bằng nhau cho biểu đồ 3D
+    Giới hạn dưới của trục z từ z_min_limit trở lên
     """
     x_limits = ax.get_xlim3d()
     y_limits = ax.get_ylim3d()
@@ -253,7 +255,10 @@ def set_axes_equal(ax):
 
     ax.set_xlim3d([x_middle - plot_radius, x_middle + plot_radius])
     ax.set_ylim3d([y_middle - plot_radius, y_middle + plot_radius])
-    ax.set_zlim3d([z_middle - plot_radius, z_middle + plot_radius])
+    
+    # Giới hạn dưới của trục z từ z_min_limit trở lên
+    z_lower = max(z_middle - plot_radius, z_min_limit)
+    ax.set_zlim3d([z_lower, z_middle + plot_radius])
 
 # ========== MAIN FUNCTIONS ==========
 
@@ -399,6 +404,15 @@ def apply_filter_and_visualize():
     for col in cleaned.columns:
         df_filtered[col] = cleaned[col].values
     
+    # Chuẩn hóa trục z: trừ cho giá trị nhỏ nhất để chiều cao bắt đầu từ 0
+    z_min = df_filtered[Z_COL].min()
+    df_filtered[Z_COL] = df_filtered[Z_COL] - z_min
+    print(f"\n  Z-axis normalized: min value {z_min:.4f} subtracted, new range: [{df_filtered[Z_COL].min():.4f}, {df_filtered[Z_COL].max():.4f}]")
+    
+    # Thêm cột Timestamp tăng dần từ 0, 1, 2...
+    df_filtered.insert(0, 'Timestamp', range(len(df_filtered)))
+    print(f"  Added sequential Timestamp column (0 to {len(df_filtered)-1})")
+    
     # Save
     base_name = os.path.basename(csv_path)
     safe_base = re.sub(r'[<>:"/\\|?*]', '_', base_name)
@@ -494,10 +508,10 @@ def main():
     # Chọn hàm muốn chạy (comment/uncomment dòng tương ứng)
     
     # Hàm 1: Chỉ vẽ quỹ đạo raw
-    visualize_raw_trajectory()
+    # visualize_raw_trajectory()
     
     # Hàm 2: Áp dụng filter và vẽ so sánh
-    # apply_filter_and_visualize()
+    apply_filter_and_visualize()
 
 if __name__ == "__main__":
     main()

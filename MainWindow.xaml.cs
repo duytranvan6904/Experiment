@@ -717,7 +717,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.recorder.MaxFrames = (maxFrames <= 0) ? int.MaxValue : maxFrames;
                 this.recorder.MaxTime = (maxTimeSeconds <= 0) ? TimeSpan.MaxValue : TimeSpan.FromSeconds(maxTimeSeconds);
 
-                var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "KinectTrajectories");
+                // Lưu vào folder Trajectories trong project
+                var projectDir = AppDomain.CurrentDomain.BaseDirectory;
+                var folder = Path.Combine(projectDir, "Trajectories");
                 Directory.CreateDirectory(folder);
                 var filename = Path.Combine(folder, $"traj_{DateTime.Now:yyyyMMdd_HHmmss}.csv");
                 this.recorder.Start(filename);
