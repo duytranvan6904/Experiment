@@ -42,17 +42,6 @@
 
                 <Button Name="btnCalibrate" Width="260" Margin="0 0 0 8" Click="BtnCalibrate_Click">Calibrate (set target origin)</Button>
 
-                <TextBlock Margin="0 6 0 2">Mode</TextBlock>
-                <ComboBox Name="cboMode" Width="260" SelectedIndex="0" Margin="0 0 0 8" SelectionChanged="CboMode_SelectionChanged">
-                    <ComboBoxItem>Free movement</ComboBoxItem>
-                    <ComboBoxItem>Obstacle</ComboBoxItem>
-                    <ComboBoxItem>Free + Change target</ComboBoxItem>
-                    <ComboBoxItem>Obstacle + Change target</ComboBoxItem>
-                </ComboBox>
-
-                <TextBlock>Target ID (1-3)</TextBlock>
-                <TextBox Name="txtTargetId" Width="126" Margin="0 0 0 8" Height="52" TextChanged="txtTargetId_TextChanged" />
-
                 <TextBlock FontSize="14" FontWeight="Bold" Margin="0 8 0 4">Live Hand (world)</TextBlock>
                 <TextBlock Name="txtXYZ" Text="X: -, Y: -, Z: -" Margin="0 0 0 8" />
 

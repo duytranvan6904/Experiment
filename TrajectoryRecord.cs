@@ -49,7 +49,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             {
                 if (IsRecording) return;
                 this.writer = new StreamWriter(File.Open(filePath, FileMode.Create, FileAccess.Write, FileShare.Read));
-                this.writer.WriteLine("timestamp,x,y,z,joint,mode,targetId");
+                this.writer.WriteLine("Timestamp,X,Y,Z,Joint,ScenarioId");
                 this.cts = new CancellationTokenSource();
                 this.recorded = 0;
                 this.startTime = DateTime.UtcNow;
@@ -84,14 +84,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         }
 
         // Call this to append a sample (time aligned to recorder rate). This will be buffered and written by the loop.
-        public void AppendSample(DateTime timestamp, float x, float y, float z, string joint, string mode, int targetId)
+        public void AppendSample(DateTime timestamp, float x, float y, float z, string joint, int scenarioId)
         {
             // We write samples directly (thread-safe)
             lock (sync)
             {
                 if (!IsRecording) return;
                 var ts = timestamp.ToString("o", CultureInfo.InvariantCulture);
-                var line = string.Format(CultureInfo.InvariantCulture, "{0},{1:F6},{2:F6},{3:F6},{4},{5},{6}", ts, x, y, z, joint, mode, targetId);
+                var line = string.Format(CultureInfo.InvariantCulture, "{0},{1:F6},{2:F6},{3:F6},{4},{5}", ts, x, y, z, joint, scenarioId);
                 this.writer.WriteLine(line);
                 this.recorded++;
 

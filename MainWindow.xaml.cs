@@ -141,8 +141,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private ulong? lastTrackingId;
 
         // experiment params
-        private int currentMode = 1; // 1..4
-        private int currentTargetId = 1;
+        private int currentScenarioId = 0; // 0 = not set, 1-18 = valid scenarios
 
         // Add UI timer for countdown
         private DispatcherTimer uiTimer;
@@ -679,10 +678,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
             var world = this.transformer.Transform(camPoint);
 
-            // AppendSample: timestamp, x,y,z, joint, mode, targetId
+            // AppendSample: timestamp, x,y,z, joint, scenarioId
             try
             {
-                this.recorder.AppendSample(DateTime.UtcNow, world.X, world.Y, world.Z, "WristRight", GetModeName(), this.currentTargetId);
+                this.recorder.AppendSample(DateTime.UtcNow, world.X, world.Y, world.Z, "WristRight", this.currentScenarioId);
             }
             catch (Exception ex)
             {
@@ -690,15 +689,43 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
-        private string GetModeName()
+        private string GetModeName(int scenarioId)
         {
-            switch (this.currentMode)
+            if (scenarioId >= 1 && scenarioId <= 3) return "Free";
+            if (scenarioId >= 4 && scenarioId <= 6) return "Obstacle";
+            if (scenarioId >= 7 && scenarioId <= 12) return "Change";
+            if (scenarioId >= 13 && scenarioId <= 18) return "Change+Obstacle";
+            return "Unknown";
+        }
+
+        private (int initialTarget, int finalTarget) GetTargetsFromScenario(int scenarioId)
+        {
+            // Scenario mapping based on Python GUI
+            switch (scenarioId)
             {
-                case 1: return "Free";
-                case 2: return "Obstacle";
-                case 3: return "FreeChange";
-                case 4: return "ObstacleChange";
-                default: return "Unknown";
+                case 1: return (1, 1);
+                case 2: return (2, 2);
+                case 3: return (3, 3);
+                
+                case 4: return (1, 1);
+                case 5: return (2, 2);
+                case 6: return (3, 3);
+                
+                case 7: return (1, 2);
+                case 8: return (1, 3);
+                case 9: return (2, 1);
+                case 10: return (2, 3);
+                case 11: return (3, 1);
+                case 12: return (3, 2);
+                
+                case 13: return (1, 2);
+                case 14: return (1, 3);
+                case 15: return (2, 1);
+                case 16: return (2, 3);
+                case 17: return (3, 1);
+                case 18: return (3, 2);
+                
+                default: return (0, 0);
             }
         }
 
@@ -747,11 +774,65 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.recorder.Stop();
                 this.lblRecording.Text = "Recording: Inactive";
                 this.txtCountdown.Text = "Countdown: -";
-                this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? "-");
+
+                // Show dialog to get Scenario ID
+                var dialog = new ScenarioInputDialog();
+                dialog.Owner = this;
+                if (dialog.ShowDialog() == true)
+                {
+                    this.currentScenarioId = dialog.ScenarioId;
+                    
+                    // Get mode and targets from scenario ID
+                    string modeName = GetModeName(this.currentScenarioId);
+                    var (initialTarget, finalTarget) = GetTargetsFromScenario(this.currentScenarioId);
+                    
+                    // Update the saved file with scenario metadata
+                    if (!string.IsNullOrEmpty(this.recorder.CurrentFilePath))
+                    {
+                        UpdateCsvWithScenarioInfo(this.recorder.CurrentFilePath, this.currentScenarioId, modeName, initialTarget, finalTarget);
+                        this.txtSavePath.Text = $"Save path: {this.recorder.CurrentFilePath} (Scenario {this.currentScenarioId})";
+                    }
+                }
+                else
+                {
+                    // User cancelled - still show the path
+                    this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? "-") + " (No scenario ID)";
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to stop recorder: " + ex.Message);
+            }
+        }
+
+        private void UpdateCsvWithScenarioInfo(string filePath, int scenarioId, string mode, int initialTarget, int finalTarget)
+        {
+            try
+            {
+                // Read all lines
+                var lines = System.IO.File.ReadAllLines(filePath);
+                if (lines.Length == 0) return;
+
+                // Update header if needed
+                if (lines[0].Contains("Mode") && lines[0].Contains("TargetId"))
+                {
+                    // Old format - replace with new format
+                    lines[0] = "Timestamp,X,Y,Z,Joint,ScenarioId";
+                }
+
+                // Write back with scenario info in a comment line
+                using (var writer = new System.IO.StreamWriter(filePath, false))
+                {
+                    writer.WriteLine($"# Scenario {scenarioId}: Mode={mode}, InitialTarget={initialTarget}, FinalTarget={finalTarget}");
+                    foreach (var line in lines)
+                    {
+                        writer.WriteLine(line);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to update CSV with scenario info: " + ex.Message);
             }
         }
 
@@ -774,15 +855,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
-        private void CboMode_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            this.currentMode = this.cboMode.SelectedIndex + 1;
-        }
 
-        private void txtTargetId_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-
-        }
 
         // other existing methods remain unchanged
     }
