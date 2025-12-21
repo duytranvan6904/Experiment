@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|e:\\downloads\\bodybasics-wpf\\experiment\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|E:\\Downloads\\BodyBasics-WPF\\Experiment\\MainWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|solutionrelative:MainWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|E:\\Downloads\\BodyBasics-WPF\\Experiment\\trajectoryrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|solutionrelative:trajectoryrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|e:\\downloads\\bodybasics-wpf\\experiment\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|E:\\Downloads\\BodyBasics-WPF\\Experiment\\CoordinateTransformer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,10 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|E:\\Downloads\\BodyBasics-WPF\\Experiment\\KinectManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|solutionrelative:KinectManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|E:\\Downloads\\BodyBasics-WPF\\Experiment\\trajectoryrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{269A7B21-FBFE-4E7A-8BBE-C8DE2EC0D833}|BodyBasics-WPF.csproj|solutionrelative:trajectoryrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,7 +42,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "TrajectoryRecord.cs",
               "DocumentMoniker": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\TrajectoryRecord.cs",
               "RelativeDocumentMoniker": "TrajectoryRecord.cs",
@@ -55,7 +55,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
@@ -68,7 +68,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
@@ -80,7 +80,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "KinectManager.cs",
               "DocumentMoniker": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\KinectManager.cs",
               "RelativeDocumentMoniker": "KinectManager.cs",
@@ -88,12 +88,11 @@
               "RelativeToolTip": "KinectManager.cs",
               "ViewState": "AgIAAEMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T04:36:32.218Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T04:36:32.218Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "CoordinateTransformer.cs",
               "DocumentMoniker": "E:\\Downloads\\BodyBasics-WPF\\Experiment\\CoordinateTransformer.cs",
               "RelativeDocumentMoniker": "CoordinateTransformer.cs",
@@ -101,8 +100,7 @@
               "RelativeToolTip": "CoordinateTransformer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T04:36:32.224Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T04:36:32.224Z"
             }
           ]
         },
