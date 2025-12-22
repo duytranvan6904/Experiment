@@ -286,31 +286,49 @@ class WorkspaceCanvas(tk.Canvas):
         super().__init__(parent, **kwargs)
         self.experiment_manager = experiment_manager
         
-        # Canvas dimensions - ROTATED: workspace is now horizontal
-        # Original workspace: 0.8m (width) x 1.5m (height)
-        # Rotated: 1.5m (width) x 0.8m (height)
-        self.canvas_width = 1000  # For 1.5m workspace width
-        self.canvas_height = 600  # For 0.8m workspace height
-        self.margin_left = 80     # Left margin for start zone
+        # Default Canvas dimensions (will be updated by resize event)
+        self.canvas_width = 1000 
+        self.canvas_height = 600
+        self.margin_left = 80
         self.margin_right = 20
         self.margin_top = 20
         self.margin_bottom = 20
-        self.config(width=self.canvas_width, height=self.canvas_height, bg="#1a1a1a")
         
-        # Effective drawing area
-        self.draw_width = self.canvas_width - self.margin_left - self.margin_right
-        self.draw_height = self.canvas_height - self.margin_top - self.margin_bottom
+        # Set initial background
+        self.config(bg="#1a1a1a")
         
-        # Scaling factors (pixels per meter)
-        # ROTATED: x-axis is now the long axis (1.5m), y-axis is short (0.8m)
-        self.scale_x = self.draw_width / WORKSPACE_HEIGHT   # 1.5m mapped to width
-        self.scale_y = self.draw_height / WORKSPACE_WIDTH   # 0.8m mapped to height
+        # Effective drawing area and scaling (initial calculation)
+        self.recalculate_scaling()
         
         # Visual elements
         self.start_zone_id = None
         self.target_ids = {1: None, 2: None, 3: None}
         self.obstacle_id = None
         
+        # Bind resize event
+        self.bind("<Configure>", self.on_resize)
+        
+        self.draw_workspace()
+
+    def recalculate_scaling(self):
+        """Recalculate content dimensions and scaling factors"""
+        self.draw_width = self.canvas_width - self.margin_left - self.margin_right
+        self.draw_height = self.canvas_height - self.margin_top - self.margin_bottom
+        
+        # Prevent division by zero if window is very small
+        if self.draw_width <= 0: self.draw_width = 1
+        if self.draw_height <= 0: self.draw_height = 1
+
+        # Scaling factors (pixels per meter)
+        # ROTATED: x-axis is now the long axis (1.5m), y-axis is short (0.8m)
+        self.scale_x = self.draw_width / WORKSPACE_HEIGHT   # 1.5m mapped to width
+        self.scale_y = self.draw_height / WORKSPACE_WIDTH   # 0.8m mapped to height
+
+    def on_resize(self, event):
+        """Handle canvas resize event"""
+        self.canvas_width = event.width
+        self.canvas_height = event.height
+        self.recalculate_scaling()
         self.draw_workspace()
         
     def world_to_canvas(self, x: float, y: float) -> Tuple[int, int]:
@@ -354,7 +372,7 @@ class WorkspaceCanvas(tk.Canvas):
     def draw_start_zone(self):
         """Draw the start position zone"""
         cx, cy = self.world_to_canvas(START_POSITION[0], START_POSITION[1])
-        size = 40
+        size = 50
         
         # Determine color based on state
         if self.experiment_manager.state == ExperimentState.RUNNING:
@@ -390,7 +408,7 @@ class WorkspaceCanvas(tk.Canvas):
     def draw_target(self, target_id: int, position: Tuple[float, float, float]):
         """Draw a single target zone"""
         cx, cy = self.world_to_canvas(position[0], position[1])
-        size = 35
+        size = 50
         
         # Determine if this target is active
         is_active = self.is_target_active(target_id)
@@ -833,7 +851,7 @@ class HRIExperimentGUI(tk.Tk):
         canvas_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 10))
         
         self.canvas = WorkspaceCanvas(canvas_frame, self.experiment_manager)
-        self.canvas.pack()
+        self.canvas.pack(fill="both", expand=True)
         
         # Right side: Control panel
         control_frame = ttk.LabelFrame(main_frame, text="Controls", padding=10)
