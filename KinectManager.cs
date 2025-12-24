@@ -16,8 +16,12 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         public bool IsAvailable => this.sensor != null && this.sensor.IsAvailable;
 
-        // ID of the tracked body (first detected / locked)
-        public ulong? TrackedBodyId { get; private set; }
+        // IDs of tracked bodies
+        public ulong? LeaderBodyId { get; private set; }
+        public ulong? FollowerBodyId { get; private set; }
+        
+        // Backwards compatibility / Primary tracked ID
+        public ulong? TrackedBodyId => LeaderBodyId;
 
         // Expose latest color frame as a WriteableBitmap (RGBA)
         public WriteableBitmap ColorBitmap { get; private set; }
@@ -55,8 +59,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         private void DepthReader_FrameArrived(object sender, DepthFrameArrivedEventArgs e)
         {
-            // Use depth frame to update floor plane from body frames instead (BodyFrame has FloorClipPlane)
-            // Keep method to satisfy initialization requirement.
             using (var frame = e.FrameReference.AcquireFrame())
             {
                 // no-op; placeholder
@@ -110,38 +112,51 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 // update floor plane
                 this.FloorClipPlane = frame.FloorClipPlane;
 
-                // find first tracked body (lock on first detected)
-                Body primary = null;
+                // Identify Leader (1st valid) and Follower (2nd valid)
+                Body leader = null;
+                Body follower = null;
+                
+                int foundCount = 0;
                 foreach (var b in this.bodies)
                 {
                     if (b != null && b.IsTracked)
                     {
-                        primary = b;
-                        break;
+                        if (foundCount == 0) leader = b;
+                        else if (foundCount == 1) follower = b;
+                        
+                        foundCount++;
+                        if (foundCount >= 2) break;
                     }
                 }
 
-                if (primary != null)
+                var ts = DateTime.UtcNow;
+
+                // Process Leader
+                if (leader != null)
                 {
-                    if (this.TrackedBodyId == null || this.TrackedBodyId != primary.TrackingId)
-                    {
-                        this.TrackedBodyId = primary.TrackingId;
-                    }
-
-                    // extract wrists (changed from hands to wrists)
-                    var joints = primary.Joints;
-                    var left = joints[JointType.WristLeft].Position;
+                    this.LeaderBodyId = leader.TrackingId;
+                    var joints = leader.Joints;
+                    // Leader: Track Right Wrist
                     var right = joints[JointType.WristRight].Position;
-
-                    var ts = DateTime.UtcNow;
-
-                    this.HandUpdated?.Invoke(new HandJointUpdate { Timestamp = ts, TrackingId = primary.TrackingId, Joint = JointType.WristLeft, Position = left });
-                    this.HandUpdated?.Invoke(new HandJointUpdate { Timestamp = ts, TrackingId = primary.TrackingId, Joint = JointType.WristRight, Position = right });
+                    this.HandUpdated?.Invoke(new HandJointUpdate { Timestamp = ts, TrackingId = leader.TrackingId, Joint = JointType.WristRight, Position = right, Role = "Leader" });
                 }
                 else
                 {
-                    // no bodies tracked
-                    this.TrackedBodyId = null;
+                    this.LeaderBodyId = null;
+                }
+
+                // Process Follower
+                if (follower != null)
+                {
+                    this.FollowerBodyId = follower.TrackingId;
+                    var joints = follower.Joints;
+                    // Follower: Track Left Wrist
+                    var left = joints[JointType.WristLeft].Position;
+                    this.HandUpdated?.Invoke(new HandJointUpdate { Timestamp = ts, TrackingId = follower.TrackingId, Joint = JointType.WristLeft, Position = left, Role = "Follower" });
+                }
+                else
+                {
+                    this.FollowerBodyId = null;
                 }
             }
         }
@@ -183,5 +198,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         public ulong TrackingId;
         public JointType Joint;
         public CameraSpacePoint Position;
+        public string Role; // "Leader" or "Follower"
     }
 }

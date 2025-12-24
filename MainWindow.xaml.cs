@@ -135,10 +135,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private TrajectoryRecorder recorder;
         private Timer samplingTimer;
 
-        // store last seen wrist positions (changed from hand to wrist)
-        private CameraSpacePoint lastLeftWrist;
-        private CameraSpacePoint lastRightWrist;
-        private ulong? lastTrackingId;
+        // store last seen positions
+        private CameraSpacePoint lastLeaderWrist;
+        private CameraSpacePoint lastFollowerWrist;
+        private ulong? lastLeaderId;
+        private ulong? lastFollowerId;
 
         // experiment params
         private int currentScenarioId = 0; // 0 = not set, 1-18 = valid scenarios
@@ -267,6 +268,92 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.lblKinect.Text = this.kinectSensor.IsAvailable ? "Kinect: Connected" : "Kinect: Not available";
             this.lblBody.Text = "Body: Not tracked";
             this.lblRecording.Text = "Recording: Inactive";
+        }
+
+        private void KinectManager_HandUpdated(HandJointUpdate update)
+        {
+            // store positions based on Role
+            if (update.Role == "Leader")
+            {
+                if (update.Joint == JointType.WristRight)
+                {
+                    this.lastLeaderWrist = update.Position;
+                    this.lastLeaderId = update.TrackingId;
+                }
+            }
+            else if (update.Role == "Follower")
+            {
+                if (update.Joint == JointType.WristLeft)
+                {
+                    this.lastFollowerWrist = update.Position;
+                    this.lastFollowerId = update.TrackingId;
+                }
+            }
+
+            // update transformer floor plane if available
+            if (this.kinectManager.FloorClipPlane.HasValue)
+            {
+                this.transformer.UpdateFloorPlane(this.kinectManager.FloorClipPlane.Value);
+            }
+
+            // update UI (marshal to UI thread)
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                // Only update text for Leader to keep UI simple
+                if (update.Role == "Leader") 
+                {
+                    CameraSpacePoint p = update.Position;
+                    var world = this.transformer.Transform(p);
+                    this.txtXYZ.Text = string.Format(CultureInfo.InvariantCulture, "Leader: {0:F3}, {1:F3}, {2:F3}", world.X, world.Y, world.Z);
+
+                    // update body tracked label
+                    this.lblBody.Text = $"Leader: {this.kinectManager.LeaderBodyId} | Follower: {this.kinectManager.FollowerBodyId}";
+                }
+            }));
+        }
+
+        private void SamplingTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            // sample at fixed rate
+            if (!this.recorder.IsRecording) return;
+            
+            // Check if we have valid items
+            if (this.kinectManager == null) return;
+            
+            // Need at least a leader? Or both? User said tracking "additional" so likely both simultaneously.
+            // If one is missing, we might record 0,0,0 or just not record?
+            // Usually for data completeness, we might want to skip if Leader is missing.
+            
+            // Let's assume Leader is mandatory, Follower is optional but preferred.
+            if (!this.kinectManager.LeaderBodyId.HasValue || !this.lastLeaderId.HasValue) return;
+            if (this.kinectManager.LeaderBodyId.Value != this.lastLeaderId.Value) return;
+
+            // Transform Leader
+            var leaderWorld = this.transformer.Transform(this.lastLeaderWrist);
+            
+            // Transform Follower
+            float fx = 0, fy = 0, fz = 0;
+            if (this.kinectManager.FollowerBodyId.HasValue && this.lastFollowerId.HasValue && 
+                this.kinectManager.FollowerBodyId.Value == this.lastFollowerId.Value)
+            {
+                var followerWorld = this.transformer.Transform(this.lastFollowerWrist);
+                fx = followerWorld.X;
+                fy = followerWorld.Y;
+                fz = followerWorld.Z;
+            }
+
+            // AppendSample: timestamp, lx, ly, lz, fx, fy, fz, scenarioId
+            try
+            {
+                this.recorder.AppendSample(DateTime.UtcNow, 
+                    leaderWorld.X, leaderWorld.Y, leaderWorld.Z, 
+                    fx, fy, fz, 
+                    this.currentScenarioId);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Recorder append failed: " + ex.Message);
+            }
         }
 
         // Add handler for recorder stopped event
@@ -631,63 +718,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                                                             : Properties.Resources.SensorNotAvailableStatusText;
         }
 
-        private void KinectManager_HandUpdated(HandJointUpdate update)
-        {
-            // store last seen wrist positions and tracking id (changed from hand to wrist)
-            if (update.Joint == JointType.WristLeft)
-            {
-                this.lastLeftWrist = update.Position;
-            }
-            else if (update.Joint == JointType.WristRight)
-            {
-                this.lastRightWrist = update.Position;
-            }
-
-            this.lastTrackingId = update.TrackingId;
-
-            // update transformer floor plane if available
-            if (this.kinectManager.FloorClipPlane.HasValue)
-            {
-                this.transformer.UpdateFloorPlane(this.kinectManager.FloorClipPlane.Value);
-            }
-
-            // update UI (marshal to UI thread)
-            this.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                // show the last right-wrist world coords if possible
-                CameraSpacePoint p = update.Position;
-                var world = this.transformer.Transform(p);
-                this.txtXYZ.Text = string.Format(CultureInfo.InvariantCulture, "X: {0:F3}, Y: {1:F3}, Z: {2:F3}", world.X, world.Y, world.Z);
-
-                // update body tracked label
-                this.lblBody.Text = this.kinectManager.TrackedBodyId.HasValue ? $"Body: {this.kinectManager.TrackedBodyId.Value}" : "Body: Not tracked";
-            }));
-        }
-
-        private void SamplingTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            // sample at fixed rate: use lastRightWrist as the tracked point (changed from hand to wrist)
-            if (!this.recorder.IsRecording) return;
-
-            // ensure tracked body matches
-            if (this.kinectManager == null || !this.kinectManager.TrackedBodyId.HasValue || !this.lastTrackingId.HasValue) return;
-            if (this.kinectManager.TrackedBodyId.Value != this.lastTrackingId.Value) return;
-
-            // pick which wrist to record (right prefer)
-            var camPoint = this.lastRightWrist;
-
-            var world = this.transformer.Transform(camPoint);
-
-            // AppendSample: timestamp, x,y,z, joint, scenarioId
-            try
-            {
-                this.recorder.AppendSample(DateTime.UtcNow, world.X, world.Y, world.Z, "WristRight", this.currentScenarioId);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Recorder append failed: " + ex.Message);
-            }
-        }
 
         private string GetModeName(int scenarioId)
         {
@@ -839,19 +869,20 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private void BtnCalibrate_Click(object sender, RoutedEventArgs e)
         {
             // Set world origin to current right wrist (if available) and update floor (changed from hand to wrist)
-            if (this.lastTrackingId.HasValue && this.kinectManager.TrackedBodyId.HasValue && this.lastTrackingId == this.kinectManager.TrackedBodyId)
+            // Use LEADER for calibration
+            if (this.lastLeaderId.HasValue && this.kinectManager.LeaderBodyId.HasValue && this.lastLeaderId == this.kinectManager.LeaderBodyId)
             {
-                this.transformer.SetWorldOriginFromTarget(this.lastRightWrist);
+                this.transformer.SetWorldOriginFromTarget(this.lastLeaderWrist);
                 if (this.kinectManager.FloorClipPlane.HasValue)
                 {
                     this.transformer.UpdateFloorPlane(this.kinectManager.FloorClipPlane.Value);
                 }
 
-                MessageBox.Show("Calibration set from current right wrist.");
+                MessageBox.Show("Calibration set from current right wrist (Leader).");
             }
             else
             {
-                MessageBox.Show("No tracked body / wrist available to calibrate.");
+                MessageBox.Show("No tracked Leader body / wrist available to calibrate.");
             }
         }
 

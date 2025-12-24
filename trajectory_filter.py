@@ -33,10 +33,19 @@ SPLINE_SMOOTH = 0.05               # Độ mượt của spline
 MIN_POINTS_REQUIRED = 10
 
 # ========== COLUMNS ==========
-TIME_COL = "timestamp"
-X_COL = "x"
-Y_COL = "z"
-Z_COL = "y"
+TIME_COL = "Timestamp" # Updated to match C# output
+
+# Mapping: Script Axis (X,Y,Z) -> CSV Column
+# Note: Previous script mapped Script Y -> CSV Z, Script Z -> CSV Y. Preserving this swap.
+# Leader
+L_X_COL = "Leader_X"
+L_Y_COL = "Leader_Z" # Swapped
+L_Z_COL = "Leader_Y" # Swapped
+
+# Follower
+F_X_COL = "Follower_X"
+F_Y_COL = "Follower_Z" # Swapped
+F_Z_COL = "Follower_Y" # Swapped
 
 # ========== HELPERS ==========
 def find_latest_csv(folder):
@@ -70,26 +79,28 @@ def detect_outliers_advanced(arr3, max_velocity=MAX_VELOCITY_THRESHOLD, max_acce
     velocities = np.linalg.norm(np.diff(arr3, axis=0), axis=1)
     
     # Adaptive threshold
-    q75 = np.percentile(velocities, 75)
-    adaptive_v_threshold = max(max_velocity, q75 * 1.5)
-    
-    velocity_outliers = velocities > adaptive_v_threshold
-    outlier_mask[:-1] |= velocity_outliers
-    outlier_mask[1:] |= velocity_outliers
+    if len(velocities) > 0:
+        q75 = np.percentile(velocities, 75)
+        adaptive_v_threshold = max(max_velocity, q75 * 1.5)
+        
+        velocity_outliers = velocities > adaptive_v_threshold
+        outlier_mask[:-1] |= velocity_outliers
+        outlier_mask[1:] |= velocity_outliers
     
     if N < 3:
         return outlier_mask
     
     # 3. Acceleration
-    accelerations = np.abs(np.diff(velocities))
-    
-    q75_accel = np.percentile(accelerations, 75)
-    adaptive_a_threshold = max(max_accel, q75_accel * 2.0)
-    
-    accel_outliers = accelerations > adaptive_a_threshold
-    outlier_mask[:-2] |= accel_outliers
-    outlier_mask[1:-1] |= accel_outliers
-    outlier_mask[2:] |= accel_outliers
+    if len(velocities) > 1:
+        accelerations = np.abs(np.diff(velocities))
+        
+        q75_accel = np.percentile(accelerations, 75)
+        adaptive_a_threshold = max(max_accel, q75_accel * 2.0)
+        
+        accel_outliers = accelerations > adaptive_a_threshold
+        outlier_mask[:-2] |= accel_outliers
+        outlier_mask[1:-1] |= accel_outliers
+        outlier_mask[2:] |= accel_outliers
     
     return outlier_mask
 
@@ -174,17 +185,25 @@ def apply_savgol_filter(arr3, window=SAVGOL_WINDOW, polyorder=SAVGOL_POLYORDER):
     
     return filtered
 
-def clean_and_smooth_trajectory(df, cols, time_col=TIME_COL):
+def clean_and_smooth_trajectory(df, cols, label="Trajectory", time_col=TIME_COL):
     """
     Pipeline hoàn chỉnh để làm sạch và làm mượt quỹ đạo
     """
+    print(f"Processing {label}...")
     if not all(c in df.columns for c in cols):
+        print(f"  ERROR: Missing columns: {cols}")
+        print(f"  Available: {df.columns.tolist()}")
         return None, 0
     
     arr = df[list(cols)].to_numpy(dtype=float)
     
+    # Check if mostly zeros (untracked)
+    if np.all(arr == 0):
+        print(f"  WARNING: {label} contains all zeros (likely untracked). Skipping.")
+        # Return zeros
+        return pd.DataFrame(arr, columns=cols), 0
+
     # Sử dụng index số thay vì timestamp string để tránh lỗi interpolation
-    # (np.interp không thể xử lý datetime string)
     time_axis = np.arange(len(arr))
     
     # Phát hiện outliers
@@ -197,9 +216,7 @@ def clean_and_smooth_trajectory(df, cols, time_col=TIME_COL):
     cleaned, outlier_mask = interpolate_outliers(arr, outlier_mask, time_axis)
     final_outlier_count = outlier_mask.sum()
     
-    print(f"    After gap handling: {final_outlier_count} outliers kept ({100*final_outlier_count/len(arr):.1f}%)")
-    print(f"    → Interpolated {initial_outlier_count - final_outlier_count} spike frames")
-    print(f"    → Removed {final_outlier_count} frames from tracking loss segments")
+    print(f"    After gap handling: {final_outlier_count} outliers kept")
     
     # Median filter
     cleaned = apply_median_filter(cleaned, MEDIAN_FILTER_SIZE)
@@ -221,16 +238,17 @@ def calculate_smoothness_metrics(arr3):
     velocities = np.linalg.norm(np.diff(arr3, axis=0), axis=1)
     
     if len(velocities) > 1:
+        # Avoid division by zero warnings if constant
         accelerations = np.diff(velocities)
     else:
         accelerations = np.array([0])
     
     metrics = {
-        'max_velocity': np.max(velocities),
-        'mean_velocity': np.mean(velocities),
-        'std_velocity': np.std(velocities),
-        'max_acceleration': np.max(np.abs(accelerations)),
-        'mean_acceleration': np.mean(np.abs(accelerations)),
+        'max_velocity': np.max(velocities) if len(velocities) > 0 else 0,
+        'mean_velocity': np.mean(velocities) if len(velocities) > 0 else 0,
+        'std_velocity': np.std(velocities) if len(velocities) > 0 else 0,
+        'max_acceleration': np.max(np.abs(accelerations)) if len(accelerations) > 0 else 0,
+        'mean_acceleration': np.mean(np.abs(accelerations)) if len(accelerations) > 0 else 0,
     }
     
     return metrics
@@ -238,35 +256,35 @@ def calculate_smoothness_metrics(arr3):
 def set_axes_equal(ax, z_min_limit=-0.01):
     """
     Đặt tỉ lệ các trục bằng nhau cho biểu đồ 3D
-    Giới hạn dưới của trục z từ z_min_limit trở lên
     """
-    x_limits = ax.get_xlim3d()
-    y_limits = ax.get_ylim3d()
-    z_limits = ax.get_zlim3d()
+    try:
+        x_limits = ax.get_xlim3d()
+        y_limits = ax.get_ylim3d()
+        z_limits = ax.get_zlim3d()
 
-    x_range = abs(x_limits[1] - x_limits[0])
-    x_middle = np.mean(x_limits)
-    y_range = abs(y_limits[1] - y_limits[0])
-    y_middle = np.mean(y_limits)
-    z_range = abs(z_limits[1] - z_limits[0])
-    z_middle = np.mean(z_limits)
+        x_range = abs(x_limits[1] - x_limits[0])
+        x_middle = np.mean(x_limits)
+        y_range = abs(y_limits[1] - y_limits[0])
+        y_middle = np.mean(y_limits)
+        z_range = abs(z_limits[1] - z_limits[0])
+        z_middle = np.mean(z_limits)
 
-    plot_radius = 0.5 * max([x_range, y_range, z_range])
+        plot_radius = 0.5 * max([x_range, y_range, z_range])
+        if plot_radius == 0: plot_radius = 1.0
 
-    ax.set_xlim3d([x_middle - plot_radius, x_middle + plot_radius])
-    ax.set_ylim3d([y_middle - plot_radius, y_middle + plot_radius])
-    
-    # Giới hạn dưới của trục z từ z_min_limit trở lên
-    z_lower = max(z_middle - plot_radius, z_min_limit)
-    ax.set_zlim3d([z_lower, z_middle + plot_radius])
+        ax.set_xlim3d([x_middle - plot_radius, x_middle + plot_radius])
+        ax.set_ylim3d([y_middle - plot_radius, y_middle + plot_radius])
+        
+        z_lower = max(z_middle - plot_radius, z_min_limit)
+        ax.set_zlim3d([z_lower, z_middle + plot_radius])
+    except Exception:
+        pass
 
 # ========== MAIN FUNCTIONS ==========
 
 def visualize_raw_trajectory():
     """
-    Hàm 1: Chỉ vẽ quỹ đạo raw thu được
-    - Vẽ x, y, z theo thời gian (3 subplot riêng biệt)
-    - Vẽ không gian 3D với tỉ lệ đúng
+    Vẽ 2 quỹ đạo Leader và Follower (Raw)
     """
     try:
         csv_path = find_latest_csv(RECORD_DIR)
@@ -275,76 +293,59 @@ def visualize_raw_trajectory():
         return
 
     print("="*60)
-    print("RAW TRAJECTORY VISUALIZATION")
+    print("RAW TRAJECTORY VISUALIZATION (LEADER & FOLLOWER)")
     print("="*60)
     print(f"Latest CSV file: {csv_path}")
     
     df = load_csv(csv_path)
-    print(f"Loaded: {df.shape[0]} rows, {df.shape[1]} columns")
+    print(f"Loaded: {df.shape[0]} rows")
     
-    # Kiểm tra các cột cần thiết
-    cols = [X_COL, Y_COL, Z_COL]
-    if not all(c in df.columns for c in cols):
-        print(f"ERROR: Missing required columns {cols}")
-        print(f"Available columns: {df.columns.tolist()}")
+    # Check columns
+    l_cols = [L_X_COL, L_Y_COL, L_Z_COL]
+    f_cols = [F_X_COL, F_Y_COL, F_Z_COL]
+    
+    has_leader = all(c in df.columns for c in l_cols)
+    has_follower = all(c in df.columns for c in f_cols)
+    
+    if not has_leader and not has_follower:
+        print("ERROR: CSV does not contain expected Leader or Follower columns.")
         return
-    
-    # Time axis
-    if TIME_COL in df.columns:
-        time_vals = df[TIME_COL].values
-    else:
-        time_vals = np.arange(len(df))
-        print("Timestamp not found – using frame index as time.")
-    
-    # Vẽ x, y, z theo thời gian
-    fig, axes = plt.subplots(3, 1, figsize=(14, 8))
-    axis_names = ['X', 'Y', 'Z']
-    
-    for i, (ax, axis_name, col) in enumerate(zip(axes, axis_names, cols)):
-        values = df[col].values
-        ax.plot(time_vals, values, 'b-', linewidth=1.5)
-        ax.set_ylabel(f'{axis_name} (m)', fontsize=11)
-        ax.grid(True, alpha=0.3)
-        ax.set_title(f'{axis_name} Position over Time', fontsize=11, fontweight='bold')
-    
-    axes[-1].set_xlabel('Time', fontsize=11)
-    fig.suptitle('Raw Trajectory - Time Series', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.show()
-    
-    # Vẽ không gian 3D với tỉ lệ đúng
+
+    # 3D plot
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111, projection='3d')
     
-    x_vals = df[X_COL].values
-    y_vals = df[Y_COL].values
-    z_vals = df[Z_COL].values
+    # Draw Leader
+    if has_leader:
+        x = df[L_X_COL].values
+        y = df[L_Y_COL].values
+        z = df[L_Z_COL].values
+        if not np.all(x==0):
+            ax.plot(x, y, z, 'b-', linewidth=2, label='Leader (Raw)')
+            ax.scatter(x[0], y[0], z[0], c='cyan', s=50, marker='o')
     
-    ax.plot(x_vals, y_vals, z_vals, 'b-', linewidth=2, label='Raw Trajectory')
-    ax.scatter(x_vals[0], y_vals[0], z_vals[0], c='green', s=100, marker='o', label='Start')
-    ax.scatter(x_vals[-1], y_vals[-1], z_vals[-1], c='red', s=100, marker='x', label='End')
+    # Draw Follower
+    if has_follower:
+        x = df[F_X_COL].values
+        y = df[F_Y_COL].values
+        z = df[F_Z_COL].values
+        if not np.all(x==0):
+            ax.plot(x, y, z, 'r-', linewidth=2, label='Follower (Raw)')
+            ax.scatter(x[0], y[0], z[0], c='orange', s=50, marker='o')
     
-    ax.set_xlabel('X (m)', fontsize=11)
-    ax.set_ylabel('Y (m)', fontsize=11)
-    ax.set_zlabel('Z (m)', fontsize=11)
-    ax.set_title('Raw Trajectory - 3D Space (Equal Aspect Ratio)', fontsize=12, fontweight='bold')
+    ax.set_xlabel('X (m)')
+    ax.set_ylabel('Y (m) [Was Z]')
+    ax.set_zlabel('Z (m) [Was Y]')
+    ax.set_title('Raw Trajectories - 3D Space')
     ax.legend()
-    
-    # Đặt tỉ lệ các trục bằng nhau
     set_axes_equal(ax)
     
     plt.tight_layout()
     plt.show()
-    
-    print("\n✅ Raw trajectory visualization completed!")
 
 def apply_filter_and_visualize():
     """
-    Hàm 2: Áp dụng filter, xuất file đã filtered, và vẽ trực quan
-    - Áp dụng filter có trong code
-    - Xuất file đã filtered vào đường dẫn đã set
-    - Vẽ trực quan quỹ đạo (x, y, z theo thời gian và không gian 3D)
-    - Không lưu ảnh
+    Áp dụng filter cho cả 2 quỹ đạo và vẽ so sánh
     """
     try:
         csv_path = find_latest_csv(RECORD_DIR)
@@ -353,164 +354,94 @@ def apply_filter_and_visualize():
         return
 
     print("="*60)
-    print("TRAJECTORY FILTER AND VISUALIZATION")
+    print("TRAJECTORY FILTER AND VISUALIZATION (DUAL)")
     print("="*60)
     print(f"Latest CSV file: {csv_path}")
     
     df = load_csv(csv_path)
-    print(f"Loaded: {df.shape[0]} rows, {df.shape[1]} columns")
     
-    # Kiểm tra các cột cần thiết
-    cols = [X_COL, Y_COL, Z_COL]
-    if not all(c in df.columns for c in cols):
-        print(f"ERROR: Missing required columns {cols}")
-        print(f"Available columns: {df.columns.tolist()}")
-        return
+    # Ensure sequential timestamp for continuity
+    df[TIME_COL] = np.arange(len(df))
     
-    # Time axis
-    if TIME_COL not in df.columns:
-        time_vals = np.arange(len(df))
-        df[TIME_COL] = time_vals
-        print("Timestamp not found – using frame index as time.")
+    l_cols = [L_X_COL, L_Y_COL, L_Z_COL]
+    f_cols = [F_X_COL, F_Y_COL, F_Z_COL]
     
-    # Tính metrics trước khi xử lý
-    arr_before = df[cols].to_numpy(dtype=float)
-    metrics_before = calculate_smoothness_metrics(arr_before)
+    # Process Leader
+    l_cleaned, l_outliers = clean_and_smooth_trajectory(df, l_cols, "Leader")
+    # Process Follower
+    f_cleaned, f_outliers = clean_and_smooth_trajectory(df, f_cols, "Follower")
     
-    print(f"\n{'='*60}")
-    print(f"Processing trajectory")
-    print(f"Columns: {cols}")
-    
-    # Clean and smooth
-    cleaned, outlier_count = clean_and_smooth_trajectory(df, cols, TIME_COL)
-    
-    if cleaned is None:
-        print(f"ERROR: Could not process trajectory")
-        return
-    
-    # Tính metrics sau khi xử lý
-    arr_after = cleaned.to_numpy(dtype=float)
-    metrics_after = calculate_smoothness_metrics(arr_after)
-    
-    # So sánh
-    if metrics_before and metrics_after:
-        print(f"\n  Metrics comparison:")
-        print(f"    Max velocity: {metrics_before['max_velocity']:.4f} → {metrics_after['max_velocity']:.4f}")
-        print(f"    Std velocity: {metrics_before['std_velocity']:.4f} → {metrics_after['std_velocity']:.4f}")
-        print(f"    Max acceleration: {metrics_before['max_acceleration']:.4f} → {metrics_after['max_acceleration']:.4f}")
-    
-    # Compose filtered df
+    # Combine results
     df_filtered = df.copy()
-    for col in cleaned.columns:
-        df_filtered[col] = cleaned[col].values
+    if l_cleaned is not None:
+        for col in l_cleaned.columns: df_filtered[col] = l_cleaned[col].values
+    if f_cleaned is not None:
+        for col in f_cleaned.columns: df_filtered[col] = f_cleaned[col].values
+
+    # Normalize Z (height) -> optional? User script did this.
+    # Let's normalize based on min Z of Leader (or absolute 0 if data allows)
+    # User script: df_filtered[Z_COL] = df_filtered[Z_COL] - z_min
+    # We should probably do this per person or keep absolute?
+    # Retaining absolute is safer for interaction analysis. 
+    # But for graph readability, maybe normalize. 
+    # I'll normalize each individually to logical floor if needed, but for now let's just shift so min is 0?
+    # Actually, Kinect coords are relative to camera. Floor is usually around Y = -1.2m (if camera is at 1.2m).
+    # Since we swapped Z->Y (Height), let's just leave it absolute or shift if it's way off.
+    # The previous script did `z - z_min`. I will do that for each person.
     
-    # Chuẩn hóa trục z: trừ cho giá trị nhỏ nhất để chiều cao bắt đầu từ 0
-    z_min = df_filtered[Z_COL].min()
-    df_filtered[Z_COL] = df_filtered[Z_COL] - z_min
-    print(f"\n  Z-axis normalized: min value {z_min:.4f} subtracted, new range: [{df_filtered[Z_COL].min():.4f}, {df_filtered[Z_COL].max():.4f}]")
-    
-    # Thêm cột Timestamp tăng dần từ 0, 1, 2...
-    df_filtered.insert(0, 'Timestamp', range(len(df_filtered)))
-    print(f"  Added sequential Timestamp column (0 to {len(df_filtered)-1})")
-    
+    if l_cleaned is not None and not np.all(df_filtered[L_Z_COL] == 0):
+        z_min = df_filtered[L_Z_COL].min()
+        df_filtered[L_Z_COL] -= z_min
+        print(f"  Leader Z normalized by subtracting {z_min:.3f}")
+        
+    if f_cleaned is not None and not np.all(df_filtered[F_Z_COL] == 0):
+        z_min = df_filtered[F_Z_COL].min()
+        df_filtered[F_Z_COL] -= z_min
+        print(f"  Follower Z normalized by subtracting {z_min:.3f}")
+
     # Save
     base_name = os.path.basename(csv_path)
     safe_base = re.sub(r'[<>:"/\\|?*]', '_', base_name)
-    out_name = f"filtered_{safe_base}"
+    out_name = f"filtered_dual_{safe_base}"
     os.makedirs(SAVE_DIR, exist_ok=True)
     out_path = os.path.join(SAVE_DIR, out_name)
-    
     try:
         df_filtered.to_csv(out_path, index=False)
-        print(f"\n{'='*60}")
-        print(f"Filtered file saved to: {out_path}")
-        print("="*60)
-    except PermissionError:
-        print("\n❌ PermissionError: Cannot write file.")
-        print("Please close all apps reading/writing the file and try again.")
-        return
-    
-    # Visualization - Before vs After comparison
-    time_vals = df[TIME_COL].values
-    
-    # Vẽ so sánh x, y, z theo thời gian
-    fig, axes = plt.subplots(3, 1, figsize=(14, 8))
-    axis_names = ['X', 'Y', 'Z']
-    
-    for i, (ax, axis_name, col) in enumerate(zip(axes, axis_names, cols)):
-        before = df[col].values
-        after = df_filtered[col].values
-        
-        ax.plot(time_vals, before, 'r-', alpha=0.5, linewidth=1, label='Before (Raw)')
-        ax.plot(time_vals, after, 'b-', linewidth=2, label='After (Filtered)')
-        ax.set_ylabel(f'{axis_name} (m)', fontsize=11)
-        ax.legend(loc='upper right')
-        ax.grid(True, alpha=0.3)
-        ax.set_title(f'{axis_name} Position - Before vs After', fontsize=11, fontweight='bold')
-    
-    axes[-1].set_xlabel('Time', fontsize=11)
-    fig.suptitle('Trajectory Filtering - Time Series Comparison', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.show()
-    
-    # 3D plot comparison với tỉ lệ đúng
-    fig = plt.figure(figsize=(16, 7))
-    
-    # Before
-    ax1 = fig.add_subplot(121, projection='3d')
-    ax1.set_title("Before Filtering (Raw Data)", fontsize=12, fontweight='bold')
-    
-    x_before = df[X_COL].values
-    y_before = df[Y_COL].values
-    z_before = df[Z_COL].values
-    
-    ax1.plot(x_before, y_before, z_before, 'r-', linewidth=1.5, alpha=0.6, label='Raw')
-    ax1.scatter(x_before[0], y_before[0], z_before[0], c='green', s=100, marker='o', label='Start')
-    ax1.scatter(x_before[-1], y_before[-1], z_before[-1], c='red', s=100, marker='x', label='End')
-    
-    ax1.set_xlabel("X (m)", fontsize=10)
-    ax1.set_ylabel("Y (m)", fontsize=10)
-    ax1.set_zlabel("Z (m)", fontsize=10)
-    ax1.legend()
-    set_axes_equal(ax1)
-    
-    # After
-    ax2 = fig.add_subplot(122, projection='3d')
-    ax2.set_title("After Filtering (Smoothed)", fontsize=12, fontweight='bold')
-    
-    x_after = df_filtered[X_COL].values
-    y_after = df_filtered[Y_COL].values
-    z_after = df_filtered[Z_COL].values
-    
-    ax2.plot(x_after, y_after, z_after, 'b-', linewidth=2, label='Filtered')
-    ax2.scatter(x_after[0], y_after[0], z_after[0], c='green', s=100, marker='o', label='Start')
-    ax2.scatter(x_after[-1], y_after[-1], z_after[-1], c='red', s=100, marker='x', label='End')
-    
-    ax2.set_xlabel("X (m)", fontsize=10)
-    ax2.set_ylabel("Y (m)", fontsize=10)
-    ax2.set_zlabel("Z (m)", fontsize=10)
-    ax2.legend()
-    set_axes_equal(ax2)
-    
-    plt.tight_layout()
-    plt.show()
-    
-    print("\n✅ Processing completed successfully!")
+        print(f"Saved: {out_path}")
+    except:
+        pass
 
-# ========== MAIN ==========
+    # 3D Comparison Plot (Filtered)
+    fig = plt.figure(figsize=(12, 10))
+    ax = fig.add_subplot(111, projection='3d')
+    
+    # Plot Leader
+    if l_cleaned is not None and not np.all(df_filtered[L_X_COL]==0):
+        ax.plot(df_filtered[L_X_COL], df_filtered[L_Y_COL], df_filtered[L_Z_COL], 'b-', linewidth=2, label='Leader (Filtered)')
+        # Start/End
+        ax.scatter(df_filtered[L_X_COL].iloc[0], df_filtered[L_Y_COL].iloc[0], df_filtered[L_Z_COL].iloc[0], c='cyan', s=60)
+        ax.scatter(df_filtered[L_X_COL].iloc[-1], df_filtered[L_Y_COL].iloc[-1], df_filtered[L_Z_COL].iloc[-1], c='blue', marker='x', s=60)
+
+    # Plot Follower
+    if f_cleaned is not None and not np.all(df_filtered[F_X_COL]==0):
+        ax.plot(df_filtered[F_X_COL], df_filtered[F_Y_COL], df_filtered[F_Z_COL], 'r-', linewidth=2, label='Follower (Filtered)')
+        # Start/End
+        ax.scatter(df_filtered[F_X_COL].iloc[0], df_filtered[F_Y_COL].iloc[0], df_filtered[F_Z_COL].iloc[0], c='orange', s=60)
+        ax.scatter(df_filtered[F_X_COL].iloc[-1], df_filtered[F_Y_COL].iloc[-1], df_filtered[F_Z_COL].iloc[-1], c='red', marker='x', s=60)
+
+    ax.set_title(f"Filtered Trajectories\nLeader (Blue) vs Follower (Red)", fontsize=14)
+    ax.set_xlabel("X (m)")
+    ax.set_ylabel("Y (m) [Depth]")
+    ax.set_zlabel("Z (m) [Height]")
+    ax.legend()
+    set_axes_equal(ax)
+    
+    plt.tight_layout()
+    plt.show()
+
 def main():
-    """
-    Hàm main - Chọn một trong hai hàm để chạy:
-    1. visualize_raw_trajectory() - Chỉ vẽ quỹ đạo raw
-    2. apply_filter_and_visualize() - Áp dụng filter và vẽ so sánh
-    """
-    
-    # Chọn hàm muốn chạy (comment/uncomment dòng tương ứng)
-    
-    # Hàm 1: Chỉ vẽ quỹ đạo raw
-    # visualize_raw_trajectory()
-    
-    # Hàm 2: Áp dụng filter và vẽ so sánh
+    # apply_filter_and_visualize()
+    visualize_raw_trajectory()
     apply_filter_and_visualize()
 
 if __name__ == "__main__":
