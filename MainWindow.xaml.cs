@@ -374,6 +374,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }));
         }
 
+
+
         private void UiTimer_Tick(object sender, EventArgs e)
         {
             if (this.recorder == null) return;
@@ -812,14 +814,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 {
                     this.currentScenarioId = dialog.ScenarioId;
                     
-                    // Get mode and targets from scenario ID
-                    string modeName = GetModeName(this.currentScenarioId);
-                    var (initialTarget, finalTarget) = GetTargetsFromScenario(this.currentScenarioId);
-                    
                     // Update the saved file with scenario metadata
+                    // Per user request, we ONLY update the ScenarioID column, no other columns added.
                     if (!string.IsNullOrEmpty(this.recorder.CurrentFilePath))
                     {
-                        UpdateCsvWithScenarioInfo(this.recorder.CurrentFilePath, this.currentScenarioId, modeName, initialTarget, finalTarget);
+                        UpdateCsvWithScenarioInfo(this.recorder.CurrentFilePath, this.currentScenarioId);
                         this.txtSavePath.Text = $"Save path: {this.recorder.CurrentFilePath} (Scenario {this.currentScenarioId})";
                     }
                 }
@@ -835,7 +834,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
-        private void UpdateCsvWithScenarioInfo(string filePath, int scenarioId, string mode, int initialTarget, int finalTarget)
+        private void UpdateCsvWithScenarioInfo(string filePath, int scenarioId)
         {
             try
             {
@@ -843,22 +842,31 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 var lines = System.IO.File.ReadAllLines(filePath);
                 if (lines.Length == 0) return;
 
-                // Update header if needed
-                if (lines[0].Contains("Mode") && lines[0].Contains("TargetId"))
+                var newLines = new List<string>();
+
+                // Process Header (keep as is)
+                newLines.Add(lines[0]);
+
+                // Process Data
+                for (int i = 1; i < lines.Length; i++)
                 {
-                    // Old format - replace with new format
-                    lines[0] = "Timestamp,X,Y,Z,Joint,ScenarioId";
+                    var line = lines[i];
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+                    
+                    var cols = new List<string>(line.Split(','));
+                    
+                    // Update ScenarioId (Index 7: Timestamp, LX, LY, LZ, FX, FY, FZ, ScenarioId)
+                    // Based on TrajectoryRecord.cs, ScenarioId is the 8th column (index 7).
+                    if (cols.Count >= 8)
+                    {
+                        cols[7] = scenarioId.ToString();
+                    }
+
+                    newLines.Add(string.Join(",", cols));
                 }
 
-                // Write back with scenario info in a comment line
-                using (var writer = new System.IO.StreamWriter(filePath, false))
-                {
-                    writer.WriteLine($"# Scenario {scenarioId}: Mode={mode}, InitialTarget={initialTarget}, FinalTarget={finalTarget}");
-                    foreach (var line in lines)
-                    {
-                        writer.WriteLine(line);
-                    }
-                }
+                // Write back
+                System.IO.File.WriteAllLines(filePath, newLines);
             }
             catch (Exception ex)
             {
