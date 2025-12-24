@@ -782,14 +782,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 {
                     this.currentScenarioId = dialog.ScenarioId;
                     
-                    // Get mode and targets from scenario ID
-                    string modeName = GetModeName(this.currentScenarioId);
-                    var (initialTarget, finalTarget) = GetTargetsFromScenario(this.currentScenarioId);
-                    
                     // Update the saved file with scenario metadata
                     if (!string.IsNullOrEmpty(this.recorder.CurrentFilePath))
                     {
-                        UpdateCsvWithScenarioInfo(this.recorder.CurrentFilePath, this.currentScenarioId, modeName, initialTarget, finalTarget);
+                        UpdateCsvWithScenarioInfo(this.recorder.CurrentFilePath, this.currentScenarioId);
                         this.txtSavePath.Text = $"Save path: {this.recorder.CurrentFilePath} (Scenario {this.currentScenarioId})";
                     }
                 }
@@ -805,7 +801,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
-        private void UpdateCsvWithScenarioInfo(string filePath, int scenarioId, string mode, int initialTarget, int finalTarget)
+        private void UpdateCsvWithScenarioInfo(string filePath, int scenarioId)
         {
             try
             {
@@ -813,20 +809,64 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 var lines = System.IO.File.ReadAllLines(filePath);
                 if (lines.Length == 0) return;
 
-                // Update header if needed
-                if (lines[0].Contains("Mode") && lines[0].Contains("TargetId"))
+                // Basic header check
+                string header = lines[0];
+                var headers = header.Split(',');
+                
+                // Find ScenarioId index
+                int scenarioIndex = -1;
+                for (int i = 0; i < headers.Length; i++)
                 {
-                    // Old format - replace with new format
-                    lines[0] = "Timestamp,X,Y,Z,Joint,ScenarioId";
+                    if (headers[i].Trim().Equals("ScenarioId", StringComparison.OrdinalIgnoreCase))
+                    {
+                        scenarioIndex = i;
+                        break;
+                    }
                 }
 
-                // Write back with scenario info in a comment line
+                // If ScenarioId column not found, we might want to append it? 
+                // But TrajectoryRecorder creates it, so it should be there.
+                // If not found, we can append it to header and rows?
+                // For now, assume it is present as per TrajectoryRecorder implementation.
+
                 using (var writer = new System.IO.StreamWriter(filePath, false))
                 {
-                    writer.WriteLine($"# Scenario {scenarioId}: Mode={mode}, InitialTarget={initialTarget}, FinalTarget={finalTarget}");
-                    foreach (var line in lines)
+                    // Write header
+                    if (scenarioIndex == -1) 
                     {
-                        writer.WriteLine(line);
+                        // Add ScenarioId if missing
+                        writer.WriteLine(header + ",ScenarioId");
+                    }
+                    else
+                    {
+                        writer.WriteLine(header);
+                    }
+
+                    // Process data rows
+                    for (int i = 1; i < lines.Length; i++)
+                    {
+                        var line = lines[i];
+                        if (string.IsNullOrWhiteSpace(line)) continue;
+
+                        if (scenarioIndex != -1)
+                        {
+                            var parts = line.Split(',');
+                            if (scenarioIndex < parts.Length)
+                            {
+                                parts[scenarioIndex] = scenarioId.ToString();
+                                writer.WriteLine(string.Join(",", parts));
+                            }
+                            else
+                            {
+                                // Row shorter than header? Just write it.
+                                writer.WriteLine(line);
+                            }
+                        }
+                        else
+                        {
+                            // Append scenario ID
+                            writer.WriteLine(line + "," + scenarioId);
+                        }
                     }
                 }
             }
