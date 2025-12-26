@@ -57,9 +57,9 @@ WORKSPACE_HEIGHT = 1.5
 
 # Target positions (x, y, z) in meters
 TARGET_POSITIONS = {
-    3: (0.3, 1.0, 0.0),
+    1: (0.3, 1.0, 0.0),
     2: (0.0, 1.4, 0.0),
-    1: (-0.3, 1.2, 0.0)
+    3: (-0.3, 1.2, 0.0)
 }
 
 # Obstacle properties
@@ -109,7 +109,7 @@ class ExperimentManager:
     def __init__(self):
         self.current_pair_id = 1
         self.random_mode_enabled = True  # Random mode toggle
-        self.random_scenario_enabled = False  # Random scenario within mode
+        self.random_scenario_enabled = True  # Random scenario within mode
         self.state = ExperimentState.IDLE
         self.t_change = 3.0  # Default change time in seconds
         
@@ -372,7 +372,7 @@ class WorkspaceCanvas(tk.Canvas):
     def draw_start_zone(self):
         """Draw the start position zone"""
         cx, cy = self.world_to_canvas(START_POSITION[0], START_POSITION[1])
-        size = 50
+        size = 90
         
         # Determine color based on state
         if self.experiment_manager.state == ExperimentState.RUNNING:
@@ -398,7 +398,7 @@ class WorkspaceCanvas(tk.Canvas):
         
         # Label
         self.create_text(cx, cy, text="START", fill="white", 
-                        font=("Arial", 12, "bold"), tags="start")
+                        font=("Arial", 25, "bold"), tags="start")
     
     def draw_targets(self):
         """Draw all target zones"""
@@ -408,7 +408,7 @@ class WorkspaceCanvas(tk.Canvas):
     def draw_target(self, target_id: int, position: Tuple[float, float, float]):
         """Draw a single target zone"""
         cx, cy = self.world_to_canvas(position[0], position[1])
-        size = 50
+        size = 90
         
         # Determine if this target is active
         is_active = self.is_target_active(target_id)
@@ -443,7 +443,7 @@ class WorkspaceCanvas(tk.Canvas):
         # Label
         text_color = "white" if is_active else "#999999"
         self.create_text(cx, cy, text=f"T{target_id}", 
-                        fill=text_color, font=("Arial", 14, "bold"),
+                        fill=text_color, font=("Arial", 80, "bold"),
                         tags=f"target_{target_id}")
     
     def draw_obstacle(self):
@@ -547,7 +547,7 @@ class ControlPanel(ttk.Frame):
         
         # Random scenario toggle (only for random mode)
         ttk.Label(self, text="Random Scenarios:").grid(row=3, column=0, sticky="w", pady=5)
-        self.random_scenario_var = tk.BooleanVar(value=False)
+        self.random_scenario_var = tk.BooleanVar(value=True)
         self.random_scenario_check = ttk.Checkbutton(
             self, variable=self.random_scenario_var,
             command=self.on_random_scenario_toggle
@@ -826,45 +826,56 @@ class HRIExperimentGUI(tk.Tk):
     def __init__(self):
         super().__init__()
         
-        self.title("HRI Co-Manipulation Experiment")
-        self.geometry("1350x700")  # Wider for horizontal layout
+        # Configure Main Window (Control Panel)
+        self.title("HRI Experiment - Control Panel")
+        self.geometry("450x750")  # Size for control panel
         self.configure(bg="#f0f0f0")
         
         # Initialize experiment manager
         self.experiment_manager = ExperimentManager()
         
-        # Create main layout
-        self.create_layout()
+        # Create the separate display window first (so canvas exists)
+        self.create_display_window()
+        
+        # Create control panel in the main window
+        self.create_control_panel()
         
         # Start update loop
         self.update_experiment()
+        
+        # Bind close event to ensure everything closes
+        self.protocol("WM_DELETE_WINDOW", self.on_close)
     
-    def create_layout(self):
-        """Create the main application layout"""
-        # Main container
-        main_frame = ttk.Frame(self)
-        main_frame.pack(fill="both", expand=True, padx=10, pady=10)
+    def create_display_window(self):
+        """Create the secondary window for the participant display"""
+        self.display_window = tk.Toplevel(self)
+        self.display_window.title("HRI Experiment - Participant Display")
+        self.display_window.geometry("1000x800")
+        self.display_window.configure(bg="#000000")
         
-        # Left side: Canvas
-        canvas_frame = ttk.LabelFrame(main_frame, text="Workspace (Top-Down View)", 
-                                     padding=10)
-        canvas_frame.grid(row=0, column=0, sticky="nsew", padx=(0, 10))
-        
-        self.canvas = WorkspaceCanvas(canvas_frame, self.experiment_manager)
+        # Create canvas frame to help with layout/padding if needed
+        # But putting it directly in window is fine for maximizing space
+        self.canvas = WorkspaceCanvas(self.display_window, self.experiment_manager)
         self.canvas.pack(fill="both", expand=True)
+
+        # Optional: Bind key to toggle fullscreen on display window
+        self.display_window.bind("<F11>", self.toggle_fullscreen)
+        self.display_window.bind("<Escape>", self.exit_fullscreen)
         
-        # Right side: Control panel
+    def create_control_panel(self):
+        """Create the control panel interface in the main window"""
+        # Main container with padding
+        main_frame = ttk.Frame(self, padding=10)
+        main_frame.pack(fill="both", expand=True)
+        
+        # Container for the control panel class
+        # We can put it in a LabelFrame or just directly
         control_frame = ttk.LabelFrame(main_frame, text="Controls", padding=10)
-        control_frame.grid(row=0, column=1, sticky="nsew")
+        control_frame.pack(fill="both", expand=True)
         
         self.control_panel = ControlPanel(control_frame, self.experiment_manager, 
                                          self.canvas)
         self.control_panel.pack(fill="both", expand=True)
-        
-        # Configure grid weights
-        main_frame.columnconfigure(0, weight=1)
-        main_frame.columnconfigure(1, weight=0)
-        main_frame.rowconfigure(0, weight=1)
     
     def update_experiment(self):
         """Update loop for experiment state"""
@@ -880,6 +891,19 @@ class HRIExperimentGUI(tk.Tk):
         
         # Schedule next update
         self.after(100, self.update_experiment)
+
+    def on_close(self):
+        """Handle application closure"""
+        self.destroy() # This will close the main window and the Toplevel child
+
+    def toggle_fullscreen(self, event=None):
+        """Toggle fullscreen mode for display window"""
+        state = self.display_window.attributes("-fullscreen")
+        self.display_window.attributes("-fullscreen", not state)
+
+    def exit_fullscreen(self, event=None):
+        """Exit fullscreen mode"""
+        self.display_window.attributes("-fullscreen", False)
 
 
 # ============================================================================
