@@ -111,7 +111,7 @@ class ExperimentManager:
         self.random_mode_enabled = True  # Random mode toggle
         self.random_scenario_enabled = True  # Random scenario within mode
         self.state = ExperimentState.IDLE
-        self.t_change = 3.0  # Default change time in seconds
+        self.t_change = 5.5  # Default change time in seconds
         
         self.scenario_queue: List[Scenario] = []
         self.current_scenario: Optional[Scenario] = None
