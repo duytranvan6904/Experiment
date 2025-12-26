@@ -16,9 +16,8 @@ except Exception:
 
 # ========== PARAMETERS ==========
 # Lấy đường dẫn thư mục hiện tại (nơi file Python đang chạy)
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-RECORD_DIR = os.path.join(SCRIPT_DIR, "Trajectories")
-SAVE_DIR   = os.path.join(SCRIPT_DIR, "Trajectories", "filtered")
+RECORD_DIR = os.path.join("E:\\Downloads\\BodyBasics-WPF\\Experiment\\bin\\AnyCPU\\Debug\\Trajectories")
+SAVE_DIR   = os.path.join("E:\\Downloads\\BodyBasics-WPF\\Experiment\\bin\\AnyCPU\\Debug\\Trajectories\\filtered")
 
 # Ngưỡng phát hiện outliers
 MAX_VELOCITY_THRESHOLD = 0.2      # 0.2m giữa 2 điểm liên tiếp
@@ -33,10 +32,10 @@ SPLINE_SMOOTH = 0.05               # Độ mượt của spline
 MIN_POINTS_REQUIRED = 10
 
 # ========== COLUMNS ==========
-TIME_COL = "timestamp"
-X_COL = "x"
-Y_COL = "z"
-Z_COL = "y"
+TIME_COL = "Timestamp"
+X_COL = "X"
+Y_COL = "Z"
+Z_COL = "Y"
 
 # ========== HELPERS ==========
 def find_latest_csv(folder):
@@ -257,7 +256,9 @@ def set_axes_equal(ax, z_min_limit=-0.01):
     ax.set_ylim3d([y_middle - plot_radius, y_middle + plot_radius])
     
     # Giới hạn dưới của trục z từ z_min_limit trở lên
-    z_lower = max(z_middle - plot_radius, z_min_limit)
+    z_lower = z_middle - plot_radius
+    if z_min_limit is not None:
+        z_lower = max(z_lower, z_min_limit)
     ax.set_zlim3d([z_lower, z_middle + plot_radius])
 
 # ========== MAIN FUNCTIONS ==========
@@ -331,7 +332,7 @@ def visualize_raw_trajectory():
     ax.legend()
     
     # Đặt tỉ lệ các trục bằng nhau
-    set_axes_equal(ax)
+    set_axes_equal(ax, z_min_limit=None)
     
     plt.tight_layout()
     plt.show()
@@ -410,6 +411,8 @@ def apply_filter_and_visualize():
     print(f"\n  Z-axis normalized: min value {z_min:.4f} subtracted, new range: [{df_filtered[Z_COL].min():.4f}, {df_filtered[Z_COL].max():.4f}]")
     
     # Thêm cột Timestamp tăng dần từ 0, 1, 2...
+    if 'Timestamp' in df_filtered.columns:
+        df_filtered = df_filtered.drop(columns=['Timestamp'])
     df_filtered.insert(0, 'Timestamp', range(len(df_filtered)))
     print(f"  Added sequential Timestamp column (0 to {len(df_filtered)-1})")
     
@@ -472,7 +475,7 @@ def apply_filter_and_visualize():
     ax1.set_ylabel("Y (m)", fontsize=10)
     ax1.set_zlabel("Z (m)", fontsize=10)
     ax1.legend()
-    set_axes_equal(ax1)
+    set_axes_equal(ax1, z_min_limit=None)
     
     # After
     ax2 = fig.add_subplot(122, projection='3d')
