@@ -16,8 +16,8 @@ except Exception:
 
 # ========== PARAMETERS ==========
 # Lấy đường dẫn thư mục hiện tại (nơi file Python đang chạy)
-RECORD_DIR = os.path.join("E:\\Downloads\\BodyBasics-WPF\\Experiment\\bin\\AnyCPU\\Debug\\Trajectories")
-SAVE_DIR   = os.path.join("E:\\Downloads\\BodyBasics-WPF\\Experiment\\bin\\AnyCPU\\Debug\\Trajectories\\filtered")
+RECORD_DIR = os.path.join("E:\\Downloads\\BodyBasics-WPF\\Experiment\\bin\\AnyCPU\\Debug\\Trajectories\\Nam_Bình_raw")
+SAVE_DIR   = os.path.join("E:\\Downloads\\BodyBasics-WPF\\Experiment\\bin\\AnyCPU\\Debug\\Trajectories\\Nam_Bình_raw\\raw")
 
 # Ngưỡng phát hiện outliers
 MAX_VELOCITY_THRESHOLD = 0.2      # 0.2m giữa 2 điểm liên tiếp
@@ -25,7 +25,7 @@ MAX_ACCELERATION_THRESHOLD = 0.05  # Ngưỡng gia tốc bất thường
 
 # Tham số làm mượt
 MEDIAN_FILTER_SIZE = 7             # Bộ lọc trung vị để loại bỏ nhiễu spike
-SAVGOL_WINDOW = 15                  # Savitzky-Golay window (phải là số lẻ)
+SAVGOL_WINDOW = 7                  # Savitzky-Golay window (phải là số lẻ)
 SAVGOL_POLYORDER = 3               # Bậc đa thức
 SPLINE_SMOOTH = 0.05               # Độ mượt của spline
 
@@ -34,8 +34,8 @@ MIN_POINTS_REQUIRED = 10
 # ========== COLUMNS ==========
 TIME_COL = "Timestamp"
 X_COL = "X"
-Y_COL = "Z"
-Z_COL = "Y"
+Y_COL = "Y"
+Z_COL = "Z"
 
 # ========== HELPERS ==========
 def find_latest_csv(folder):
@@ -233,6 +233,125 @@ def calculate_smoothness_metrics(arr3):
     }
     
     return metrics
+
+def swap_yz(df):
+    """
+    Swap Y and Z columns.
+    Assumes df has columns 'Y' and 'Z'.
+    """
+    if 'Y' in df.columns and 'Z' in df.columns:
+        # Create temporary copy to avoid overwrite issues
+        temp = df['Y'].copy()
+        df['Y'] = df['Z']
+        df['Z'] = temp
+        return df
+    return df
+
+def normalize_y_start(df, y_col='Y'):
+    """
+    Subtract the integer part of the minimum value in the Y column from all Y points.
+    """
+    if y_col in df.columns and not df.empty:
+        min_val = df[y_col].min()
+        offset = min_val
+        df[y_col] = df[y_col] - offset
+    return df
+
+def normalize_start_end(df, z_col='Z', n_start=8, n_end=8, threshold=0.05):
+    """
+    Smoothly ramp the start and end of the trajectory to 0 if they are above threshold.
+    n_start: number of points at the start to ramp up.
+    n_end: number of points at the end to ramp down.
+    threshold: only apply if the value at start/end > threshold (meters).
+    """
+    if z_col not in df.columns or len(df) < (n_start + n_end):
+        return df
+    
+    # --- Start Normalization ---
+    # Check if the n_start-th point (which we ramp TO) is above threshold
+    # Or check the 0-th point? "points which over 5cm" -> implies checking the actual data
+    # Logic: Ramp from 0 to df[n_start-1] linearly
+    
+    # Check first few points just to see if we satisfy condition (start is 'lifted')
+    # Use the value at n_start index as the target "stable" point?
+    # Actually, we want to replace indices 0..n_start-1
+    # We interpolate from 0.0 at index 0 to df[n_start] at index n_start.
+    
+    # Only apply if the start area is significantly high? 
+    # User said: "khoảng 5-10 điểm đầu tiên đó tăng dần dần lên"
+    # User also said: "only with first/last n point which over 5cm"
+    
+    # Let's check the value at index 0. If it's > threshold (0.05), we apply ramp?
+    # Or if ANY of the first n points > threshold?
+    # Simplest valid interpretation: If start point > threshold, force a ramp from 0.
+    
+    start_val = df[z_col].iloc[0]
+    if start_val > threshold:
+        # Ramp from 0 to value at n_start
+        # target value at n_start frame is df[z_col].iloc[n_start]
+        # We replace 0 to n_start-1
+        target_val = df[z_col].iloc[n_start]
+        ramp = np.linspace(0.0, target_val, n_start + 1)
+        # remove last point of ramp because it overlaps with n_start index which we keep?
+        # typically linspace(0, V, N) includes V. 
+        # df.iloc[0:n_start] has n_start points.
+        # we want ramp to be n_start points long?
+        # Let's do linspace(0, target, n_start+1) -> indices 0..n_start
+        # We assign ramp[:-1] to indices 0..n_start-1
+        
+        df.loc[0:n_start-1, z_col] = ramp[:-1]
+
+    # --- End Normalization ---
+    end_val = df[z_col].iloc[-1]
+    last_idx = len(df) - 1
+    # Check if end point > threshold
+    if end_val > threshold:
+        # Target value at (len - 1 - n_end)
+        start_ramp_idx = last_idx - n_end
+        target_val = df[z_col].iloc[start_ramp_idx]
+        
+        # Ramp from target_val down to 0
+        ramp = np.linspace(target_val, 0.0, n_end + 1)
+        # ramp includes start and end. 
+        # We assign ramp[1:] to indices (start_ramp_idx+1)..last_idx
+        # This covers n_end points.
+        
+        df.loc[start_ramp_idx+1:last_idx, z_col] = ramp[1:]
+        
+    return df
+
+def ensure_obstacle_clearance(df, z_col='Z', min_height=0.35):
+    """
+    Ensure the trajectory clears the obstacle height (min_height).
+    If peak height < min_height, add a Gaussian offset to lift it.
+    """
+    if z_col not in df.columns or len(df) == 0:
+        return df
+        
+    z_values = df[z_col].values
+    peak_idx = np.argmax(z_values)
+    peak_val = z_values[peak_idx]
+    
+    if peak_val < min_height:
+        diff = min_height - peak_val
+        
+        # Gaussian width (sigma)
+        # Heuristic: 1/6 of trajectory length? or fixed frame count?
+        # User mentioned "time around step 43". 
+        # Typically trajectory is maybe 80-100 frames?
+        # Lets try sigma = 15 frames
+        sigma = 15
+        
+        N = len(df)
+        x = np.arange(N)
+        gaussian = diff * np.exp(-0.5 * ((x - peak_idx) / sigma) ** 2)
+        
+        # Apply offset
+        df[z_col] = df[z_col] + gaussian
+        
+        # print(f"    -> Lifted peak at frame {peak_idx} from {peak_val:.3f} to {min_height}")
+        
+    return df
 
 def set_axes_equal(ax, z_min_limit=-0.01):
     """
@@ -511,10 +630,10 @@ def main():
     # Chọn hàm muốn chạy (comment/uncomment dòng tương ứng)
     
     # Hàm 1: Chỉ vẽ quỹ đạo raw
-    # visualize_raw_trajectory()
+    visualize_raw_trajectory()
     
     # Hàm 2: Áp dụng filter và vẽ so sánh
-    apply_filter_and_visualize()
+    # apply_filter_and_visualize()
 
 if __name__ == "__main__":
     main()

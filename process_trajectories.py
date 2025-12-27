@@ -51,17 +51,12 @@ def check_scenario_coverage(folder_path):
             # Đọc file CSV để lấy ScenarioId (chỉ cần đọc vài dòng đầu)
             df = pd.read_csv(file_path, nrows=5)
             if 'ScenarioId' in df.columns:
-                # Lấy ScenarioId từ dòng đầu tiên (giả sử cả file cùng 1 scenario)
-                scenario_id = int(df['ScenarioId'].iloc[0])
-                
-                if scenario_id in scenario_map:
-                    scenario_map[scenario_id].append(os.path.basename(file_path))
-                else:
-                    # Nếu ScenarioId nằm ngoài range 1-18 hoặc chưa được init
-                    if scenario_id not in scenario_map:
-                        scenario_map[scenario_id] = []
-                    scenario_map[scenario_id].append(os.path.basename(file_path))
+                # Lấy ScenarioId từ dòng đầu tiên
+                scenario_id = int(df['ScenarioId'].iloc[2])
             else:
+                # If missing column, try to infer from filename or skip
+                # For now, default to 0 (no special handling)
+                scenario_id = 0
                 print(f"⚠️  Warning: File '{os.path.basename(file_path)}' missing 'ScenarioId' column.")
         except Exception as e:
             print(f"❌ Error reading '{os.path.basename(file_path)}': {e}")
@@ -146,19 +141,63 @@ def apply_filter_to_all(input_dir, output_dir):
             for col in cleaned_df.columns:
                 result_df[col] = cleaned_df[col].values
 
-            # CHUẨN HÓA TRỤC Z (như trong trajectory_filter.py)
-            # Z thực tế đang nằm ở cột tf.Z_COL (tức là cột 'Y' nếu tf swap, hoặc 'Z')
-            # trajectory_filter.py line 38: Z_COL = "Y".
-            # CSV có X, Y, Z.
-            # Nếu code cũ quy định Z_COL là chiều cao, thì ta chuẩn hóa cột đó.
-            # Lưu ý trong trajectory_filter.py:
-            # line 409: z_min = df_filtered[Z_COL].min()
-            # line 410: df_filtered[Z_COL] = ... - z_min
+            # 1. SWAP Y/Z Columns
+            df = tf.swap_yz(df)
             
-            z_col_name = tf.Z_COL 
-            if z_col_name in result_df.columns:
-                z_min = result_df[z_col_name].min()
-                result_df[z_col_name] = result_df[z_col_name] - z_min
+            # 2. Normalize Y Start (Subtract int part of start)
+            df = tf.normalize_y_start(df, y_col='Y')
+
+            # 3. Clean and Smooth (Pipeline cũ)
+            # Note: clean_and_smooth_trajectory handles basic smoothing. 
+            # We pass current df. 
+            # Note: tf.Z_COL is "Y" in the file?? No, let's look at trajectory_filter.py imports.
+            # In trajectory_filter.py:
+            # TIME_COL = "Timestamp", X_COL = "X", Y_COL = "Z", Z_COL = "Y"
+            # Wait, the trajectory_filter constants might be confusing now that we swapped Y and Z.
+            # If we swapped, then df['Z'] IS height (assuming user meant Z is height).
+            # "y cordinate and z cordinate were exchanged" -> Originally Z was height (Kinect)? 
+            # Usually Kinect Y is Height. User said "exchanged... so you should exchange them".
+            # If we swap, "Height" should end up in Z column? 
+            # User said: "Height axis: After swapping, 'Z' will be treated as the Height axis."
+            
+            # So after swap, Z is height.
+            # But trajectory_filter.py has: Y_COL = "Z", Z_COL = "Y".
+            # We should probably pass explicit column names to clean_and_smooth if needed, or rely on it using x,y,z names.
+            # clean_and_smooth uses: cols = [X_COL, Y_COL, Z_COL]
+            # If we swapped in df, and passed df to clean_and_smooth, it will use cols.
+            # If cols are "X", "Z", "Y" (from constants), it just extracts those columns.
+            # Since we have "X","Y","Z" columns in df, order in list doesn't matter much for extraction.
+            
+            cleaned_df, outlier_count = tf.clean_and_smooth_trajectory(df, cols_to_process, tf.TIME_COL)
+            
+            if cleaned_df is None:
+                print(f"❌ Failed to process {filename}")
+                fail_count += 1
+                continue
+
+            # Update result_df with smoothed values
+            result_df = df.copy()
+            for col in cleaned_df.columns:
+                result_df[col] = cleaned_df[col].values
+            
+            # 4. Normalize Z Min (Global Shift)
+            # Ensure the lowest point is at 0 (ground level) to correct for sensor noise/offset
+            z_min = result_df['Z'].min()
+            result_df['Z'] = result_df['Z'] - z_min
+
+            # 5. Normalize Start/End (Smoothing) - on Z axis (Height)
+            # User: "8 points", "if > 5cm".
+            result_df = tf.normalize_start_end(result_df, z_col='Z', n_start=8, n_end=8, threshold=0.05)
+            
+            # 6. Obstacle Clearance
+            # Scenarios: 4-6, 13-18
+            obstacle_scenarios = [4, 5, 6, 13, 14, 15, 16, 17, 18]
+            
+            # Extract ScenarioId again from result_df (it should still be there)
+            if 'ScenarioId' in result_df.columns:
+                 sc_id = int(result_df['ScenarioId'].iloc[0])
+                 if sc_id in obstacle_scenarios:
+                     result_df = tf.ensure_obstacle_clearance(result_df, z_col='Z', min_height=0.35)
             
             # Thêm cột Sequential Timestamp
             if 'Timestamp' in result_df.columns:
