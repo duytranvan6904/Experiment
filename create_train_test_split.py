@@ -37,7 +37,7 @@ def create_train_test_split():
     print(f"\nScenarios with >= 2 trajectories: {len(valid_scenarios)}")
     
     required_scenarios = 18
-    trajs_per_scenario = 2
+    trajs_per_scenario = 3
     
     if len(valid_scenarios) < required_scenarios:
         print(f"WARNING: Found only {len(valid_scenarios)} valid scenarios. "
@@ -55,7 +55,7 @@ def create_train_test_split():
     for sc_id in selected_scenarios:
         # Get all trajectories for this scenario
         trajs_in_scenario = traj_metadata[traj_metadata['ScenarioId'] == sc_id]['TrajectoryId'].values
-        # Randomly sample 2
+        # Randomly sample 3
         selected = np.random.choice(trajs_in_scenario, trajs_per_scenario, replace=False)
         test_traj_ids.extend(selected)
         
