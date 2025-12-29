@@ -141,6 +141,16 @@ def apply_filter_to_all(input_dir, output_dir):
             for col in cleaned_df.columns:
                 result_df[col] = cleaned_df[col].values
 
+            # 0. Truncate Data (Keep only up to timestamp 190)
+            # Assuming 'Timestamp' column exists usually (from raw info)
+            # Check if 'Timestamp' exists, else rely on index?
+            # Raw files usually have 'Timestamp' 0, 1, 2...
+            if 'Timestamp' in df.columns:
+                 df = tf.truncate_by_timestamp(df, max_ts=190)
+            else:
+                 # If no timestamp, maybe just take first 191 rows?
+                 df = df.iloc[:191]
+
             # 1. SWAP Y/Z Columns
             df = tf.swap_yz(df)
             
