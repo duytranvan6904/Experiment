@@ -1,0 +1,10 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages"
+    ]
+}
