@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // <copyright file="MainWindow.xaml.cs" company="Microsoft">
 //     Copyright (c) Microsoft Corporation.  All rights reserved.
 // </copyright>
@@ -19,6 +19,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using System.Timers;
     using System.Windows.Threading;
     using System.Numerics;
+    using System.Net.Sockets;
+    using System.Text;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -166,6 +168,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         // Add UI timer for countdown
         private DispatcherTimer uiTimer;
+
+        // ROS TCP Connection
+        private TcpClient rosClient;
+        private StreamWriter rosWriter;
 
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
@@ -459,6 +465,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// <param name="e">event arguments</param>
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
+            if (this.rosClient != null) { this.rosClient.Close(); }
+
             if (this.bodyFrameReader != null)
             {
                 // BodyFrameReader is IDisposable
@@ -764,6 +772,19 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 {
                     this.txtXYZCam1.Text = string.Format(CultureInfo.InvariantCulture, "Cam1: X: {0:F3}, Y: {1:F3}, Z: {2:F3}", update.Position.X, update.Position.Y, update.Position.Z);
                 }));
+
+                // TCP send to ROS
+                if (this.rosWriter != null)
+                {
+                    try
+                    {
+                        string json = string.Format(CultureInfo.InvariantCulture,
+                            "{{\"x\": {0:F6}, \"y\": {1:F6}, \"z\": {2:F6}, \"ts\": \"{3:O}\", \"id\": {4}, \"tracked\": true, \"confidence\": 1.0}}",
+                            update.Position.X, update.Position.Y, update.Position.Z, update.Timestamp, update.TrackingId);
+                        this.rosWriter.WriteLine(json);
+                    }
+                    catch { }
+                }
             }
         }
 
@@ -879,6 +900,24 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to start recorder: " + ex.Message);
+            }
+        }
+
+        private void BtnConnectRos_Click(object sender, RoutedEventArgs e)
+        {
+            string ip = this.txtRosIp.Text.Trim();
+            try
+            {
+                if (this.rosClient != null) { this.rosClient.Close(); this.rosClient = null; }
+                this.rosClient = new TcpClient();
+                this.rosClient.Connect(ip, 9090);
+                this.rosWriter = new StreamWriter(this.rosClient.GetStream(), new UTF8Encoding(false));
+                this.rosWriter.AutoFlush = true;
+                MessageBox.Show("Connected to ROS Server at " + ip + ":9090");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("ROS Connection Error: " + ex.Message);
             }
         }
 
