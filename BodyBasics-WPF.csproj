@@ -78,6 +78,10 @@
     </ApplicationDefinition>
     <Compile Include="DualCameraCalibrationManager.cs" />
     <Compile Include="KinectSensorWrapper.cs" />
+    <Compile Include="PredictionManager.cs" />
+    <Compile Include="TrajectoryPlot.xaml.cs">
+      <DependentUpon>TrajectoryPlot.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TrajectoryRecorder.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -93,6 +97,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="TrajectoryPlot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

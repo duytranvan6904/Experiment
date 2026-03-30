@@ -13,6 +13,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using System.Globalization;
     using System.IO;
     using System.Windows;
+    using System.Windows.Controls;               // <-- ADD: allows RadioButton, TextBox, TextBlock types
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Microsoft.Kinect;
@@ -638,10 +639,20 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         Point pt = new Point(dsp.X, dsp.Y);
 
                         // Draw a blue circle for prediction
-                        drawingContext.DrawEllipse(new SolidColorBrush(Color.FromArgb(180, 0, 188, 242)), null, pt, 20, 20);
-                        // Draw a small label
-                        FormattedText text = new FormattedText("PRED", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Segoe UI"), 14, Brushes.White);
-                        drawingContext.DrawText(text, new Point(pt.X + 15, pt.Y - 15));
+                        dc.DrawEllipse(new SolidColorBrush(Color.FromArgb(180, 0, 188, 242)), null, pt, 20, 20);
+
+                        // Create FormattedText using PixelsPerDip (non-obsolete)
+                        double pixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
+                        FormattedText text = new FormattedText(
+                            "PRED",
+                            CultureInfo.CurrentCulture,
+                            FlowDirection.LeftToRight,
+                            new Typeface("Segoe UI"),
+                            14,
+                            Brushes.White,
+                            pixelsPerDip);
+
+                        dc.DrawText(text, new Point(pt.X + 15, pt.Y - 15));
                     }
 
                     // prevent drawing outside of our render area

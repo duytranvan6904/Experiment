@@ -94,6 +94,32 @@
           </StackPanel>
         </ScrollViewer>
       </Border>
+
+      <!-- New Controls for Extended Functionality -->
+      <StackPanel Grid.Column="2" Margin="10,0,0,0" VerticalAlignment="Top">
+        <TextBlock FontSize="16" FontWeight="Bold" Margin="0,0,0,8" Foreground="#cdd6f4">Extended Controls</TextBlock>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+          <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Max Frames:</TextBlock>
+          <TextBox Name="txtMaxFrames" Width="60" Text="0" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+          <TextBlock VerticalAlignment="Center" Margin="0,0,6,0">Max Time:</TextBlock>
+          <TextBox Name="txtMaxTime" Width="60" Text="0" />
+        </StackPanel>
+
+        <TextBlock Name="txtCountdown" Text="Countdown: -" Margin="0,0,0,8" FontWeight="Bold" Foreground="#f5e0dc"/>
+
+        <GroupBox Header="Camera Status" Foreground="#cdd6f4" Margin="0,0,0,10">
+          <StackPanel Margin="5">
+            <TextBlock Name="txtXYZCam1" Text="Cam1: X:-,Y:-,Z:-" />
+            <TextBlock Name="txtXYZCam2" Text="Cam2: X:-,Y:-,Z:-" />
+            <TextBlock Name="lblCam1Status" Text="Cam1 calibrated: -" />
+            <TextBlock Name="lblCam2Status" Text="Cam2 calibrated: -" />
+          </StackPanel>
+        </GroupBox>
+      </StackPanel>
     </Grid>
       
     <StatusBar Grid.Row="2" HorizontalAlignment="Stretch" Name="statusBar" VerticalAlignment="Bottom" Background="White" Foreground="{StaticResource MediumGreyBrush}">

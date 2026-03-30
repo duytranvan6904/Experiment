@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Kinect;
+using Newtonsoft.Json;
 
 namespace Microsoft.Samples.Kinect.BodyBasics
 {
@@ -75,7 +75,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     window_size = WindowSize
                 };
 
-                pythonStdin.WriteLine(JsonSerializer.Serialize(config));
+                pythonStdin.WriteLine(JsonConvert.SerializeObject(config));
                 pythonStdin.Flush();
 
                 // Start reader task
@@ -96,7 +96,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     string line = await pythonStdout.ReadLineAsync();
                     if (string.IsNullOrEmpty(line)) break;
 
-                    var result = JsonSerializer.Deserialize<PredictionResult>(line);
+                    var result = JsonConvert.DeserializeObject<PredictionResult>(line);
                     if (result.type == "ready")
                     {
                         IsReady = result.success;
@@ -106,13 +106,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     {
                         if (result.prediction != null && posOffset != null)
                         {
-                            // Post-process: inverse offset and swap back
-                            // Received from worker: [x_centered, y_centered, z_centered] (swapped space)
-                            // We need to return to original space:
-                            // x_raw = x_centered - offset_x
-                            // y_raw = z_centered - offset_z (swap back)
-                            // z_raw = y_centered - offset_y (swap back)
-                            
                             float predX = (float)result.prediction[0] - posOffset[0];
                             float predY_centered = (float)result.prediction[1];
                             float predZ_centered = (float)result.prediction[2];
@@ -137,12 +130,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         public void AddDataPoint(CameraSpacePoint point)
         {
-            // 1. Swap Y and Z to match offline training frame
             float swX = point.X;
             float swY = point.Z;
             float swZ = point.Y;
 
-            // 2. Auto-centering offset
             if (posOffset == null)
             {
                 posOffset = new float[] {
@@ -158,14 +149,12 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 swZ + posOffset[2]
             };
 
-            // 3. Update buffer
             if (windowBuffer.Count >= WindowSize)
             {
                 windowBuffer.Dequeue();
             }
             windowBuffer.Enqueue(swappedCentered);
 
-            // 4. Send for prediction if worker ready
             if (IsReady && windowBuffer.Count == WindowSize)
             {
                 var cmd = new
@@ -173,7 +162,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     cmd = "predict",
                     data = windowBuffer.ToArray()
                 };
-                pythonStdin.WriteLine(JsonSerializer.Serialize(cmd));
+                pythonStdin.WriteLine(JsonConvert.SerializeObject(cmd));
                 pythonStdin.Flush();
             }
         }
@@ -183,7 +172,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             if (pythonStdin != null && !string.IsNullOrEmpty(modelName))
             {
                 var cmd = new { cmd = "load_model", model_name = modelName };
-                pythonStdin.WriteLine(JsonSerializer.Serialize(cmd));
+                pythonStdin.WriteLine(JsonConvert.SerializeObject(cmd));
                 pythonStdin.Flush();
                 ActiveModel = modelName;
             }
@@ -201,7 +190,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             {
                 try
                 {
-                    pythonStdin.WriteLine(JsonSerializer.Serialize(new { cmd = "shutdown" }));
+                    pythonStdin.WriteLine(JsonConvert.SerializeObject(new { cmd = "shutdown" }));
                     pythonStdin.Flush();
                     pythonProcess.WaitForExit(1000);
                 }
