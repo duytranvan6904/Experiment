@@ -162,6 +162,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private CameraSpacePoint lastRightHand;
         private ulong? lastTrackingId;
 
+        // Prediction subsystem
+        private PredictionManager predictionManager;
+        private PredictionResult lastPrediction;
+
         // experiment params
         private int currentMode = 1; // 1..4
         private int currentTargetId = 1;
@@ -324,6 +328,69 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.lblKinect.Text = this.kinectSensor.IsAvailable ? "Kinect: Connected" : "Kinect: Not available";
             this.lblBody.Text = "Body: Not tracked";
             this.lblRecording.Text = "Recording: Inactive";
+
+            // Initialize prediction manager (Python sidecar)
+            string pythonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".venv", "Scripts", "python.exe");
+            if (!File.Exists(pythonPath)) pythonPath = "python"; // Fallback to system python
+            
+            string workerScript = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hrc_ws", "src", "trajectory_predictor", "trajectory_predictor", "inference_worker.py");
+            string modelDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "hrc_ws", "src", "trajectory_predictor", "models");
+
+            this.predictionManager = new PredictionManager(pythonPath, workerScript, modelDir);
+            this.predictionManager.PredictionReceived += (res) =>
+            {
+                this.lastPrediction = res;
+                
+                // Update UI Labels (marshal to UI thread if needed)
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    this.lblActiveModel.Text = $"Model: {res.model_name.ToUpper()}";
+                    this.lblInferenceTime.Text = $"Inference: {res.inference_ms:F1}ms";
+                    this.lblBufferStatus.Text = $"Buffer: {this.predictionManager.BufferCount}/20";
+                    
+                    // Update Plots with predicted values
+                    this.plotX.AddPoints(res.FinalX, res.FinalX); // Simplified for now, or use actual measured
+                    this.plotY.AddPoints(res.FinalY, res.FinalY);
+                    this.plotZ.AddPoints(res.FinalZ, res.FinalZ);
+                }));
+
+                // Send prediction to ROS via TCP
+                if (this.rosWriter != null)
+                {
+                    try
+                    {
+                        string json = string.Format(CultureInfo.InvariantCulture,
+                            "{{\"x\": {0:F6}, \"y\": {1:F6}, \"z\": {2:F6}, \"inference_ms\": {3:F2}, \"model_name\": \"{4}\", \"confidence\": {5:F2}}}",
+                            res.FinalX, res.FinalY, res.FinalZ, res.inference_ms, res.model_name, 1.0);
+                        this.rosWriter.WriteLine(json);
+                    }
+                    catch { }
+                }
+            };
+        }
+
+        private void Model_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.predictionManager == null) return;
+            var rb = sender as RadioButton;
+            if (rb == null || !rb.IsChecked.Value) return;
+
+            string modelName = "gru";
+            if (rb == rbRnn) modelName = "rnn";
+            else if (rb == rbLstm) modelName = "lstm";
+
+            this.predictionManager.LoadModel(modelName);
+            this.plotX.Clear();
+            this.plotY.Clear();
+            this.plotZ.Clear();
+        }
+
+        private void BtnResetPlots_Click(object sender, RoutedEventArgs e)
+        {
+            this.plotX.Clear();
+            this.plotY.Clear();
+            this.plotZ.Clear();
+            this.predictionManager?.Reset();
         }
 
         // Add handler for recorder stopped event
@@ -481,6 +548,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.recorder?.Dispose();
                 this.recorderCam2?.Dispose();
                 this.kinectManager?.Dispose();
+                this.predictionManager?.Dispose();
                 try { this.cam1Wrapper?.Dispose(); } catch { }
                 try { this.cam2Wrapper?.Dispose(); } catch { }
             }
@@ -559,6 +627,21 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                             this.DrawHand(body.HandLeftState, jointPoints[JointType.HandLeft], dc);
                             this.DrawHand(body.HandRightState, jointPoints[JointType.HandRight], dc);
                         }
+                    }
+
+                    // --- NEW: Draw Prediction ---
+                    if (this.lastPrediction != null)
+                    {
+                        CameraSpacePoint p = new CameraSpacePoint { X = lastPrediction.FinalX, Y = lastPrediction.FinalY, Z = lastPrediction.FinalZ };
+                        if (p.Z < 0.1f) p.Z = 0.1f;
+                        DepthSpacePoint dsp = this.coordinateMapper.MapCameraPointToDepthSpace(p);
+                        Point pt = new Point(dsp.X, dsp.Y);
+
+                        // Draw a blue circle for prediction
+                        drawingContext.DrawEllipse(new SolidColorBrush(Color.FromArgb(180, 0, 188, 242)), null, pt, 20, 20);
+                        // Draw a small label
+                        FormattedText text = new FormattedText("PRED", CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Segoe UI"), 14, Brushes.White);
+                        drawingContext.DrawText(text, new Point(pt.X + 15, pt.Y - 15));
                     }
 
                     // prevent drawing outside of our render area
@@ -773,18 +856,17 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     this.txtXYZCam1.Text = string.Format(CultureInfo.InvariantCulture, "Cam1: X: {0:F3}, Y: {1:F3}, Z: {2:F3}", update.Position.X, update.Position.Y, update.Position.Z);
                 }));
 
-                // TCP send to ROS
-                if (this.rosWriter != null)
+                // Feed to local PredictionManager
+                this.predictionManager?.AddDataPoint(update.Position);
+
+                // Update plots with MEASURED data even if no prediction yet
+                this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    try
-                    {
-                        string json = string.Format(CultureInfo.InvariantCulture,
-                            "{{\"x\": {0:F6}, \"y\": {1:F6}, \"z\": {2:F6}, \"ts\": \"{3:O}\", \"id\": {4}, \"tracked\": true, \"confidence\": 1.0}}",
-                            update.Position.X, update.Position.Y, update.Position.Z, update.Timestamp, update.TrackingId);
-                        this.rosWriter.WriteLine(json);
-                    }
-                    catch { }
-                }
+                    this.plotX.AddPoints(update.Position.X, null);
+                    this.plotY.AddPoints(update.Position.Y, null);
+                    this.plotZ.AddPoints(update.Position.Z, null);
+                    this.lblBufferStatus.Text = $"Buffer: {this.predictionManager.BufferCount}/20";
+                }));
             }
         }
 
@@ -913,10 +995,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.rosClient.Connect(ip, 9090);
                 this.rosWriter = new StreamWriter(this.rosClient.GetStream(), new UTF8Encoding(false));
                 this.rosWriter.AutoFlush = true;
+                this.lblBridgeStatus.Text = "Bridge: Connected";
+                this.lblBridgeStatus.Foreground = new SolidColorBrush(Color.FromRgb(166, 227, 161));
                 MessageBox.Show("Connected to ROS Server at " + ip + ":9090");
             }
             catch (Exception ex)
             {
+                this.lblBridgeStatus.Text = "Bridge: Error";
+                this.lblBridgeStatus.Foreground = new SolidColorBrush(Color.FromRgb(243, 139, 168));
                 MessageBox.Show("ROS Connection Error: " + ex.Message);
             }
         }

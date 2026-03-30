@@ -14,11 +14,11 @@ import time
 
 import rclpy
 from rclpy.node import Node
-from human_hand_msgs.msg import HandState, SystemStatus
+from human_hand_msgs.msg import HandPrediction, SystemStatus
 
 
 class KinectBridgeNode(Node):
-    """Receives TCP data from Windows Kinect C# app, publishes HandState."""
+    """Receives TCP data from Windows Kinect C# app, publishes HandPrediction."""
 
     def __init__(self):
         super().__init__('kinect_bridge')
@@ -35,7 +35,8 @@ class KinectBridgeNode(Node):
         self.source_name = self.get_parameter('source_name').value
 
         # Publishers
-        self.hand_pub = self.create_publisher(HandState, '/hand_position', 10)
+        # CHANGED: Publish directly to /predicted_position with HandPrediction message
+        self.pred_pub = self.create_publisher(HandPrediction, '/predicted_position', 10)
         self.status_pub = self.create_publisher(SystemStatus, '/system_status', 10)
 
         # Status tracking
@@ -122,25 +123,24 @@ class KinectBridgeNode(Node):
             pass
 
     def _process_json(self, json_str: str):
-        """Parse JSON and publish HandState message."""
+        """Parse JSON and publish HandPrediction message."""
         try:
             data = json.loads(json_str)
         except json.JSONDecodeError as e:
             self.get_logger().warn(f'Invalid JSON: {e}')
             return
 
-        msg = HandState()
+        msg = HandPrediction()
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = 'kinect_world'
         msg.x = float(data.get('x', 0.0))
         msg.y = float(data.get('y', 0.0))
         msg.z = float(data.get('z', 0.0))
-        msg.tracking_id = int(data.get('id', 0))
-        msg.is_tracked = data.get('tracked', True)
-        msg.confidence = float(data.get('confidence', 1.0))
-        msg.source = self.source_name
+        msg.inference_time_ms = float(data.get('inference_ms', 0.0))
+        msg.model_name = data.get('model_name', 'unknown')
+        msg.prediction_confidence = float(data.get('confidence', 1.0))
 
-        self.hand_pub.publish(msg)
+        self.pred_pub.publish(msg)
 
         # Update stats
         self.last_receive_time = time.time()
