@@ -1,0 +1,18 @@
+running develop
+running egg_info
+writing kinect_bridge.egg-info/PKG-INFO
+writing dependency_links to kinect_bridge.egg-info/dependency_links.txt
+writing entry points to kinect_bridge.egg-info/entry_points.txt
+writing requirements to kinect_bridge.egg-info/requires.txt
+writing top-level names to kinect_bridge.egg-info/top_level.txt
+reading manifest file 'kinect_bridge.egg-info/SOURCES.txt'
+writing manifest file 'kinect_bridge.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect-bridge.egg-link (link to .)
+Installing bridge_node script to /home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/kinect_bridge
+
+Installed /home/duy/Experiment/hrc_ws/build/kinect_bridge
+running symlink_data
+symbolically linking /home/duy/Experiment/hrc_ws/build/kinect_bridge/resource/kinect_bridge -> /home/duy/Experiment/hrc_ws/install/kinect_bridge/share/ament_index/resource_index/packages
+symbolically linking /home/duy/Experiment/hrc_ws/build/kinect_bridge/package.xml -> /home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge
+symbolically linking /home/duy/Experiment/hrc_ws/build/kinect_bridge/config/bridge_params.yaml -> /home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/config

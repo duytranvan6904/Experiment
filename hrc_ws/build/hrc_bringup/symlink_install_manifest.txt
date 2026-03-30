@@ -1,0 +1,17 @@
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/launch/full_pipeline.launch.py
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/config/all_params.yaml
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/ament_index/resource_index/package_run_dependencies/hrc_bringup
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/ament_index/resource_index/parent_prefix_path/hrc_bringup
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/environment/ament_prefix_path.sh
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/environment/ament_prefix_path.dsv
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/environment/path.sh
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/environment/path.dsv
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/local_setup.bash
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/local_setup.sh
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/local_setup.zsh
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/local_setup.dsv
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/package.dsv
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/ament_index/resource_index/packages/hrc_bringup
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/cmake/hrc_bringupConfig.cmake
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/cmake/hrc_bringupConfig-version.cmake
+/home/duy/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/package.xml

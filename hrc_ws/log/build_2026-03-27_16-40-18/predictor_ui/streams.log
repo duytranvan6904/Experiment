@@ -1,0 +1,24 @@
+[1.121s] Invoking command in '/home/duy/Experiment/hrc_ws/src/predictor_ui': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:/home/duy/Experiment/hrc_ws/install/hrc_bringup:/home/duy/kinectv2/install/libfreenect2:/home/duy/kinectv2/install/kinect2_bridge:/home/duy/kinectv2/install/kinect2_registration PYTHONPATH=/home/duy/Experiment/hrc_ws/build/predictor_ui/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/home/duy/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/predictor_ui build --build-base /home/duy/Experiment/hrc_ws/build/predictor_ui/build install --record /home/duy/Experiment/hrc_ws/build/predictor_ui/install.log --single-version-externally-managed install_data
+[1.338s] running egg_info
+[1.338s] writing ../../build/predictor_ui/predictor_ui.egg-info/PKG-INFO
+[1.338s] writing dependency_links to ../../build/predictor_ui/predictor_ui.egg-info/dependency_links.txt
+[1.339s] writing entry points to ../../build/predictor_ui/predictor_ui.egg-info/entry_points.txt
+[1.339s] writing requirements to ../../build/predictor_ui/predictor_ui.egg-info/requires.txt
+[1.339s] writing top-level names to ../../build/predictor_ui/predictor_ui.egg-info/top_level.txt
+[1.340s] reading manifest file '../../build/predictor_ui/predictor_ui.egg-info/SOURCES.txt'
+[1.341s] writing manifest file '../../build/predictor_ui/predictor_ui.egg-info/SOURCES.txt'
+[1.341s] running build
+[1.341s] running build_py
+[1.341s] copying predictor_ui/ui_node.py -> /home/duy/Experiment/hrc_ws/build/predictor_ui/build/lib/predictor_ui
+[1.341s] running install
+[1.341s] running install_lib
+[1.342s] copying /home/duy/Experiment/hrc_ws/build/predictor_ui/build/lib/predictor_ui/ui_node.py -> /home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui
+[1.343s] byte-compiling /home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui/ui_node.py to ui_node.cpython-310.pyc
+[1.345s] running install_data
+[1.345s] running install_egg_info
+[1.347s] removing '/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui-0.1.0-py3.10.egg-info' (and everything under it)
+[1.347s] Copying ../../build/predictor_ui/predictor_ui.egg-info to /home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui-0.1.0-py3.10.egg-info
+[1.347s] running install_scripts
+[1.365s] Installing ui_node script to /home/duy/Experiment/hrc_ws/install/predictor_ui/lib/predictor_ui
+[1.366s] writing list of installed files to '/home/duy/Experiment/hrc_ws/build/predictor_ui/install.log'
+[1.419s] Invoked command in '/home/duy/Experiment/hrc_ws/src/predictor_ui' returned '0': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:/home/duy/Experiment/hrc_ws/install/hrc_bringup:/home/duy/kinectv2/install/libfreenect2:/home/duy/kinectv2/install/kinect2_bridge:/home/duy/kinectv2/install/kinect2_registration PYTHONPATH=/home/duy/Experiment/hrc_ws/build/predictor_ui/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/home/duy/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/predictor_ui build --build-base /home/duy/Experiment/hrc_ws/build/predictor_ui/build install --record /home/duy/Experiment/hrc_ws/build/predictor_ui/install.log --single-version-externally-managed install_data

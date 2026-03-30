@@ -1,0 +1,240 @@
+[0.109s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install', '--packages-select', 'trajectory_predictor', 'kinect_bridge']
+[0.109s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=True, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=16, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=['trajectory_predictor', 'kinect_bridge'], packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x77e655f62800>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x77e656057c10>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x77e656057c10>>)
+[0.292s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.292s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.292s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.292s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.292s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.292s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.293s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/duy/Experiment/hrc_ws'
+[0.293s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.293s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.293s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.293s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.293s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.293s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.293s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.294s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.294s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.313s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.314s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src/experiment_logger) by extensions ['ignore', 'ignore_ament_install']
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src/experiment_logger) by extension 'ignore'
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src/experiment_logger) by extension 'ignore_ament_install'
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src/experiment_logger) by extensions ['colcon_pkg']
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src/experiment_logger) by extension 'colcon_pkg'
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src/experiment_logger) by extensions ['colcon_meta']
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src/experiment_logger) by extension 'colcon_meta'
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src/experiment_logger) by extensions ['ros']
+[0.315s] Level 1:colcon.colcon_core.package_identification:_identify(src/experiment_logger) by extension 'ros'
+[0.319s] DEBUG:colcon.colcon_core.package_identification:Package 'src/experiment_logger' with type 'ros.ament_python' and name 'experiment_logger'
+[0.319s] Level 1:colcon.colcon_core.package_identification:_identify(src/hrc_bringup) by extensions ['ignore', 'ignore_ament_install']
+[0.320s] Level 1:colcon.colcon_core.package_identification:_identify(src/hrc_bringup) by extension 'ignore'
+[0.320s] Level 1:colcon.colcon_core.package_identification:_identify(src/hrc_bringup) by extension 'ignore_ament_install'
+[0.320s] Level 1:colcon.colcon_core.package_identification:_identify(src/hrc_bringup) by extensions ['colcon_pkg']
+[0.320s] Level 1:colcon.colcon_core.package_identification:_identify(src/hrc_bringup) by extension 'colcon_pkg'
+[0.320s] Level 1:colcon.colcon_core.package_identification:_identify(src/hrc_bringup) by extensions ['colcon_meta']
+[0.320s] Level 1:colcon.colcon_core.package_identification:_identify(src/hrc_bringup) by extension 'colcon_meta'
+[0.320s] Level 1:colcon.colcon_core.package_identification:_identify(src/hrc_bringup) by extensions ['ros']
+[0.320s] Level 1:colcon.colcon_core.package_identification:_identify(src/hrc_bringup) by extension 'ros'
+[0.321s] DEBUG:colcon.colcon_core.package_identification:Package 'src/hrc_bringup' with type 'ros.ament_cmake' and name 'hrc_bringup'
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(src/human_hand_msgs) by extensions ['ignore', 'ignore_ament_install']
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(src/human_hand_msgs) by extension 'ignore'
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(src/human_hand_msgs) by extension 'ignore_ament_install'
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(src/human_hand_msgs) by extensions ['colcon_pkg']
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(src/human_hand_msgs) by extension 'colcon_pkg'
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(src/human_hand_msgs) by extensions ['colcon_meta']
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(src/human_hand_msgs) by extension 'colcon_meta'
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(src/human_hand_msgs) by extensions ['ros']
+[0.321s] Level 1:colcon.colcon_core.package_identification:_identify(src/human_hand_msgs) by extension 'ros'
+[0.333s] DEBUG:colcon.colcon_core.package_identification:Package 'src/human_hand_msgs' with type 'ros.catkin' and name 'human_hand_msgs'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/kinect_bridge) by extensions ['ignore', 'ignore_ament_install']
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/kinect_bridge) by extension 'ignore'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/kinect_bridge) by extension 'ignore_ament_install'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/kinect_bridge) by extensions ['colcon_pkg']
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/kinect_bridge) by extension 'colcon_pkg'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/kinect_bridge) by extensions ['colcon_meta']
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/kinect_bridge) by extension 'colcon_meta'
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/kinect_bridge) by extensions ['ros']
+[0.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/kinect_bridge) by extension 'ros'
+[0.335s] DEBUG:colcon.colcon_core.package_identification:Package 'src/kinect_bridge' with type 'ros.ament_python' and name 'kinect_bridge'
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/predictor_ui) by extensions ['ignore', 'ignore_ament_install']
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/predictor_ui) by extension 'ignore'
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/predictor_ui) by extension 'ignore_ament_install'
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/predictor_ui) by extensions ['colcon_pkg']
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/predictor_ui) by extension 'colcon_pkg'
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/predictor_ui) by extensions ['colcon_meta']
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/predictor_ui) by extension 'colcon_meta'
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/predictor_ui) by extensions ['ros']
+[0.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/predictor_ui) by extension 'ros'
+[0.336s] DEBUG:colcon.colcon_core.package_identification:Package 'src/predictor_ui' with type 'ros.ament_python' and name 'predictor_ui'
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(src/trajectory_predictor) by extensions ['ignore', 'ignore_ament_install']
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(src/trajectory_predictor) by extension 'ignore'
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(src/trajectory_predictor) by extension 'ignore_ament_install'
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(src/trajectory_predictor) by extensions ['colcon_pkg']
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(src/trajectory_predictor) by extension 'colcon_pkg'
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(src/trajectory_predictor) by extensions ['colcon_meta']
+[0.336s] Level 1:colcon.colcon_core.package_identification:_identify(src/trajectory_predictor) by extension 'colcon_meta'
+[0.337s] Level 1:colcon.colcon_core.package_identification:_identify(src/trajectory_predictor) by extensions ['ros']
+[0.337s] Level 1:colcon.colcon_core.package_identification:_identify(src/trajectory_predictor) by extension 'ros'
+[0.337s] DEBUG:colcon.colcon_core.package_identification:Package 'src/trajectory_predictor' with type 'ros.ament_python' and name 'trajectory_predictor'
+[0.337s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.337s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.337s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.337s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.337s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.363s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'human_hand_msgs' in 'src/human_hand_msgs'
+[0.363s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'experiment_logger' in 'src/experiment_logger'
+[0.363s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'predictor_ui' in 'src/predictor_ui'
+[0.363s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'hrc_bringup' in 'src/hrc_bringup'
+[0.363s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.364s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.365s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 6 installed packages in /home/duy/Experiment/hrc_ws/install
+[0.366s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 3 installed packages in /home/duy/kinectv2/install
+[0.367s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 358 installed packages in /opt/ros/humble
+[0.369s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.413s] WARNING:colcon.colcon_core.package_selection:Some selected packages are already built in one or more underlay workspaces:
+	'trajectory_predictor' is in: /home/duy/Experiment/hrc_ws/install/trajectory_predictor
+	'kinect_bridge' is in: /home/duy/Experiment/hrc_ws/install/kinect_bridge
+If a package in a merged underlay workspace is overridden and it installs headers, then all packages in the overlay must sort their include directories by workspace order. Failure to do so may result in build failures or undefined behavior at run time.
+If the overridden package is used by another package in any underlay, then the overriding package in the overlay must be API and ABI compatible or undefined behavior at run time may occur.
+
+If you understand the risks and want to override a package anyways, add the following to the command line:
+	--allow-overriding kinect_bridge trajectory_predictor
+
+This may be promoted to an error in a future release of colcon-override-check.
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'kinect_bridge' build argument 'cmake_args' from command line to 'None'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'kinect_bridge' build argument 'cmake_target' from command line to 'None'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'kinect_bridge' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'kinect_bridge' build argument 'cmake_clean_cache' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'kinect_bridge' build argument 'cmake_clean_first' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'kinect_bridge' build argument 'cmake_force_configure' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'kinect_bridge' build argument 'ament_cmake_args' from command line to 'None'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'kinect_bridge' build argument 'catkin_cmake_args' from command line to 'None'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'kinect_bridge' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.414s] DEBUG:colcon.colcon_core.verb:Building package 'kinect_bridge' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/duy/Experiment/hrc_ws/build/kinect_bridge', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/duy/Experiment/hrc_ws/install/kinect_bridge', 'merge_install': False, 'path': '/home/duy/Experiment/hrc_ws/src/kinect_bridge', 'symlink_install': True, 'test_result_base': None}
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'trajectory_predictor' build argument 'cmake_args' from command line to 'None'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'trajectory_predictor' build argument 'cmake_target' from command line to 'None'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'trajectory_predictor' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'trajectory_predictor' build argument 'cmake_clean_cache' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'trajectory_predictor' build argument 'cmake_clean_first' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'trajectory_predictor' build argument 'cmake_force_configure' from command line to 'False'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'trajectory_predictor' build argument 'ament_cmake_args' from command line to 'None'
+[0.414s] Level 5:colcon.colcon_core.verb:set package 'trajectory_predictor' build argument 'catkin_cmake_args' from command line to 'None'
+[0.415s] Level 5:colcon.colcon_core.verb:set package 'trajectory_predictor' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.415s] DEBUG:colcon.colcon_core.verb:Building package 'trajectory_predictor' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/duy/Experiment/hrc_ws/build/trajectory_predictor', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/duy/Experiment/hrc_ws/install/trajectory_predictor', 'merge_install': False, 'path': '/home/duy/Experiment/hrc_ws/src/trajectory_predictor', 'symlink_install': True, 'test_result_base': None}
+[0.415s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.416s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.416s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/duy/Experiment/hrc_ws/src/kinect_bridge' with build type 'ament_python'
+[0.416s] Level 1:colcon.colcon_core.shell:create_environment_hook('kinect_bridge', 'ament_prefix_path')
+[0.419s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.419s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/hook/ament_prefix_path.ps1'
+[0.420s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/hook/ament_prefix_path.dsv'
+[0.420s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/hook/ament_prefix_path.sh'
+[0.421s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.421s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.425s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/duy/Experiment/hrc_ws/src/trajectory_predictor' with build type 'ament_python'
+[0.426s] Level 1:colcon.colcon_core.shell:create_environment_hook('trajectory_predictor', 'ament_prefix_path')
+[0.426s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/hook/ament_prefix_path.ps1'
+[0.426s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/hook/ament_prefix_path.dsv'
+[0.427s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/hook/ament_prefix_path.sh'
+[0.427s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.427s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.752s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/duy/Experiment/hrc_ws/src/kinect_bridge'
+[0.753s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.753s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.142s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/duy/Experiment/hrc_ws/src/trajectory_predictor'
+[1.143s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.143s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.745s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/duy/Experiment/hrc_ws/build/kinect_bridge': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:/home/duy/Experiment/hrc_ws/install/hrc_bringup:/home/duy/kinectv2/install/libfreenect2:/home/duy/kinectv2/install/kinect2_bridge:/home/duy/kinectv2/install/kinect2_registration PYTHONPATH=/home/duy/Experiment/hrc_ws/build/kinect_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/home/duy/Experiment/hrc_ws/build/trajectory_predictor:/home/duy/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/predictor_ui:/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/kinect_bridge:/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/experiment_logger:/home/duy/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/duy/Experiment/hrc_ws/build/kinect_bridge/build --no-deps symlink_data
+[1.779s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/duy/Experiment/hrc_ws/build/trajectory_predictor': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:/home/duy/Experiment/hrc_ws/install/hrc_bringup:/home/duy/kinectv2/install/libfreenect2:/home/duy/kinectv2/install/kinect2_bridge:/home/duy/kinectv2/install/kinect2_registration PYTHONPATH=/home/duy/Experiment/hrc_ws/build/trajectory_predictor/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/home/duy/Experiment/hrc_ws/build/trajectory_predictor:/home/duy/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/predictor_ui:/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/kinect_bridge:/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/experiment_logger:/home/duy/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/duy/Experiment/hrc_ws/build/trajectory_predictor/build --no-deps symlink_data
+[2.470s] Level 1:colcon.colcon_core.shell:create_environment_hook('kinect_bridge', 'pythonpath_develop')
+[2.471s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/build/kinect_bridge/share/kinect_bridge/hook/pythonpath_develop.ps1'
+[2.472s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/duy/Experiment/hrc_ws/build/kinect_bridge' returned '0': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:/home/duy/Experiment/hrc_ws/install/hrc_bringup:/home/duy/kinectv2/install/libfreenect2:/home/duy/kinectv2/install/kinect2_bridge:/home/duy/kinectv2/install/kinect2_registration PYTHONPATH=/home/duy/Experiment/hrc_ws/build/kinect_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/home/duy/Experiment/hrc_ws/build/trajectory_predictor:/home/duy/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/predictor_ui:/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/kinect_bridge:/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/experiment_logger:/home/duy/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/duy/Experiment/hrc_ws/build/kinect_bridge/build --no-deps symlink_data
+[2.473s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/duy/Experiment/hrc_ws/build/kinect_bridge/share/kinect_bridge/hook/pythonpath_develop.dsv'
+[2.474s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/build/kinect_bridge/share/kinect_bridge/hook/pythonpath_develop.sh'
+[2.480s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/kinect_bridge' for CMake module files
+[2.482s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/kinect_bridge' for CMake config files
+[2.482s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib'
+[2.483s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/kinect_bridge/bin'
+[2.483s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/pkgconfig/kinect_bridge.pc'
+[2.483s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages'
+[2.483s] Level 1:colcon.colcon_core.shell:create_environment_hook('kinect_bridge', 'pythonpath')
+[2.484s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/hook/pythonpath.ps1'
+[2.484s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/hook/pythonpath.dsv'
+[2.485s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/hook/pythonpath.sh'
+[2.485s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/kinect_bridge/bin'
+[2.485s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(kinect_bridge)
+[2.486s] INFO:colcon.colcon_core.shell:Creating package script '/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/package.ps1'
+[2.487s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/package.dsv'
+[2.488s] INFO:colcon.colcon_core.shell:Creating package script '/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/package.sh'
+[2.489s] INFO:colcon.colcon_core.shell:Creating package script '/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/package.bash'
+[2.490s] INFO:colcon.colcon_core.shell:Creating package script '/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/package.zsh'
+[2.491s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/duy/Experiment/hrc_ws/install/kinect_bridge/share/colcon-core/packages/kinect_bridge)
+[2.596s] Level 1:colcon.colcon_core.shell:create_environment_hook('trajectory_predictor', 'pythonpath_develop')
+[2.596s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/build/trajectory_predictor/share/trajectory_predictor/hook/pythonpath_develop.ps1'
+[2.597s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/duy/Experiment/hrc_ws/build/trajectory_predictor' returned '0': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:/home/duy/Experiment/hrc_ws/install/hrc_bringup:/home/duy/kinectv2/install/libfreenect2:/home/duy/kinectv2/install/kinect2_bridge:/home/duy/kinectv2/install/kinect2_registration PYTHONPATH=/home/duy/Experiment/hrc_ws/build/trajectory_predictor/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/home/duy/Experiment/hrc_ws/build/trajectory_predictor:/home/duy/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/predictor_ui:/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/kinect_bridge:/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/build/experiment_logger:/home/duy/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/duy/Experiment/hrc_ws/build/trajectory_predictor/build --no-deps symlink_data
+[2.599s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/duy/Experiment/hrc_ws/build/trajectory_predictor/share/trajectory_predictor/hook/pythonpath_develop.dsv'
+[2.599s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/build/trajectory_predictor/share/trajectory_predictor/hook/pythonpath_develop.sh'
+[2.601s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/trajectory_predictor' for CMake module files
+[2.601s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/trajectory_predictor' for CMake config files
+[2.602s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/lib'
+[2.602s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/bin'
+[2.602s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/lib/pkgconfig/trajectory_predictor.pc'
+[2.602s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages'
+[2.602s] Level 1:colcon.colcon_core.shell:create_environment_hook('trajectory_predictor', 'pythonpath')
+[2.603s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/hook/pythonpath.ps1'
+[2.603s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/hook/pythonpath.dsv'
+[2.604s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/hook/pythonpath.sh'
+[2.604s] Level 1:colcon.colcon_core.environment:checking '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/bin'
+[2.604s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(trajectory_predictor)
+[2.605s] INFO:colcon.colcon_core.shell:Creating package script '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/package.ps1'
+[2.605s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/package.dsv'
+[2.606s] INFO:colcon.colcon_core.shell:Creating package script '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/package.sh'
+[2.606s] INFO:colcon.colcon_core.shell:Creating package script '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/package.bash'
+[2.607s] INFO:colcon.colcon_core.shell:Creating package script '/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/package.zsh'
+[2.607s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/duy/Experiment/hrc_ws/install/trajectory_predictor/share/colcon-core/packages/trajectory_predictor)
+[2.608s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[2.608s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[2.608s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[2.609s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[2.616s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[2.616s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[2.616s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[2.633s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[2.634s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/duy/Experiment/hrc_ws/install/local_setup.ps1'
+[2.636s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/duy/Experiment/hrc_ws/install/_local_setup_util_ps1.py'
+[2.639s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/duy/Experiment/hrc_ws/install/setup.ps1'
+[2.643s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/duy/Experiment/hrc_ws/install/local_setup.sh'
+[2.644s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/duy/Experiment/hrc_ws/install/_local_setup_util_sh.py'
+[2.645s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/duy/Experiment/hrc_ws/install/setup.sh'
+[2.649s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/duy/Experiment/hrc_ws/install/local_setup.bash'
+[2.650s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/duy/Experiment/hrc_ws/install/setup.bash'
+[2.653s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/duy/Experiment/hrc_ws/install/local_setup.zsh'
+[2.654s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/duy/Experiment/hrc_ws/install/setup.zsh'
