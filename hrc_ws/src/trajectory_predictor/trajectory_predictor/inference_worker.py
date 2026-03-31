@@ -12,11 +12,15 @@ import time
 import traceback
 
 # These env vars are already set, but reinforce them
-os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+os.environ["PYTHONHASHSEED"] = "0"
 
 import numpy as np
+# Set thread count to 1 for small models to avoid context switching overhead
+import tensorflow as tf
+tf.config.threading.set_intra_op_parallelism_threads(1)
+tf.config.threading.set_inter_op_parallelism_threads(1)
 
 
 def _load_pickle(path):
@@ -57,10 +61,17 @@ def main():
 
     # Import TensorFlow (safe — this is the venv Python)
     try:
+        import tensorflow as tf
         from tensorflow.keras.models import load_model as keras_load
+        import sklearn # Check if sklearn is found
+        send_response({"type": "info", "message": f"TF {tf.__version__} and sklearn loaded"})
+    except ImportError as ie:
+        send_response({"type": "ready", "success": False,
+                        "message": f"Dependency missing: {ie}"})
+        return
     except Exception as e:
         send_response({"type": "ready", "success": False,
-                        "message": f"TensorFlow import failed: {e}"})
+                        "message": f"Initialization failed: {e}\\n{traceback.format_exc()}"})
         return
 
     current_model = None
@@ -183,6 +194,12 @@ def main():
                     pass
 
                 input_batch = input_seq.reshape(1, -1, num_features)
+                
+                # Check for NaNs
+                if np.isnan(input_batch).any():
+                    send_response({"type": "predict", "prediction": None, "inference_ms": 0.0, "error": "Input contains NaN"})
+                    continue
+
                 input_scaled = scale_input(input_batch)
 
                 t0 = time.time()
@@ -199,6 +216,7 @@ def main():
                                 "inference_ms": inference_ms,
                                 "model_name": current_model_name})
             except Exception as e:
+                print(f"DEBUG: Predict error: {e}", file=sys.stderr)
                 send_response({"type": "predict", "prediction": None,
                                 "inference_ms": 0.0, "error": str(e)})
 

@@ -28,6 +28,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         public string ActiveModel { get; private set; } = "gru";
 
         public event Action<PredictionResult> PredictionReceived;
+        public event Action<string> ErrorReceived;
 
         public PredictionManager(string pythonPath, string workerScriptPath, string modelDir)
         {
@@ -50,7 +51,16 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 };
 
                 pythonProcess = new Process { StartInfo = startInfo };
-                pythonProcess.ErrorDataReceived += (s, e) => { if (!string.IsNullOrEmpty(e.Data)) Debug.WriteLine($"[Python Error] {e.Data}"); };
+                pythonProcess.Start();
+                pythonProcess.PriorityClass = ProcessPriorityClass.High;
+
+                pythonProcess.ErrorDataReceived += (s, e) => { 
+                    if (!string.IsNullOrEmpty(e.Data)) 
+                    {
+                        Debug.WriteLine($"[Python Error] {e.Data}");
+                        ErrorReceived?.Invoke(e.Data);
+                    }
+                };
                 
                 pythonProcess.Start();
                 pythonProcess.BeginErrorReadLine();
@@ -89,29 +99,59 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         private async Task ReadLoop()
         {
-            while (pythonProcess != null && !pythonProcess.HasExited)
+            try
             {
-                try
+                while (pythonProcess != null && !pythonProcess.HasExited)
                 {
                     string line = await pythonStdout.ReadLineAsync();
-                    if (string.IsNullOrEmpty(line)) break;
+                    if (string.IsNullOrEmpty(line))
+                    {
+                        ErrorReceived?.Invoke("Python stdout closed (process may have exited)");
+                        break;
+                    }
 
-                    var result = JsonConvert.DeserializeObject<PredictionResult>(line);
+                    PredictionResult result;
+                    try
+                    {
+                        result = JsonConvert.DeserializeObject<PredictionResult>(line);
+                    }
+                    catch (Exception parseEx)
+                    {
+                        // Non-JSON output from Python (e.g. TensorFlow warnings)
+                        ErrorReceived?.Invoke("stdout: " + line);
+                        continue;
+                    }
+
                     if (result.type == "ready")
                     {
                         IsReady = result.success;
-                        Debug.WriteLine($"Prediction Worker Ready: {result.message}");
+                        ErrorReceived?.Invoke($"Worker ready={result.success}: {result.message}");
+                        if (!result.success)
+                        {
+                            ErrorReceived?.Invoke("Init Failed: " + result.message);
+                        }
+                    }
+                    else if (result.type == "model_loaded")
+                    {
+                        ErrorReceived?.Invoke($"Model loaded: {result.model_name} ok={result.success}");
+                        if (result.success) ActiveModel = result.model_name;
                     }
                     else if (result.type == "predict")
                     {
+                        if (!string.IsNullOrEmpty(result.error))
+                        {
+                            ErrorReceived?.Invoke("Predict Error: " + result.error);
+                            continue;
+                        }
+
                         if (result.prediction != null && posOffset != null)
                         {
                             float predX = (float)result.prediction[0] - posOffset[0];
                             float predY_centered = (float)result.prediction[1];
                             float predZ_centered = (float)result.prediction[2];
                             
-                            float predY = predZ_centered - posOffset[2];
-                            float predZ = predY_centered - posOffset[1];
+                            float predY = predY_centered - posOffset[1];
+                            float predZ = predZ_centered - posOffset[2];
 
                             result.FinalX = predX;
                             result.FinalY = predY;
@@ -121,15 +161,27 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         }
                     }
                 }
-                catch (Exception ex)
+            }
+            catch (Exception ex)
+            {
+                ErrorReceived?.Invoke($"ReadLoop error: {ex.Message}");
+            }
+
+            // Log process exit
+            if (pythonProcess != null)
+            {
+                try
                 {
-                    Debug.WriteLine($"Error reading from Python: {ex.Message}");
+                    ErrorReceived?.Invoke($"Python process exited with code: {pythonProcess.ExitCode}");
                 }
+                catch { }
             }
         }
 
         public void AddDataPoint(CameraSpacePoint point)
         {
+            if (float.IsNaN(point.X) || float.IsNaN(point.Y) || float.IsNaN(point.Z)) return;
+
             float swX = point.X;
             float swY = point.Z;
             float swZ = point.Y;
@@ -208,6 +260,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         public string type { get; set; }
         public bool success { get; set; }
         public string message { get; set; }
+        public string error { get; set; }
         public double[] prediction { get; set; }
         public double inference_ms { get; set; }
         public string model_name { get; set; }
