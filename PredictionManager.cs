@@ -144,18 +144,13 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                             continue;
                         }
 
-                        if (result.prediction != null && posOffset != null)
+                        if (result.prediction != null)
                         {
-                            float predX = (float)result.prediction[0] - posOffset[0];
-                            float predY_centered = (float)result.prediction[1];
-                            float predZ_centered = (float)result.prediction[2];
-                            
-                            float predY = predY_centered - posOffset[1];
-                            float predZ = predZ_centered - posOffset[2];
-
-                            result.FinalX = predX;
-                            result.FinalY = predY;
-                            result.FinalZ = predZ;
+                            // Python returns raw experiment-space coordinates (X, Y_depth, Z_up)
+                            // No offset needed - model trained and predicts in same space
+                            result.FinalX = (float)result.prediction[0];
+                            result.FinalY = (float)result.prediction[1];
+                            result.FinalZ = (float)result.prediction[2];
 
                             PredictionReceived?.Invoke(result);
                         }
@@ -182,30 +177,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         {
             if (float.IsNaN(point.X) || float.IsNaN(point.Y) || float.IsNaN(point.Z)) return;
 
-            float swX = point.X;
-            float swY = point.Z;
-            float swZ = point.Y;
-
-            if (posOffset == null)
-            {
-                posOffset = new float[] {
-                    targetFirst[0] - swX,
-                    targetFirst[1] - swY,
-                    targetFirst[2] - swZ
-                };
-            }
-
-            float[] swappedCentered = new float[] {
-                swX + posOffset[0],
-                swY + posOffset[1],
-                swZ + posOffset[2]
-            };
+            // Swap to experiment coordinate system: X=X, Y=camera_Z(depth), Z=camera_Y(up)
+            float[] swapped = new float[] { point.X, point.Z, point.Y };
 
             if (windowBuffer.Count >= WindowSize)
             {
                 windowBuffer.Dequeue();
             }
-            windowBuffer.Enqueue(swappedCentered);
+            windowBuffer.Enqueue(swapped);
 
             if (IsReady && windowBuffer.Count == WindowSize)
             {

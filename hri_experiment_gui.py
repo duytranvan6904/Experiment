@@ -909,19 +909,26 @@ class HRIExperimentGUI(tk.Tk):
             print("[HRI GUI] Received START_TRIAL trigger, attempting to begin trial...")
             self._start_trigger = False
             if self.experiment_manager.begin_trial():
-                print("[HRI GUI] Trial started successfully via external trigger")
-                self.update_ui_state()
+                print(f"[HRI GUI] Trial started: Scenario {self.experiment_manager.current_scenario}")
+                # Update the control panel UI (not just internal state)
+                if hasattr(self, 'control_panel'):
+                    self.control_panel.update_ui_state()
                 self.canvas.update_display()
             else:
-                print("[HRI GUI] FAILED to start trial via external trigger")
+                print(f"[HRI GUI] FAILED to start trial - state={self.experiment_manager.state}")
 
         if self.experiment_manager.state == ExperimentState.RUNNING:
             # Check for externally-triggered change (via TCP from C# app)
             if hasattr(self, '_external_trigger') and self._external_trigger:
                 print("[HRI GUI] Received Y_CROSSED trigger, forcing target change...")
                 self._external_trigger = False
-                if self.experiment_manager.update_trial(force_trigger=True):
-                    print("[HRI GUI] Target change triggered successfully")
+                triggered = self.experiment_manager.update_trial(force_trigger=True)
+                if triggered:
+                    print("[HRI GUI] Target change triggered - advancing to next scenario")
+                    # Advance state and update display
+                    self.experiment_manager.next_scenario()
+                    if hasattr(self, 'control_panel'):
+                        self.control_panel.update_ui_state()
                     self.canvas.update_display()
                 else:
                     print("[HRI GUI] Target change FAILED or already triggered")

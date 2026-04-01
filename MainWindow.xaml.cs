@@ -1024,12 +1024,16 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         }
                 }
 
-                // Feed to local PredictionManager
-                this.predictionManager?.AddDataPoint(update.Position);
+                // Feed to local PredictionManager ONLY when session is active
+                if (this.isPredictionSessionActive)
+                {
+                    this.predictionManager?.AddDataPoint(update.Position);
+                }
 
-                // Update plots with MEASURED data (swapped Y↔Z) + latest prediction
+                // Update plots with MEASURED data (swapped Y↔Z)
+                // Only show prediction line when session is active
                 var swapped = this.lastWorldSwapped;
-                var pred = this.lastPrediction;
+                var pred = this.isPredictionSessionActive ? this.lastPrediction : null;
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     this.plotX.AddPoints(swapped.X, pred?.FinalX);
