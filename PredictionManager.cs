@@ -144,16 +144,24 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                             continue;
                         }
 
+                    else if (result.type == "predict")
+                    {
+                        if (!string.IsNullOrEmpty(result.error))
+                        {
+                            ErrorReceived?.Invoke("Predict Error: " + result.error);
+                            continue;
+                        }
+
                         if (result.prediction != null)
                         {
-                            // Python returns raw experiment-space coordinates (X, Y_depth, Z_up)
-                            // No offset needed - model trained and predicts in same space
+                            // Model outputs are now in the same scale as unified input
                             result.FinalX = (float)result.prediction[0];
                             result.FinalY = (float)result.prediction[1];
                             result.FinalZ = (float)result.prediction[2];
 
                             PredictionReceived?.Invoke(result);
                         }
+                    }
                     }
                 }
             }
@@ -177,14 +185,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         {
             if (float.IsNaN(point.X) || float.IsNaN(point.Y) || float.IsNaN(point.Z)) return;
 
-            // Swap to experiment coordinate system: X=X, Y=camera_Z(depth), Z=camera_Y(up)
-            float[] swapped = new float[] { point.X, point.Z, point.Y };
+            // Point is already transformed and mapped to experimental frame by MainWindow
+            float[] data = new float[] { point.X, point.Y, point.Z };
 
             if (windowBuffer.Count >= WindowSize)
             {
                 windowBuffer.Dequeue();
             }
-            windowBuffer.Enqueue(swapped);
+            windowBuffer.Enqueue(data);
 
             if (IsReady && windowBuffer.Count == WindowSize)
             {
@@ -198,6 +206,12 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
+        public void Reset()
+        {
+            windowBuffer.Clear();
+            ErrorReceived?.Invoke("Prediction session reset: buffer cleared.");
+        }
+
         public void LoadModel(string modelName)
         {
             if (pythonStdin != null && !string.IsNullOrEmpty(modelName))
@@ -207,12 +221,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 pythonStdin.Flush();
                 ActiveModel = modelName;
             }
-        }
-
-        public void Reset()
-        {
-            windowBuffer.Clear();
-            posOffset = null;
         }
 
         public void Dispose()

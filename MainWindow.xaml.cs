@@ -191,8 +191,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private int predictionSampleCount = 0;
         private double sumAbsErrX = 0, sumAbsErrY = 0, sumAbsErrZ = 0;
         private double sumSqErrX = 0, sumSqErrY = 0, sumSqErrZ = 0;
-        private CameraSpacePoint lastWorldSwapped; // Y↔Z swapped for experiment coords
+        private CameraSpacePoint lastWorldSwapped; // raw Y↔Z swapped for experiment coords
         private CameraSpacePoint lastActualForPrediction; // last actual point when prediction arrived
+        // Simple calibration origin (raw swapped coords at calibration time)
+        private CameraSpacePoint calibOrigin = new CameraSpacePoint { X = 0, Y = 0, Z = 0 };
+        private bool isCalibrated = false;
 
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
@@ -385,8 +388,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     this.LogEvent($"First pred received: {res.model_name}");
                 }
                 
-                // Capture actual position at prediction time (swapped Y↔Z for experiment coords)
-                var actual = this.lastWorldSwapped;
+                // Capture CENTERED actual position at prediction time
+                var raw = this.lastWorldSwapped;
+                var actual = new CameraSpacePoint
+                {
+                    X = raw.X - this.calibOrigin.X,
+                    Y = raw.Y - this.calibOrigin.Y,
+                    Z = raw.Z - this.calibOrigin.Z
+                };
                 this.lastActualForPrediction = actual;
                 
                 // Update UI Labels (marshal to UI thread)
@@ -415,11 +424,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         this.predictionSampleCount++;
 
                         string csvLine = string.Format(CultureInfo.InvariantCulture,
-                            "{0},{1:F6},{2:F6},{3:F6},{4:F6},{5:F6},{6:F6},{7:F2},{8},{9},{10:F6},{11:F6},{12:F6}",
+                            "{0},{1:F6},{2:F6},{3:F6},{4:F6},{5:F6},{6:F6},{7:F2},{8},{9:F6},{10:F6},{11:F6}",
                             DateTime.UtcNow.ToString("o"),
                             actual.X, actual.Y, actual.Z,
                             res.FinalX, res.FinalY, res.FinalZ,
-                            res.inference_ms, res.model_name, this.currentTargetId,
+                            res.inference_ms, res.model_name,
                             errX, errY, errZ);
                         this.predictionCsvWriter.WriteLine(csvLine);
                         this.predictionCsvWriter.Flush();
@@ -951,11 +960,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             // update UI (marshal to UI thread)
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
-                // show the last right-hand world coords (swap Y↔Z for experiment coordinates)
-                CameraSpacePoint p = update.Position;
-                var world = this.transformer.Transform(p);
-                // Experiment coords: X=X, Y=Z(depth/forward), Z=Y(up/down)
-                this.txtXYZ.Text = string.Format(CultureInfo.InvariantCulture, "X: {0:F3}, Y: {1:F3}, Z: {2:F3}", world.X, world.Z, world.Y);
+                // Show calibrated experiment coordinates (raw swapped - calibration origin)
+                float dispX = this.lastWorldSwapped.X - this.calibOrigin.X;
+                float dispY = this.lastWorldSwapped.Y - this.calibOrigin.Y;
+                float dispZ = this.lastWorldSwapped.Z - this.calibOrigin.Z;
+                this.txtXYZ.Text = string.Format(CultureInfo.InvariantCulture, "X: {0:F3}, Y: {1:F3}, Z: {2:F3}", dispX, dispY, dispZ);
 
                 // update body tracked label
                 this.lblBody.Text = this.kinectManager.TrackedBodyId.HasValue ? $"Body: {this.kinectManager.TrackedBodyId.Value}" : "Body: Not tracked";
@@ -984,19 +993,25 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             {
                 this.lastWorldCam1 = update.Position;
                 
-                // Store experiment-swapped coordinates: X=X, Y=Z(forward), Z=Y(up)
+                // RAW swap only - NO Transform. Matches how model training data was collected.
+                // Kinect raw: X=left/right, Y=up/down, Z=depth/forward
+                // Experiment:  X=left/right, Y=forward(depth), Z=up(height)
                 this.lastWorldSwapped = new CameraSpacePoint
                 {
-                    X = update.Position.X,
-                    Y = update.Position.Z,  // experiment Y = camera Z (depth/forward)
-                    Z = update.Position.Y   // experiment Z = camera Y (up/down)
+                    X = update.Position.X,      // X stays X
+                    Y = update.Position.Z,      // Y_exp = Kinect_Z (depth/forward)
+                    Z = update.Position.Y        // Z_exp = Kinect_Y (up/down)
                 };
+
+                // Centered = raw swapped - calibration origin
+                float cx = this.lastWorldSwapped.X - this.calibOrigin.X;
+                float cy = this.lastWorldSwapped.Y - this.calibOrigin.Y;
+                float cz = this.lastWorldSwapped.Z - this.calibOrigin.Z;
                 
-                // Trigger Change Scene: check experiment Y (camera Z = forward) > threshold
+                // Trigger Change Scene: check CENTERED Y (forward) > threshold
                 if (this.isPredictionSessionActive && !this.hasTriggeredChange)
                 {
-                        // Trigger if experiment Y (depth) crosses threshold
-                        if (this.lastWorldSwapped.Y > this.yThresholdTarget)
+                        if (cy > this.yThresholdTarget)
                         {
                             this.hasTriggeredChange = true;
                             this.Dispatcher.BeginInvoke(new Action(() => {
@@ -1024,21 +1039,22 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         }
                 }
 
-                // Feed to local PredictionManager ONLY when session is active
+                // Build centered point for AI and plotting
+                var centered = new CameraSpacePoint { X = cx, Y = cy, Z = cz };
+
+                // Feed CENTERED data to PredictionManager (matches model's training distribution)
                 if (this.isPredictionSessionActive)
                 {
-                    this.predictionManager?.AddDataPoint(update.Position);
+                    this.predictionManager?.AddDataPoint(centered);
                 }
 
-                // Update plots with MEASURED data (swapped Y↔Z)
-                // Only show prediction line when session is active
-                var swapped = this.lastWorldSwapped;
+                // Update plots with CENTERED measured data + prediction
                 var pred = this.isPredictionSessionActive ? this.lastPrediction : null;
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    this.plotX.AddPoints(swapped.X, pred?.FinalX);
-                    this.plotY.AddPoints(swapped.Y, pred?.FinalY);
-                    this.plotZ.AddPoints(swapped.Z, pred?.FinalZ);
+                    this.plotX.AddPoints(cx, pred?.FinalX);
+                    this.plotY.AddPoints(cy, pred?.FinalY);
+                    this.plotZ.AddPoints(cz, pred?.FinalZ);
                     this.lblBufferStatus.Text = $"Buffer: {this.predictionManager.BufferCount}/20";
                 }));
             }
@@ -1126,9 +1142,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.yThresholdTarget = 1.0;
             }
             this.hasTriggeredChange = false;
-            // Set a default 'change' scenario ID to enable the Y-coordinate trigger check in Cam1_WorldHandUpdated
-            this.currentTargetId = 8; 
-
             // Start prediction session - capture to temp file first
             try
             {
@@ -1137,13 +1150,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.predictionCsvPath = Path.Combine(folder, "last_session_temp.csv");
 
                 this.predictionCsvWriter = new StreamWriter(this.predictionCsvPath, false, new UTF8Encoding(false));
-                this.predictionCsvWriter.WriteLine("timestamp,actual_x,actual_y,actual_z,predicted_x,predicted_y,predicted_z,inference_ms,model_name,scenario_id,abs_err_x,abs_err_y,abs_err_z");
+                this.predictionCsvWriter.WriteLine("timestamp,actual_x,actual_y,actual_z,predicted_x,predicted_y,predicted_z,inference_ms,model_name,abs_err_x,abs_err_y,abs_err_z");
                 this.predictionCsvWriter.Flush();
 
-                // Reset metrics
-                this.predictionSampleCount = 0;
-                this.sumAbsErrX = 0; this.sumAbsErrY = 0; this.sumAbsErrZ = 0;
-                this.sumSqErrX = 0; this.sumSqErrY = 0; this.sumSqErrZ = 0;
+                // Reset prediction state (offset/buffer)
+                this.predictionManager?.Reset();
 
                 this.isPredictionSessionActive = true;
                 this.txtSavePath.Text = "Capturing to temp file...";
@@ -1241,16 +1252,20 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
         private void BtnCalibrate_Click(object sender, RoutedEventArgs e)
         {
-            // Set world origin to current right hand (if available) and update floor
+            // Simple calibration: store current raw-swapped hand position as origin
             if (this.lastTrackingId.HasValue && this.kinectManager.TrackedBodyId.HasValue && this.lastTrackingId == this.kinectManager.TrackedBodyId)
             {
-                this.transformer.SetWorldOriginFromTarget(this.lastRightHand);
-                if (this.kinectManager.FloorClipPlane.HasValue)
-                {
-                    this.transformer.UpdateFloorPlane(this.kinectManager.FloorClipPlane.Value);
-                }
+                // Record current raw swapped position as calibration origin
+                this.calibOrigin = this.lastWorldSwapped;
+                this.isCalibrated = true;
 
-                MessageBox.Show("Calibration set from current right hand.");
+                this.LogEvent(string.Format(CultureInfo.InvariantCulture,
+                    "Calibrated Origin: X={0:F3}, Y={1:F3}, Z={2:F3}",
+                    this.calibOrigin.X, this.calibOrigin.Y, this.calibOrigin.Z));
+
+                MessageBox.Show(string.Format(CultureInfo.InvariantCulture,
+                    "Calibration set from right hand.\nOrigin: X={0:F3}, Y={1:F3}, Z={2:F3}\n\nAfter this, coordinates will show relative to this point.\nY increases = forward, Z increases = upward.",
+                    this.calibOrigin.X, this.calibOrigin.Y, this.calibOrigin.Z));
             }
             else
             {
