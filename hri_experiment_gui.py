@@ -922,16 +922,18 @@ class HRIExperimentGUI(tk.Tk):
             if hasattr(self, '_external_trigger') and self._external_trigger:
                 print("[HRI GUI] Received Y_CROSSED trigger, forcing target change...")
                 self._external_trigger = False
-                triggered = self.experiment_manager.update_trial(force_trigger=True)
-                if triggered:
-                    print("[HRI GUI] Target change triggered - advancing to next scenario")
-                    # Advance state and update display
-                    self.experiment_manager.next_scenario()
+                
+                # Force target change logic
+                if self.experiment_manager.current_scenario and self.experiment_manager.current_scenario.is_change_scenario():
+                    self.experiment_manager.update_trial(force_trigger=True)
+                    print(f"[HRI GUI] Target state ADVANCED.")
+                    
+                    # ALWAYS refresh UI after a trigger
                     if hasattr(self, 'control_panel'):
                         self.control_panel.update_ui_state()
                     self.canvas.update_display()
                 else:
-                    print("[HRI GUI] Target change FAILED or already triggered")
+                    print("[HRI GUI] Y_CROSSED ignored: Scenario is NOT a change scenario.")
         
         # Schedule next update
         self.after(100, self.update_experiment)

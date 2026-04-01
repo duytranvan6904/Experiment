@@ -160,7 +160,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <local:TrajectoryPlot x:Name="plotX" Title="X-Axis Trajectory" Grid.Row="0" Margin="0,0,0,10"/>
+                    <local:TrajectoryPlot x:Name="plotX" Title="X-Axis Trajectory" Grid.Row="0" Margin="0,23,0,46"/>
                     <local:TrajectoryPlot x:Name="plotY" Title="Y-Axis Trajectory" Grid.Row="1" Margin="0,0,0,10"/>
                     <local:TrajectoryPlot x:Name="plotZ" Title="Z-Axis Trajectory" Grid.Row="2"/>
                 </Grid>
