@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Kinect;
 using Newtonsoft.Json;
@@ -16,13 +17,21 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private readonly Queue<float[]> windowBuffer = new Queue<float[]>();
         
         public int BufferCount => windowBuffer.Count;
-        
+
         private Process pythonProcess;
         private StreamWriter pythonStdin;
         private StreamReader pythonStdout;
         
-        private float[] posOffset = null;
-        private readonly float[] targetFirst = new float[] { 0.158f, 0.028f, 0.015f };
+        // Drop-frame: only one prediction in-flight at a time
+        private volatile bool isPredicting = false;
+
+        // Spike suppression for initial frames
+        private int predictionSequenceCount = 0;
+        private float[] lastHandPoint = new float[3];
+
+        // Outlier clamping: max allowed jump per prediction (meters)
+        private float lastPredX, lastPredY, lastPredZ;
+        private const float MaxJumpPerPrediction = 0.08f; // 8 cm max jump
 
         public bool IsReady { get; private set; } = false;
         public string ActiveModel { get; private set; } = "gru";
@@ -52,20 +61,27 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
                 pythonProcess = new Process { StartInfo = startInfo };
                 pythonProcess.Start();
-                pythonProcess.PriorityClass = ProcessPriorityClass.High;
 
-                pythonProcess.ErrorDataReceived += (s, e) => { 
-                    if (!string.IsNullOrEmpty(e.Data)) 
+                // Elevate Python process priority so inference doesn't get starved
+                try { pythonProcess.PriorityClass = ProcessPriorityClass.AboveNormal; } catch { }
+
+                // Also elevate THIS process (the WPF app) to High so the UI thread doesn't get starved
+                try { Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High; } catch { }
+
+                pythonProcess.ErrorDataReceived += (s, e) =>
+                {
+                    if (!string.IsNullOrEmpty(e.Data))
                     {
                         Debug.WriteLine($"[Python Error] {e.Data}");
                         ErrorReceived?.Invoke(e.Data);
                     }
                 };
-                
-                pythonProcess.Start();
+
                 pythonProcess.BeginErrorReadLine();
 
                 pythonStdin = pythonProcess.StandardInput;
+                // Use AutoFlush to avoid buffering delays
+                pythonStdin.AutoFlush = true;
                 pythonStdout = pythonProcess.StandardOutput;
 
                 // Send initial config
@@ -86,10 +102,15 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 };
 
                 pythonStdin.WriteLine(JsonConvert.SerializeObject(config));
-                pythonStdin.Flush();
 
-                // Start reader task
-                Task.Run(() => ReadLoop());
+                // Start reader on a dedicated thread (not ThreadPool) with high priority
+                var readerThread = new Thread(() => ReadLoop())
+                {
+                    IsBackground = true,
+                    Name = "PredictionReader",
+                    Priority = ThreadPriority.AboveNormal
+                };
+                readerThread.Start();
             }
             catch (Exception ex)
             {
@@ -97,13 +118,13 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
-        private async Task ReadLoop()
+        private void ReadLoop()
         {
             try
             {
                 while (pythonProcess != null && !pythonProcess.HasExited)
                 {
-                    string line = await pythonStdout.ReadLineAsync();
+                    string line = pythonStdout.ReadLine(); // blocking read, no async overhead
                     if (string.IsNullOrEmpty(line))
                     {
                         ErrorReceived?.Invoke("Python stdout closed (process may have exited)");
@@ -115,7 +136,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     {
                         result = JsonConvert.DeserializeObject<PredictionResult>(line);
                     }
-                    catch (Exception parseEx)
+                    catch
                     {
                         // Non-JSON output from Python (e.g. TensorFlow warnings)
                         ErrorReceived?.Invoke("stdout: " + line);
@@ -138,14 +159,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     }
                     else if (result.type == "predict")
                     {
-                        if (!string.IsNullOrEmpty(result.error))
-                        {
-                            ErrorReceived?.Invoke("Predict Error: " + result.error);
-                            continue;
-                        }
+                        // Release the lock IMMEDIATELY so next frame can be sent
+                        isPredicting = false;
 
-                    else if (result.type == "predict")
-                    {
                         if (!string.IsNullOrEmpty(result.error))
                         {
                             ErrorReceived?.Invoke("Predict Error: " + result.error);
@@ -154,14 +170,35 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 
                         if (result.prediction != null)
                         {
-                            // Model outputs are now in the same scale as unified input
-                            result.FinalX = (float)result.prediction[0];
-                            result.FinalY = (float)result.prediction[1];
-                            result.FinalZ = (float)result.prediction[2];
+                            float rawX = (float)result.prediction[0];
+                            float rawY = (float)result.prediction[1];
+                            float rawZ = (float)result.prediction[2];
 
+                            if (predictionSequenceCount < 3)
+                            {
+                                // First 3 predictions: use actual hand position to avoid initial spikes
+                                result.FinalX = lastHandPoint[0];
+                                result.FinalY = lastHandPoint[1];
+                                result.FinalZ = lastHandPoint[2];
+                                // Seed last-pred so clamping works from frame 3+
+                                lastPredX = lastHandPoint[0];
+                                lastPredY = lastHandPoint[1];
+                                lastPredZ = lastHandPoint[2];
+                            }
+                            else
+                            {
+                                // Clamp each axis: if model jumps > MaxJumpPerPrediction, limit it
+                                result.FinalX = Clamp(rawX, lastPredX, MaxJumpPerPrediction);
+                                result.FinalY = Clamp(rawY, lastPredY, MaxJumpPerPrediction);
+                                result.FinalZ = Clamp(rawZ, lastPredZ, MaxJumpPerPrediction);
+                                lastPredX = result.FinalX;
+                                lastPredY = result.FinalY;
+                                lastPredZ = result.FinalZ;
+                            }
+
+                            predictionSequenceCount++;
                             PredictionReceived?.Invoke(result);
                         }
-                    }
                     }
                 }
             }
@@ -181,6 +218,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
+        private static float Clamp(float value, float previous, float maxDelta)
+        {
+            float delta = value - previous;
+            if (delta > maxDelta) return previous + maxDelta;
+            if (delta < -maxDelta) return previous - maxDelta;
+            return value;
+        }
+
         public void AddDataPoint(CameraSpacePoint point)
         {
             if (float.IsNaN(point.X) || float.IsNaN(point.Y) || float.IsNaN(point.Z)) return;
@@ -194,21 +239,38 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
             windowBuffer.Enqueue(data);
 
-            if (IsReady && windowBuffer.Count == WindowSize)
+            // Record latest hand position for soft-start reference
+            lastHandPoint[0] = data[0];
+            lastHandPoint[1] = data[1];
+            lastHandPoint[2] = data[2];
+
+            // Drop-frame strategy: only send predict request if we aren't waiting for one
+            // This prevents stdin queue buildup which causes latency and UI jank
+            if (IsReady && windowBuffer.Count == WindowSize && !isPredicting)
             {
-                var cmd = new
+                isPredicting = true;
+                try
                 {
-                    cmd = "predict",
-                    data = windowBuffer.ToArray()
-                };
-                pythonStdin.WriteLine(JsonConvert.SerializeObject(cmd));
-                pythonStdin.Flush();
+                    var cmd = new
+                    {
+                        cmd = "predict",
+                        data = windowBuffer.ToArray()
+                    };
+                    pythonStdin.WriteLine(JsonConvert.SerializeObject(cmd));
+                }
+                catch (Exception ex)
+                {
+                    isPredicting = false;
+                    ErrorReceived?.Invoke("Stdin write error: " + ex.Message);
+                }
             }
         }
 
         public void Reset()
         {
             windowBuffer.Clear();
+            predictionSequenceCount = 0;
+            isPredicting = false;
             ErrorReceived?.Invoke("Prediction session reset: buffer cleared.");
         }
 
@@ -218,7 +280,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             {
                 var cmd = new { cmd = "load_model", model_name = modelName };
                 pythonStdin.WriteLine(JsonConvert.SerializeObject(cmd));
-                pythonStdin.Flush();
                 ActiveModel = modelName;
             }
         }
@@ -230,7 +291,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 try
                 {
                     pythonStdin.WriteLine(JsonConvert.SerializeObject(new { cmd = "shutdown" }));
-                    pythonStdin.Flush();
                     pythonProcess.WaitForExit(1000);
                 }
                 catch { }

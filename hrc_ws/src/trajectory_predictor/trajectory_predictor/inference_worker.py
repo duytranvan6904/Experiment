@@ -22,6 +22,11 @@ import tensorflow as tf
 tf.config.threading.set_intra_op_parallelism_threads(1)
 tf.config.threading.set_inter_op_parallelism_threads(1)
 
+# Pre-import scipy filter once at startup (not per-prediction)
+try:
+    from scipy.signal import savgol_filter as _savgol_filter
+except ImportError:
+    _savgol_filter = None
 
 def _load_pickle(path):
     if not os.path.exists(path):
@@ -182,15 +187,10 @@ def main():
 
                 # --- Apply Savitzky-Golay Filter ---
                 try:
-                    from scipy.signal import savgol_filter
-                    window_len = 5
-                    polyorder = 3
-                    if len(input_seq) >= window_len:
-                        # Smooth each axis
+                    if _savgol_filter is not None and len(input_seq) >= 5:
                         for i in range(num_features):
-                            input_seq[:, i] = savgol_filter(input_seq[:, i], window_len, polyorder)
-                except Exception as e:
-                    # Ignore and fallback to raw data if scipy is missing or error
+                            input_seq[:, i] = _savgol_filter(input_seq[:, i], 5, 3)
+                except Exception:
                     pass
 
                 input_batch = input_seq.reshape(1, -1, num_features)

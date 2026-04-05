@@ -196,6 +196,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         // Simple calibration origin (raw swapped coords at calibration time)
         private CameraSpacePoint calibOrigin = new CameraSpacePoint { X = 0, Y = 0, Z = 0 };
         private bool isCalibrated = false;
+        private int plotFrameCounter = 0; // throttle plot updates
 
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
@@ -737,7 +738,13 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     // --- NEW: Draw Prediction ---
                     if (this.lastPrediction != null)
                     {
-                        CameraSpacePoint p = new CameraSpacePoint { X = lastPrediction.FinalX, Y = lastPrediction.FinalY, Z = lastPrediction.FinalZ };
+                        // Uncenter and unswap prediction back to original Kinect CameraSpace
+                        CameraSpacePoint p = new CameraSpacePoint 
+                        { 
+                            X = (float)(lastPrediction.FinalX + this.calibOrigin.X), 
+                            Y = (float)(lastPrediction.FinalZ + this.calibOrigin.Z), // Z_exp maps to Kinect Y 
+                            Z = (float)(lastPrediction.FinalY + this.calibOrigin.Y)  // Y_exp maps to Kinect Z
+                        };
                         if (p.Z < 0.1f) p.Z = 0.1f;
                         ColorSpacePoint csp = this.coordinateMapper.MapCameraPointToColorSpace(p);
                         Point pt = new Point(csp.X, csp.Y);
@@ -991,16 +998,17 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         {
             if (update.Joint == JointType.HandRight)
             {
-                this.lastWorldCam1 = update.Position;
+                // Use pure raw position to prevent any DualCameraCalibrationManager offsets from skewing the origin
+                this.lastWorldCam1 = this.lastRawCam1;
                 
                 // RAW swap only - NO Transform. Matches how model training data was collected.
                 // Kinect raw: X=left/right, Y=up/down, Z=depth/forward
                 // Experiment:  X=left/right, Y=forward(depth), Z=up(height)
                 this.lastWorldSwapped = new CameraSpacePoint
                 {
-                    X = update.Position.X,      // X stays X
-                    Y = update.Position.Z,      // Y_exp = Kinect_Z (depth/forward)
-                    Z = update.Position.Y        // Z_exp = Kinect_Y (up/down)
+                    X = this.lastRawCam1.X,      // X stays X
+                    Y = this.lastRawCam1.Z,      // Y_exp = Kinect_Z (depth/forward)
+                    Z = this.lastRawCam1.Y       // Z_exp = Kinect_Y (up/down)
                 };
 
                 // Centered = raw swapped - calibration origin
@@ -1048,15 +1056,19 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     this.predictionManager?.AddDataPoint(centered);
                 }
 
-                // Update plots with CENTERED measured data + prediction
-                var pred = this.isPredictionSessionActive ? this.lastPrediction : null;
-                this.Dispatcher.BeginInvoke(new Action(() =>
+                // Update plots at reduced rate (~10 FPS) to prevent UI thread congestion
+                this.plotFrameCounter++;
+                if (this.plotFrameCounter % 3 == 0)
                 {
-                    this.plotX.AddPoints(cx, pred?.FinalX);
-                    this.plotY.AddPoints(cy, pred?.FinalY);
-                    this.plotZ.AddPoints(cz, pred?.FinalZ);
-                    this.lblBufferStatus.Text = $"Buffer: {this.predictionManager.BufferCount}/20";
-                }));
+                    var pred = this.isPredictionSessionActive ? this.lastPrediction : null;
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        this.plotX.AddPoints(cx, pred?.FinalX);
+                        this.plotY.AddPoints(cy, pred?.FinalY);
+                        this.plotZ.AddPoints(cz, pred?.FinalZ);
+                        this.lblBufferStatus.Text = $"Buffer: {this.predictionManager.BufferCount}/20";
+                    }));
+                }
             }
         }
 
