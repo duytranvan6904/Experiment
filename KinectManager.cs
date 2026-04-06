@@ -17,6 +17,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         public bool IsAvailable => this.sensor != null && this.sensor.IsAvailable;
 
         // ID of the tracked body (first detected / locked)
+        [System.CLSCompliant(false)]
         public ulong? TrackedBodyId { get; private set; }
 
         // Expose latest color frame as a WriteableBitmap (RGBA)
@@ -180,6 +181,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     public struct HandJointUpdate
     {
         public DateTime Timestamp;
+        [System.CLSCompliant(false)]
         public ulong TrackingId;
         public JointType Joint;
         public CameraSpacePoint Position;

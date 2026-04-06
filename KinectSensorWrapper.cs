@@ -19,6 +19,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         public bool IsAvailable => this.sensor != null && this.sensor.IsAvailable;
 
         // Expose tracked body id
+        [System.CLSCompliant(false)]
         public ulong? TrackedBodyId { get; private set; }
 
         // Raw hand update (camera-space)

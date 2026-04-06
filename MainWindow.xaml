@@ -85,7 +85,7 @@
                                 <TextBlock Name="lblRecording" Text="Session: Inactive" Foreground="#fab387"/>
                             </StackPanel>
                         </GroupBox>
-                        
+
                         <GroupBox Header="Event Log" Foreground="#89b4fa" Padding="4" FontSize="11" Margin="0,0,0,6">
                             <ListBox Name="lstLog" Height="100" Background="#1e1e2e" Foreground="#cdd6f4" BorderThickness="0" FontSize="10">
                                 <ListBox.ItemContainerStyle>
@@ -94,6 +94,14 @@
                                     </Style>
                                 </ListBox.ItemContainerStyle>
                             </ListBox>
+                        </GroupBox>
+
+                        <GroupBox Header="Performance" Foreground="#89b4fa" Padding="4" FontSize="10" Margin="0,0,0,6">
+                            <StackPanel>
+                                <TextBlock Name="lblBridgeStatus" Text="Bridge: Disconnected" Foreground="#f38ba8"/>
+                                <TextBlock Name="lblMAE" Text="MAE: -" Foreground="#89dceb"/>
+                                <TextBlock Name="lblMSE" Text="MSE: -" Foreground="#89dceb"/>
+                            </StackPanel>
                         </GroupBox>
 
                         <TextBlock Name="txtSavePath" Text="-" TextWrapping="Wrap" FontSize="8" Foreground="#585b70" Margin="0,4,0,0"/>
@@ -119,7 +127,7 @@
                         </Viewbox>
                     </StackPanel>
                 </Border>
-                
+
                 <Border Grid.Row="1" Margin="0,0,0,15" BorderBrush="#313244" BorderThickness="1" CornerRadius="8" Background="#181825" Visibility="Collapsed">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                         <TextBlock Text="RESERVED FOR DESTINATION ANALYSIS" Foreground="#45475a" FontSize="14" HorizontalAlignment="Center"/>
@@ -127,7 +135,6 @@
                     </StackPanel>
                 </Border>
             </Grid>
-        </Grid>
         </Grid>
 
         <!-- Status Bar -->

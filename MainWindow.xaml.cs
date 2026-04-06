@@ -169,7 +169,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private CameraSpacePoint lastRightHand;
         private ulong? lastTrackingId;
 
-        // Prediction subsystem removed.
+        // Prediction subsystem
+        private PredictionManager predictionManager;
+        private PredictionResult lastPrediction;
 
         // experiment params
         private int currentMode = 1; // 1..4
@@ -188,7 +190,6 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private CameraSpacePoint lastActualForPrediction; // last actual point when prediction arrived
         // Simple calibration origin (raw swapped coords at calibration time)
         private CameraSpacePoint calibOrigin = new CameraSpacePoint { X = 0, Y = 0, Z = 0 };
-        private bool isCalibrated = false;
         private bool isCalibrated = false;
 
         /// <summary>
@@ -1095,5 +1096,37 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         //}
 
         // other existing methods remain unchanged
+
+        /// <summary>
+        /// Logs an event message to the event log UI list box.
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        private void LogEvent(string message)
+        {
+            // Check if the UI element exists
+            if (this.lstLog == null)
+                return;
+
+            // Create timestamped log entry
+            string logEntry = $"[{DateTime.Now:HH:mm:ss.fff}] {message}";
+
+            // Add to list box via dispatcher for thread safety
+            this.Dispatcher.Invoke(() =>
+            {
+                this.lstLog.Items.Add(logEntry);
+
+                // Limit log size to prevent memory issues
+                while (this.lstLog.Items.Count > 200)
+                {
+                    this.lstLog.Items.RemoveAt(0);
+                }
+
+                // Auto-scroll to latest entry
+                if (this.lstLog.Items.Count > 0)
+                {
+                    this.lstLog.ScrollIntoView(this.lstLog.Items[this.lstLog.Items.Count - 1]);
+                }
+            });
+        }
     }
 }
