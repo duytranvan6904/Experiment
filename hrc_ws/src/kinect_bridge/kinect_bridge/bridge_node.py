@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """
 Kinect Bridge Node — TCP server that receives hand position JSON from
-the Windows C# Kinect app and publishes to ROS 2 topic /hand_position.
+the Windows C# Kinect app and publishes to ROS 2 topics.
 
-Protocol: C# app connects via TCP and sends newline-delimited JSON:
+Protocol (normal frame):
   {"x": 0.342, "y": 0.891, "z": 1.205, "ts": "...", "id": 12345}
+
+Protocol (control command from Windows Stop button):
+  {"command": "stop", "scenario_id": "ABC"}
+
+Stop command is forwarded to /bridge/stop_command (std_msgs/String: scenario_id).
 """
 
 import json
@@ -14,6 +19,7 @@ import time
 
 import rclpy
 from rclpy.node import Node
+from std_msgs.msg import String
 from human_hand_msgs.msg import HandPrediction, SystemStatus
 
 
@@ -35,9 +41,11 @@ class KinectBridgeNode(Node):
         self.source_name = self.get_parameter('source_name').value
 
         # Publishers
-        # CHANGED: Publish directly to /predicted_position with HandPrediction message
+        # Raw XYZ from Kinect (forwarded as HandPrediction with model_name='raw')
         self.pred_pub = self.create_publisher(HandPrediction, '/predicted_position', 10)
         self.status_pub = self.create_publisher(SystemStatus, '/system_status', 10)
+        # Stop command: publishes scenario_id string when Windows sends stop
+        self.stop_pub = self.create_publisher(String, '/bridge/stop_command', 5)
 
         # Status tracking
         self.connected = False
@@ -123,22 +131,37 @@ class KinectBridgeNode(Node):
             pass
 
     def _process_json(self, json_str: str):
-        """Parse JSON and publish HandPrediction message."""
+        """Parse JSON, handle control commands or publish raw XYZ."""
         try:
             data = json.loads(json_str)
         except json.JSONDecodeError as e:
             self.get_logger().warn(f'Invalid JSON: {e}')
             return
 
+        # ── Control command from Windows ────────────────────────────────────
+        if 'command' in data:
+            cmd = data['command'].lower()
+            if cmd == 'stop':
+                scenario_id = str(data.get('scenario_id', ''))
+                self.get_logger().info(
+                    f'Stop command received | scenario_id={scenario_id!r}')
+                stop_msg = String()
+                stop_msg.data = scenario_id
+                self.stop_pub.publish(stop_msg)
+            else:
+                self.get_logger().warn(f'Unknown command: {cmd}')
+            return
+
+        # ── Normal hand position frame ───────────────────────────────────────
         msg = HandPrediction()
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = 'kinect_world'
         msg.x = float(data.get('x', 0.0))
         msg.y = float(data.get('y', 0.0))
         msg.z = float(data.get('z', 0.0))
-        msg.inference_time_ms = float(data.get('inference_ms', 0.0))
-        msg.model_name = data.get('model_name', 'unknown')
-        msg.prediction_confidence = float(data.get('confidence', 1.0))
+        msg.inference_time_ms = 0.0
+        msg.model_name = 'raw'   # Đánh dấu đây là raw XYZ, chưa qua predict
+        msg.prediction_confidence = 1.0
 
         self.pred_pub.publish(msg)
 

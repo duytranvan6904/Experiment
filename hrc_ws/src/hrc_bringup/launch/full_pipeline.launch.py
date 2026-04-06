@@ -90,5 +90,7 @@ def generate_launch_description():
         tcp_port_arg,
         log_dir_arg,
         bridge_node,
+        predictor_node,
         logger_node,
+        ui_node,
     ])

@@ -169,9 +169,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private CameraSpacePoint lastRightHand;
         private ulong? lastTrackingId;
 
-        // Prediction subsystem
-        private PredictionManager predictionManager;
-        private PredictionResult lastPrediction;
+        // Prediction subsystem removed.
 
         // experiment params
         private int currentMode = 1; // 1..4
@@ -184,19 +182,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private TcpClient rosClient;
         private StreamWriter rosWriter;
 
-        // Prediction session - CSV logging + metrics
-        private StreamWriter predictionCsvWriter;
-        private string predictionCsvPath;
+        // Experiment tracking variables
         private bool isPredictionSessionActive = false;
-        private int predictionSampleCount = 0;
-        private double sumAbsErrX = 0, sumAbsErrY = 0, sumAbsErrZ = 0;
-        private double sumSqErrX = 0, sumSqErrY = 0, sumSqErrZ = 0;
         private CameraSpacePoint lastWorldSwapped; // raw Y↔Z swapped for experiment coords
         private CameraSpacePoint lastActualForPrediction; // last actual point when prediction arrived
         // Simple calibration origin (raw swapped coords at calibration time)
         private CameraSpacePoint calibOrigin = new CameraSpacePoint { X = 0, Y = 0, Z = 0 };
         private bool isCalibrated = false;
-        private int plotFrameCounter = 0; // throttle plot updates
+        private bool isCalibrated = false;
 
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
@@ -356,155 +349,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.lblBody.Text = "Body: Not tracked";
             this.lblRecording.Text = "Session: Inactive";
 
-            // Initialize prediction manager (Python sidecar)
-            // BaseDirectory is bin\AnyCPU\Debug\ when running from VS, go up to find project root
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string projectRoot = Path.GetFullPath(Path.Combine(baseDir, "..", "..", ".."));
-            
-            // Try project root first, then baseDir for .venv
-            string pythonPath = Path.Combine(projectRoot, ".venv", "Scripts", "python.exe");
-            if (!File.Exists(pythonPath)) pythonPath = Path.Combine(baseDir, ".venv", "Scripts", "python.exe");
-            if (!File.Exists(pythonPath)) pythonPath = "python"; // Fallback to system python
-            
-            // Worker script and model dir - try project root first
-            string workerScript = Path.Combine(projectRoot, "hrc_ws", "src", "trajectory_predictor", "trajectory_predictor", "inference_worker.py");
-            if (!File.Exists(workerScript))
-                workerScript = Path.Combine(baseDir, "hrc_ws", "src", "trajectory_predictor", "trajectory_predictor", "inference_worker.py");
-            
-            string modelDir = Path.Combine(projectRoot, "hrc_ws", "src", "trajectory_predictor", "models");
-            if (!Directory.Exists(modelDir))
-                modelDir = Path.Combine(baseDir, "hrc_ws", "src", "trajectory_predictor", "models");
-
-            // Log resolved paths for debugging
-            this.LogEvent($"Python: {pythonPath} [exists={File.Exists(pythonPath)}]");
-            this.LogEvent($"Worker: {workerScript} [exists={File.Exists(workerScript)}]");
-            this.LogEvent($"Models: {modelDir} [exists={Directory.Exists(modelDir)}]");
-
-            this.predictionManager = new PredictionManager(pythonPath, workerScript, modelDir);
-            this.predictionManager.ErrorReceived += (msg) => this.LogEvent("PY: " + msg);
-            this.predictionManager.PredictionReceived += (res) =>
-            {
-                this.lastPrediction = res;
-                if (this.predictionSampleCount == 0 && this.isPredictionSessionActive) {
-                    this.LogEvent($"First pred received: {res.model_name}");
-                }
-                
-                // Capture CENTERED actual position at prediction time
-                var raw = this.lastWorldSwapped;
-                var actual = new CameraSpacePoint
-                {
-                    X = raw.X - this.calibOrigin.X,
-                    Y = raw.Y - this.calibOrigin.Y,
-                    Z = raw.Z - this.calibOrigin.Z
-                };
-                this.lastActualForPrediction = actual;
-                
-                // Update UI Labels (marshal to UI thread)
-                this.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    this.lblActiveModel.Text = $"Model: {res.model_name.ToUpper()}";
-                    this.lblInferenceTime.Text = $"Inference: {res.inference_ms:F1}ms";
-                    this.lblBufferStatus.Text = $"Buffer: {this.predictionManager.BufferCount}/20";
-                    
-                    // Show predicted coordinates
-                    this.txtPredXYZ.Text = string.Format(CultureInfo.InvariantCulture,
-                        "Pred: X: {0:F3}, Y: {1:F3}, Z: {2:F3}", res.FinalX, res.FinalY, res.FinalZ);
-                }));
-
-                // Log to CSV if session is active
-                if (this.isPredictionSessionActive && this.predictionCsvWriter != null)
-                {
-                    try
-                    {
-                        double errX = Math.Abs(res.FinalX - actual.X);
-                        double errY = Math.Abs(res.FinalY - actual.Y);
-                        double errZ = Math.Abs(res.FinalZ - actual.Z);
-                        
-                        this.sumAbsErrX += errX; this.sumAbsErrY += errY; this.sumAbsErrZ += errZ;
-                        this.sumSqErrX += errX * errX; this.sumSqErrY += errY * errY; this.sumSqErrZ += errZ * errZ;
-                        this.predictionSampleCount++;
-
-                        string csvLine = string.Format(CultureInfo.InvariantCulture,
-                            "{0},{1:F6},{2:F6},{3:F6},{4:F6},{5:F6},{6:F6},{7:F2},{8},{9:F6},{10:F6},{11:F6}",
-                            DateTime.UtcNow.ToString("o"),
-                            actual.X, actual.Y, actual.Z,
-                            res.FinalX, res.FinalY, res.FinalZ,
-                            res.inference_ms, res.model_name,
-                            errX, errY, errZ);
-                        this.predictionCsvWriter.WriteLine(csvLine);
-                        this.predictionCsvWriter.Flush();
-
-                        // Update MAE/MSE labels at intervals
-                        if (this.predictionSampleCount % 5 == 0)
-                        {
-                            int n = this.predictionSampleCount;
-                            this.Dispatcher.BeginInvoke(new Action(() =>
-                            {
-                                double maeAvg = (this.sumAbsErrX + this.sumAbsErrY + this.sumAbsErrZ) / (3.0 * n);
-                                double mseAvg = (this.sumSqErrX + this.sumSqErrY + this.sumSqErrZ) / (3.0 * n);
-                                this.lblMAE.Text = string.Format(CultureInfo.InvariantCulture, "MAE: {0:F4} (n={1})", maeAvg, n);
-                                this.lblMSE.Text = string.Format(CultureInfo.InvariantCulture, "MSE: {0:F6}", mseAvg);
-                            }));
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        this.LogEvent("CSV write error: " + ex.Message);
-                    }
-                }
-
-                // Send prediction to ROS via TCP
-                if (this.rosWriter != null)
-                {
-                    try
-                    {
-                        string json = string.Format(CultureInfo.InvariantCulture,
-                            "{{\"x\": {0:F6}, \"y\": {1:F6}, \"z\": {2:F6}, \"inference_ms\": {3:F2}, \"model_name\": \"{4}\", \"confidence\": {5:F2}}}",
-                            res.FinalX, res.FinalY, res.FinalZ, res.inference_ms, res.model_name, 1.0);
-                        this.rosWriter.WriteLine(json);
-                    }
-                    catch { }
-                }
-            };
-            this.LogEvent("Prediction Pipeline Initialized");
-            this.LogEvent($"Search Python: {pythonPath}");
+            // Prediction pipeline initialization removed
         }
 
-        private void Model_Checked(object sender, RoutedEventArgs e)
-        {
-            if (this.predictionManager == null) return;
-            var rb = sender as RadioButton;
-            if (rb == null || !rb.IsChecked.Value) return;
-
-            string modelName = "gru";
-            if (rb == rbRnn) modelName = "rnn";
-            else if (rb == rbLstm) modelName = "lstm";
-
-            this.predictionManager.LoadModel(modelName);
-            this.lblActiveModel.Text = $"Model: {modelName.ToUpper()}";
-            this.LogEvent($"Model switched to {modelName.ToUpper()}");
-            
-            this.plotX.Clear();
-            this.plotY.Clear();
-            this.plotZ.Clear();
-        }
-
-        private void LogEvent(string msg)
-        {
-            this.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                this.lstLog.Items.Insert(0, $"[{DateTime.Now:HH:mm:ss}] {msg}");
-                if (this.lstLog.Items.Count > 50) this.lstLog.Items.RemoveAt(50);
-            }));
-        }
-
-        private void BtnResetPlots_Click(object sender, RoutedEventArgs e)
-        {
-            this.plotX.Clear();
-            this.plotY.Clear();
-            this.plotZ.Clear();
-            this.predictionManager?.Reset();
-        }
+    // Removed Model_Checked and BtnResetPlots_Click
 
         // Add handler for recorder stopped event
         private void Recorder_RecordingStopped()
@@ -1047,27 +895,17 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         }
                 }
 
-                // Build centered point for AI and plotting
-                var centered = new CameraSpacePoint { X = cx, Y = cy, Z = cz };
-
-                // Feed CENTERED data to PredictionManager (matches model's training distribution)
-                if (this.isPredictionSessionActive)
+                // Stream raw coordinates to ROS (Ubuntu Bridge)
+                if (this.isPredictionSessionActive && this.rosWriter != null)
                 {
-                    this.predictionManager?.AddDataPoint(centered);
-                }
-
-                // Update plots at reduced rate (~10 FPS) to prevent UI thread congestion
-                this.plotFrameCounter++;
-                if (this.plotFrameCounter % 3 == 0)
-                {
-                    var pred = this.isPredictionSessionActive ? this.lastPrediction : null;
-                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    try
                     {
-                        this.plotX.AddPoints(cx, pred?.FinalX);
-                        this.plotY.AddPoints(cy, pred?.FinalY);
-                        this.plotZ.AddPoints(cz, pred?.FinalZ);
-                        this.lblBufferStatus.Text = $"Buffer: {this.predictionManager.BufferCount}/20";
-                    }));
+                        string json = string.Format(CultureInfo.InvariantCulture,
+                            "{{\"x\": {0:F6}, \"y\": {1:F6}, \"z\": {2:F6}, \"command\": \"data\"}}",
+                            cx, cy, cz);
+                        this.rosWriter.WriteLine(json);
+                    }
+                    catch { }
                 }
             }
         }
@@ -1154,35 +992,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.yThresholdTarget = 1.0;
             }
             this.hasTriggeredChange = false;
-            // Start prediction session - capture to temp file first
-            try
-            {
-                var folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PredictionResults");
-                Directory.CreateDirectory(folder);
-                this.predictionCsvPath = Path.Combine(folder, "last_session_temp.csv");
-
-                this.predictionCsvWriter = new StreamWriter(this.predictionCsvPath, false, new UTF8Encoding(false));
-                this.predictionCsvWriter.WriteLine("timestamp,actual_x,actual_y,actual_z,predicted_x,predicted_y,predicted_z,inference_ms,model_name,abs_err_x,abs_err_y,abs_err_z");
-                this.predictionCsvWriter.Flush();
-
-                // Reset prediction state (offset/buffer)
-                this.predictionManager?.Reset();
-
-                this.isPredictionSessionActive = true;
-                this.txtSavePath.Text = "Capturing to temp file...";
-                this.lblRecording.Text = "Prediction: Active";
-                this.lblRecording.Foreground = new SolidColorBrush(Color.FromRgb(166, 227, 161)); // green
-                this.lblMAE.Text = "MAE: -";
-                this.lblMSE.Text = "MSE: -";
-
-                // Also reset prediction manager buffer for clean start
-                this.predictionManager?.Reset();
-                this.LogEvent("Prediction Started");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Failed to start prediction session: " + ex.Message);
-            }
+            
+            this.isPredictionSessionActive = true;
+            this.lblRecording.Text = "Streaming: Active";
+            this.lblRecording.Foreground = new SolidColorBrush(Color.FromRgb(166, 227, 161)); // green
+            this.LogEvent("Streaming Started");
         }
 
         private void BtnConnectRos_Click(object sender, RoutedEventArgs e)
@@ -1214,47 +1028,33 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 if (!this.isPredictionSessionActive) return;
                 this.isPredictionSessionActive = false;
 
-                if (this.predictionCsvWriter != null)
-                {
-                    this.predictionCsvWriter.Close();
-                    this.predictionCsvWriter = null;
-                }
-
                 // Ask for Scenario ID AFTER stop
                 var dialog = new ScenarioInputDialog();
                 if (dialog.ShowDialog() == true)
                 {
                     this.currentTargetId = dialog.ScenarioId;
                     
-                    // Rename temp to final
-                    string modelName = this.predictionManager?.ActiveModel ?? "unknown";
-                    string finalPath = Path.Combine(Path.GetDirectoryName(this.predictionCsvPath),
-                        $"prediction_{modelName}_s{this.currentTargetId}_{DateTime.Now:yyyyMMdd_HHmmss}.csv");
-                    
-                    if (File.Exists(this.predictionCsvPath))
+                    if (this.rosWriter != null)
                     {
-                        File.Move(this.predictionCsvPath, finalPath);
-                        this.predictionCsvPath = finalPath;
+                        try
+                        {
+                            string json = $"{{\"command\": \"stop\", \"scenario_id\": \"{this.currentTargetId}\"}}";
+                            this.rosWriter.WriteLine(json);
+                        }
+                        catch (Exception ex)
+                        {
+                            this.LogEvent("TCP Send error: " + ex.Message);
+                        }
                     }
-                }
-
-                this.lblRecording.Text = "Prediction: Inactive";
-                this.lblRecording.Foreground = new SolidColorBrush(Color.FromRgb(250, 179, 135)); // orange
-                this.txtSavePath.Text = this.predictionCsvPath;
-
-                if (this.predictionSampleCount > 0)
-                {
-                    double maeAvg = (this.sumAbsErrX + this.sumAbsErrY + this.sumAbsErrZ) / (3.0 * this.predictionSampleCount);
-                    this.LogEvent($"Session Stopped. Samples: {this.predictionSampleCount}, MAE: {maeAvg:F4}");
-                    
-                    MessageBox.Show(string.Format(CultureInfo.InvariantCulture,
-                        "Prediction session saved.\n\nSamples: {0}\nMAE: {1:F4}\nFile: {2}",
-                        this.predictionSampleCount, maeAvg, this.predictionCsvPath ?? "-"));
+                    this.LogEvent($"Streaming Stopped. Scenario: {this.currentTargetId}");
                 }
                 else
                 {
-                    this.LogEvent("Session Stopped (No samples)");
+                    this.LogEvent("Session Stopped (No ID provided)");
                 }
+
+                this.lblRecording.Text = "Streaming: Inactive";
+                this.lblRecording.Foreground = new SolidColorBrush(Color.FromRgb(250, 179, 135)); // orange
             }
             catch (Exception ex)
             {

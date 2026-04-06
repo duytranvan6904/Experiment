@@ -17,6 +17,7 @@ from datetime import datetime
 
 import rclpy
 from rclpy.node import Node
+from std_msgs.msg import String
 from std_srvs.srv import SetBool
 
 from human_hand_msgs.msg import HandState, HandPrediction
@@ -50,7 +51,9 @@ class ExperimentLoggerNode(Node):
 
         # Subscribers
         self.create_subscription(HandState, '/hand_position', self._on_hand, 10)
-        self.create_subscription(HandPrediction, '/predicted_position', self._on_prediction, 10)
+        self.create_subscription(HandPrediction, '/ml/predicted_position', self._on_prediction, 10)
+        # Stop command from bridge (scenario_id string from Windows)
+        self.create_subscription(String, '/bridge/stop_command', self._on_stop_command, 5)
 
         # Service to toggle recording
         self.toggle_srv = self.create_service(SetBool, '/logger/toggle', self._srv_toggle)
@@ -98,6 +101,54 @@ class ExperimentLoggerNode(Node):
                 self._calculate_metrics(self.csv_path)
             except Exception as e:
                 self.get_logger().error(f'Error during stop/metrics: {e}')
+            finally:
+                self.csv_file = None
+                self.csv_writer = None
+
+    def _on_stop_command(self, msg: String):
+        """Nhận scenario_id từ bridge khi Windows bấm Stop."""
+        scenario_id = msg.data.strip()
+        self.get_logger().info(
+            f'Stop command received from bridge | scenario_id={scenario_id!r}')
+
+        if not self.is_logging:
+            self.get_logger().info('Logger already stopped, ignoring stop command.')
+            return
+
+        # Dừng logging
+        self.is_logging = False
+        self._stop_logging_and_rename(scenario_id)
+
+    def _stop_logging_and_rename(self, scenario_id: str):
+        """Dừng ghi CSV và đổi tên file để thêm _ScenarioXXX."""
+        if self.csv_file:
+            try:
+                self.csv_file.flush()
+                self.csv_file.close()
+                old_path = self.csv_path
+
+                if scenario_id:
+                    dir_name = os.path.dirname(old_path)
+                    base = os.path.basename(old_path)
+                    # Thêm _ScenarioID trước .csv
+                    if base.endswith('.csv'):
+                        new_name = base[:-4] + f'_Scenario{scenario_id}.csv'
+                    else:
+                        new_name = base + f'_Scenario{scenario_id}'
+                    new_path = os.path.join(dir_name, new_name)
+                    try:
+                        os.rename(old_path, new_path)
+                        self.csv_path = new_path
+                        self.get_logger().info(
+                            f'CSV renamed: {base} → {new_name}')
+                    except Exception as e_rename:
+                        self.get_logger().error(f'Rename failed: {e_rename}')
+
+                self.get_logger().info(
+                    f'Stopped logging. Saved {self.row_count} rows to {self.csv_path}')
+                self._calculate_metrics(self.csv_path)
+            except Exception as e:
+                self.get_logger().error(f'Error during stop/rename: {e}')
             finally:
                 self.csv_file = None
                 self.csv_writer = None
