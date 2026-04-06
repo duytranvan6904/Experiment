@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 // <copyright file="MainWindow.xaml.cs" company="Microsoft">
 //     Copyright (c) Microsoft Corporation.  All rights reserved.
 // </copyright>
@@ -13,12 +13,16 @@ namespace Microsoft.Samples.Kinect.BodyBasics
     using System.Globalization;
     using System.IO;
     using System.Windows;
+    using System.Windows.Controls;               // <-- ADD: allows RadioButton, TextBox, TextBlock types
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Microsoft.Kinect;
     using System.Timers;
     using System.Windows.Threading;
     using System.Numerics;
+    using System.Net.Sockets;
+    using System.Text;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Interaction logic for MainWindow
@@ -84,6 +88,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// Drawing image that we will display
         /// </summary>
         private DrawingImage imageSource;
+
+        private ColorFrameReader colorFrameReader = null;
+        private WriteableBitmap colorBitmap = null;
+        private double yThresholdTarget = 1.0;
+        private bool hasTriggeredChange = false;
 
         /// <summary>
         /// Active Kinect sensor
@@ -160,12 +169,34 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         private CameraSpacePoint lastRightHand;
         private ulong? lastTrackingId;
 
+        // Prediction subsystem
+        private PredictionManager predictionManager;
+        private PredictionResult lastPrediction;
+
         // experiment params
         private int currentMode = 1; // 1..4
         private int currentTargetId = 1;
 
         // Add UI timer for countdown
         private DispatcherTimer uiTimer;
+
+        // ROS TCP Connection
+        private TcpClient rosClient;
+        private StreamWriter rosWriter;
+
+        // Prediction session - CSV logging + metrics
+        private StreamWriter predictionCsvWriter;
+        private string predictionCsvPath;
+        private bool isPredictionSessionActive = false;
+        private int predictionSampleCount = 0;
+        private double sumAbsErrX = 0, sumAbsErrY = 0, sumAbsErrZ = 0;
+        private double sumSqErrX = 0, sumSqErrY = 0, sumSqErrZ = 0;
+        private CameraSpacePoint lastWorldSwapped; // raw Y↔Z swapped for experiment coords
+        private CameraSpacePoint lastActualForPrediction; // last actual point when prediction arrived
+        // Simple calibration origin (raw swapped coords at calibration time)
+        private CameraSpacePoint calibOrigin = new CameraSpacePoint { X = 0, Y = 0, Z = 0 };
+        private bool isCalibrated = false;
+        private int plotFrameCounter = 0; // throttle plot updates
 
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
@@ -178,12 +209,19 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             // get the coordinate mapper
             this.coordinateMapper = this.kinectSensor.CoordinateMapper;
 
-            // get the depth (display) extents
-            FrameDescription frameDescription = this.kinectSensor.DepthFrameSource.FrameDescription;
+            // get the color frame details
+            FrameDescription colorFrameDescription = this.kinectSensor.ColorFrameSource.CreateFrameDescription(ColorImageFormat.Bgra);
 
             // get size of joint space
-            this.displayWidth = frameDescription.Width;
-            this.displayHeight = frameDescription.Height;
+            this.displayWidth = colorFrameDescription.Width;
+            this.displayHeight = colorFrameDescription.Height;
+
+            // create the color bitmap
+            this.colorBitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
+
+            // open the reader for the color frames
+            this.colorFrameReader = this.kinectSensor.ColorFrameSource.OpenReader();
+            this.colorFrameReader.FrameArrived += this.Reader_ColorFrameArrived;
 
             // open the reader for the body frames
             this.bodyFrameReader = this.kinectSensor.BodyFrameSource.OpenReader();
@@ -315,9 +353,157 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.uiTimer.Tick += UiTimer_Tick;
 
             // initialize UI labels
-            this.lblKinect.Text = this.kinectSensor.IsAvailable ? "Kinect: Connected" : "Kinect: Not available";
             this.lblBody.Text = "Body: Not tracked";
-            this.lblRecording.Text = "Recording: Inactive";
+            this.lblRecording.Text = "Session: Inactive";
+
+            // Initialize prediction manager (Python sidecar)
+            // BaseDirectory is bin\AnyCPU\Debug\ when running from VS, go up to find project root
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string projectRoot = Path.GetFullPath(Path.Combine(baseDir, "..", "..", ".."));
+            
+            // Try project root first, then baseDir for .venv
+            string pythonPath = Path.Combine(projectRoot, ".venv", "Scripts", "python.exe");
+            if (!File.Exists(pythonPath)) pythonPath = Path.Combine(baseDir, ".venv", "Scripts", "python.exe");
+            if (!File.Exists(pythonPath)) pythonPath = "python"; // Fallback to system python
+            
+            // Worker script and model dir - try project root first
+            string workerScript = Path.Combine(projectRoot, "hrc_ws", "src", "trajectory_predictor", "trajectory_predictor", "inference_worker.py");
+            if (!File.Exists(workerScript))
+                workerScript = Path.Combine(baseDir, "hrc_ws", "src", "trajectory_predictor", "trajectory_predictor", "inference_worker.py");
+            
+            string modelDir = Path.Combine(projectRoot, "hrc_ws", "src", "trajectory_predictor", "models");
+            if (!Directory.Exists(modelDir))
+                modelDir = Path.Combine(baseDir, "hrc_ws", "src", "trajectory_predictor", "models");
+
+            // Log resolved paths for debugging
+            this.LogEvent($"Python: {pythonPath} [exists={File.Exists(pythonPath)}]");
+            this.LogEvent($"Worker: {workerScript} [exists={File.Exists(workerScript)}]");
+            this.LogEvent($"Models: {modelDir} [exists={Directory.Exists(modelDir)}]");
+
+            this.predictionManager = new PredictionManager(pythonPath, workerScript, modelDir);
+            this.predictionManager.ErrorReceived += (msg) => this.LogEvent("PY: " + msg);
+            this.predictionManager.PredictionReceived += (res) =>
+            {
+                this.lastPrediction = res;
+                if (this.predictionSampleCount == 0 && this.isPredictionSessionActive) {
+                    this.LogEvent($"First pred received: {res.model_name}");
+                }
+                
+                // Capture CENTERED actual position at prediction time
+                var raw = this.lastWorldSwapped;
+                var actual = new CameraSpacePoint
+                {
+                    X = raw.X - this.calibOrigin.X,
+                    Y = raw.Y - this.calibOrigin.Y,
+                    Z = raw.Z - this.calibOrigin.Z
+                };
+                this.lastActualForPrediction = actual;
+                
+                // Update UI Labels (marshal to UI thread)
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    this.lblActiveModel.Text = $"Model: {res.model_name.ToUpper()}";
+                    this.lblInferenceTime.Text = $"Inference: {res.inference_ms:F1}ms";
+                    this.lblBufferStatus.Text = $"Buffer: {this.predictionManager.BufferCount}/20";
+                    
+                    // Show predicted coordinates
+                    this.txtPredXYZ.Text = string.Format(CultureInfo.InvariantCulture,
+                        "Pred: X: {0:F3}, Y: {1:F3}, Z: {2:F3}", res.FinalX, res.FinalY, res.FinalZ);
+                }));
+
+                // Log to CSV if session is active
+                if (this.isPredictionSessionActive && this.predictionCsvWriter != null)
+                {
+                    try
+                    {
+                        double errX = Math.Abs(res.FinalX - actual.X);
+                        double errY = Math.Abs(res.FinalY - actual.Y);
+                        double errZ = Math.Abs(res.FinalZ - actual.Z);
+                        
+                        this.sumAbsErrX += errX; this.sumAbsErrY += errY; this.sumAbsErrZ += errZ;
+                        this.sumSqErrX += errX * errX; this.sumSqErrY += errY * errY; this.sumSqErrZ += errZ * errZ;
+                        this.predictionSampleCount++;
+
+                        string csvLine = string.Format(CultureInfo.InvariantCulture,
+                            "{0},{1:F6},{2:F6},{3:F6},{4:F6},{5:F6},{6:F6},{7:F2},{8},{9:F6},{10:F6},{11:F6}",
+                            DateTime.UtcNow.ToString("o"),
+                            actual.X, actual.Y, actual.Z,
+                            res.FinalX, res.FinalY, res.FinalZ,
+                            res.inference_ms, res.model_name,
+                            errX, errY, errZ);
+                        this.predictionCsvWriter.WriteLine(csvLine);
+                        this.predictionCsvWriter.Flush();
+
+                        // Update MAE/MSE labels at intervals
+                        if (this.predictionSampleCount % 5 == 0)
+                        {
+                            int n = this.predictionSampleCount;
+                            this.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                double maeAvg = (this.sumAbsErrX + this.sumAbsErrY + this.sumAbsErrZ) / (3.0 * n);
+                                double mseAvg = (this.sumSqErrX + this.sumSqErrY + this.sumSqErrZ) / (3.0 * n);
+                                this.lblMAE.Text = string.Format(CultureInfo.InvariantCulture, "MAE: {0:F4} (n={1})", maeAvg, n);
+                                this.lblMSE.Text = string.Format(CultureInfo.InvariantCulture, "MSE: {0:F6}", mseAvg);
+                            }));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        this.LogEvent("CSV write error: " + ex.Message);
+                    }
+                }
+
+                // Send prediction to ROS via TCP
+                if (this.rosWriter != null)
+                {
+                    try
+                    {
+                        string json = string.Format(CultureInfo.InvariantCulture,
+                            "{{\"x\": {0:F6}, \"y\": {1:F6}, \"z\": {2:F6}, \"inference_ms\": {3:F2}, \"model_name\": \"{4}\", \"confidence\": {5:F2}}}",
+                            res.FinalX, res.FinalY, res.FinalZ, res.inference_ms, res.model_name, 1.0);
+                        this.rosWriter.WriteLine(json);
+                    }
+                    catch { }
+                }
+            };
+            this.LogEvent("Prediction Pipeline Initialized");
+            this.LogEvent($"Search Python: {pythonPath}");
+        }
+
+        private void Model_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.predictionManager == null) return;
+            var rb = sender as RadioButton;
+            if (rb == null || !rb.IsChecked.Value) return;
+
+            string modelName = "gru";
+            if (rb == rbRnn) modelName = "rnn";
+            else if (rb == rbLstm) modelName = "lstm";
+
+            this.predictionManager.LoadModel(modelName);
+            this.lblActiveModel.Text = $"Model: {modelName.ToUpper()}";
+            this.LogEvent($"Model switched to {modelName.ToUpper()}");
+            
+            this.plotX.Clear();
+            this.plotY.Clear();
+            this.plotZ.Clear();
+        }
+
+        private void LogEvent(string msg)
+        {
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                this.lstLog.Items.Insert(0, $"[{DateTime.Now:HH:mm:ss}] {msg}");
+                if (this.lstLog.Items.Count > 50) this.lstLog.Items.RemoveAt(50);
+            }));
+        }
+
+        private void BtnResetPlots_Click(object sender, RoutedEventArgs e)
+        {
+            this.plotX.Clear();
+            this.plotY.Clear();
+            this.plotZ.Clear();
+            this.predictionManager?.Reset();
         }
 
         // Add handler for recorder stopped event
@@ -330,8 +516,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 {
                     this.samplingTimer?.Stop();
                     this.uiTimer?.Stop();
-                    this.lblRecording.Text = "Recording: Inactive";
-                    this.txtCountdown.Text = "Countdown: -";
+                    this.lblRecording.Text = "Session: Inactive";
                     this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? "-");
                 }
                 catch { }
@@ -350,8 +535,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     {
                         this.samplingTimer?.Stop();
                         this.uiTimer?.Stop();
-                        this.lblRecording.Text = "Recording: Inactive";
-                        this.txtCountdown.Text = "Countdown: -";
+                        this.lblRecording.Text = "Session: Inactive";
                         this.txtSavePath.Text = "Save path: " + (this.recorder?.CurrentFilePath ?? this.recorderCam2?.CurrentFilePath ?? "-");
                     }
                 }
@@ -376,26 +560,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             // update save path
             this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? this.recorderCam2?.CurrentFilePath ?? "-");
 
-            // compute remaining time
-            string timePart = "Time left: ∞";
-            if (this.recorder.StartTimestamp.HasValue && this.recorder.MaxTime != TimeSpan.MaxValue)
-            {
-                var elapsed = DateTime.UtcNow - this.recorder.StartTimestamp.Value;
-                var remaining = this.recorder.MaxTime - elapsed;
-                if (remaining < TimeSpan.Zero) remaining = TimeSpan.Zero;
-                timePart = string.Format(CultureInfo.InvariantCulture, "Time left: {0:F1}s", remaining.TotalSeconds);
-            }
-
-            // compute remaining frames
-            string framePart = "Frames left: ∞";
-            if (this.recorder.MaxFrames != int.MaxValue)
-            {
-                var left = this.recorder.MaxFrames - this.recorder.RecordedFrames;
-                if (left < 0) left = 0;
-                framePart = "Frames left: " + left.ToString(CultureInfo.InvariantCulture);
-            }
-
-            this.txtCountdown.Text = $"Countdown: {timePart} | {framePart}";
+            // UI text removed because countdown UI was replaced
         }
 
         /// <summary>
@@ -411,6 +576,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             get
             {
                 return this.imageSource;
+            }
+        }
+
+        public ImageSource ColorImageSource
+        {
+            get
+            {
+                return this.colorBitmap;
             }
         }
 
@@ -459,6 +632,14 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         /// <param name="e">event arguments</param>
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
+            if (this.rosClient != null) { this.rosClient.Close(); }
+
+            if (this.colorFrameReader != null)
+            {
+                this.colorFrameReader.Dispose();
+                this.colorFrameReader = null;
+            }
+
             if (this.bodyFrameReader != null)
             {
                 // BodyFrameReader is IDisposable
@@ -473,6 +654,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.recorder?.Dispose();
                 this.recorderCam2?.Dispose();
                 this.kinectManager?.Dispose();
+                this.predictionManager?.Dispose();
                 try { this.cam1Wrapper?.Dispose(); } catch { }
                 try { this.cam2Wrapper?.Dispose(); } catch { }
             }
@@ -516,7 +698,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 using (DrawingContext dc = this.drawingGroup.Open())
                 {
                     // Draw a transparent background to set the render size
-                    dc.DrawRectangle(Brushes.Black, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
+                    dc.DrawRectangle(Brushes.Transparent, null, new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
 
                     int penIndex = 0;
                     foreach (Body body in this.bodies)
@@ -542,8 +724,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                                     position.Z = InferredZPositionClamp;
                                 }
 
-                                DepthSpacePoint depthSpacePoint = this.coordinateMapper.MapCameraPointToDepthSpace(position);
-                                jointPoints[jointType] = new Point(depthSpacePoint.X, depthSpacePoint.Y);
+                                ColorSpacePoint colorSpacePoint = this.coordinateMapper.MapCameraPointToColorSpace(position);
+                                jointPoints[jointType] = new Point(colorSpacePoint.X, colorSpacePoint.Y);
                             }
 
                             this.DrawBody(joints, jointPoints, dc, drawPen);
@@ -553,8 +735,64 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         }
                     }
 
+                    // --- NEW: Draw Prediction ---
+                    if (this.lastPrediction != null)
+                    {
+                        // Uncenter and unswap prediction back to original Kinect CameraSpace
+                        CameraSpacePoint p = new CameraSpacePoint 
+                        { 
+                            X = (float)(lastPrediction.FinalX + this.calibOrigin.X), 
+                            Y = (float)(lastPrediction.FinalZ + this.calibOrigin.Z), // Z_exp maps to Kinect Y 
+                            Z = (float)(lastPrediction.FinalY + this.calibOrigin.Y)  // Y_exp maps to Kinect Z
+                        };
+                        if (p.Z < 0.1f) p.Z = 0.1f;
+                        ColorSpacePoint csp = this.coordinateMapper.MapCameraPointToColorSpace(p);
+                        Point pt = new Point(csp.X, csp.Y);
+
+                        // Draw a blue circle for prediction
+                        dc.DrawEllipse(new SolidColorBrush(Color.FromArgb(180, 0, 188, 242)), null, pt, 20, 20);
+
+                        // Create FormattedText using PixelsPerDip (non-obsolete)
+                        double pixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
+                        FormattedText text = new FormattedText(
+                            "PRED",
+                            CultureInfo.CurrentCulture,
+                            FlowDirection.LeftToRight,
+                            new Typeface("Segoe UI"),
+                            14,
+                            Brushes.White,
+                            pixelsPerDip);
+
+                        dc.DrawText(text, new Point(pt.X + 15, pt.Y - 15));
+                    }
+
                     // prevent drawing outside of our render area
                     this.drawingGroup.ClipGeometry = new RectangleGeometry(new Rect(0.0, 0.0, this.displayWidth, this.displayHeight));
+                }
+            }
+        }
+
+        private void Reader_ColorFrameArrived(object sender, ColorFrameArrivedEventArgs e)
+        {
+            using (ColorFrame colorFrame = e.FrameReference.AcquireFrame())
+            {
+                if (colorFrame != null)
+                {
+                    FrameDescription colorFrameDescription = colorFrame.FrameDescription;
+                    using (KinectBuffer colorBuffer = colorFrame.LockRawImageBuffer())
+                    {
+                        this.colorBitmap.Lock();
+                        if ((colorFrameDescription.Width == this.colorBitmap.PixelWidth) && (colorFrameDescription.Height == this.colorBitmap.PixelHeight))
+                        {
+                            colorFrame.CopyConvertedFrameDataToIntPtr(
+                                this.colorBitmap.BackBuffer,
+                                (uint)(colorFrameDescription.Width * colorFrameDescription.Height * 4),
+                                ColorImageFormat.Bgra);
+
+                            this.colorBitmap.AddDirtyRect(new Int32Rect(0, 0, this.colorBitmap.PixelWidth, this.colorBitmap.PixelHeight));
+                        }
+                        this.colorBitmap.Unlock();
+                    }
                 }
             }
         }
@@ -729,10 +967,11 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             // update UI (marshal to UI thread)
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
-                // show the last right-hand world coords if possible
-                CameraSpacePoint p = update.Position;
-                var world = this.transformer.Transform(p);
-                this.txtXYZ.Text = string.Format(CultureInfo.InvariantCulture, "X: {0:F3}, Y: {1:F3}, Z: {2:F3}", world.X, world.Y, world.Z);
+                // Show calibrated experiment coordinates (raw swapped - calibration origin)
+                float dispX = this.lastWorldSwapped.X - this.calibOrigin.X;
+                float dispY = this.lastWorldSwapped.Y - this.calibOrigin.Y;
+                float dispZ = this.lastWorldSwapped.Z - this.calibOrigin.Z;
+                this.txtXYZ.Text = string.Format(CultureInfo.InvariantCulture, "X: {0:F3}, Y: {1:F3}, Z: {2:F3}", dispX, dispY, dispZ);
 
                 // update body tracked label
                 this.lblBody.Text = this.kinectManager.TrackedBodyId.HasValue ? $"Body: {this.kinectManager.TrackedBodyId.Value}" : "Body: Not tracked";
@@ -759,11 +998,77 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         {
             if (update.Joint == JointType.HandRight)
             {
-                this.lastWorldCam1 = update.Position;
-                this.Dispatcher.BeginInvoke(new Action(() =>
+                // Use pure raw position to prevent any DualCameraCalibrationManager offsets from skewing the origin
+                this.lastWorldCam1 = this.lastRawCam1;
+                
+                // RAW swap only - NO Transform. Matches how model training data was collected.
+                // Kinect raw: X=left/right, Y=up/down, Z=depth/forward
+                // Experiment:  X=left/right, Y=forward(depth), Z=up(height)
+                this.lastWorldSwapped = new CameraSpacePoint
                 {
-                    this.txtXYZCam1.Text = string.Format(CultureInfo.InvariantCulture, "Cam1: X: {0:F3}, Y: {1:F3}, Z: {2:F3}", update.Position.X, update.Position.Y, update.Position.Z);
-                }));
+                    X = this.lastRawCam1.X,      // X stays X
+                    Y = this.lastRawCam1.Z,      // Y_exp = Kinect_Z (depth/forward)
+                    Z = this.lastRawCam1.Y       // Z_exp = Kinect_Y (up/down)
+                };
+
+                // Centered = raw swapped - calibration origin
+                float cx = this.lastWorldSwapped.X - this.calibOrigin.X;
+                float cy = this.lastWorldSwapped.Y - this.calibOrigin.Y;
+                float cz = this.lastWorldSwapped.Z - this.calibOrigin.Z;
+                
+                // Trigger Change Scene: check CENTERED Y (forward) > threshold
+                if (this.isPredictionSessionActive && !this.hasTriggeredChange)
+                {
+                        if (cy > this.yThresholdTarget)
+                        {
+                            this.hasTriggeredChange = true;
+                            this.Dispatcher.BeginInvoke(new Action(() => {
+                                this.txtCurrentScenario.Text = $"Scenario: {this.currentTargetId} (CHANGED)";
+                            }));
+
+                            // Send TCP signal to Python GUI to trigger target change
+                            Task.Run(() =>
+                            {
+                                try
+                                {
+                                    using (var client = new TcpClient())
+                                    {
+                                        client.Connect("127.0.0.1", 9091);
+                                        var writer = new StreamWriter(client.GetStream(), new UTF8Encoding(false));
+                                        writer.Write("Y_CROSSED");
+                                        writer.Flush();
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    Debug.WriteLine("Failed to send Y_CROSSED to Python GUI: " + ex.Message);
+                                }
+                            });
+                        }
+                }
+
+                // Build centered point for AI and plotting
+                var centered = new CameraSpacePoint { X = cx, Y = cy, Z = cz };
+
+                // Feed CENTERED data to PredictionManager (matches model's training distribution)
+                if (this.isPredictionSessionActive)
+                {
+                    this.predictionManager?.AddDataPoint(centered);
+                }
+
+                // Update plots at reduced rate (~10 FPS) to prevent UI thread congestion
+                this.plotFrameCounter++;
+                if (this.plotFrameCounter % 3 == 0)
+                {
+                    var pred = this.isPredictionSessionActive ? this.lastPrediction : null;
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        this.plotX.AddPoints(cx, pred?.FinalX);
+                        this.plotY.AddPoints(cy, pred?.FinalY);
+                        this.plotZ.AddPoints(cz, pred?.FinalZ);
+                        this.lblBufferStatus.Text = $"Buffer: {this.predictionManager.BufferCount}/20";
+                    }));
+                }
             }
         }
 
@@ -774,7 +1079,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 this.lastWorldCam2 = update.Position;
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    this.txtXYZCam2.Text = string.Format(CultureInfo.InvariantCulture, "Cam2: X: {0:F3}, Y: {1:F3}, Z: {2:F3}", update.Position.X, update.Position.Y, update.Position.Z);
+                    
                 }));
             }
         }
@@ -821,64 +1126,84 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         // Button handlers wired in XAML
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
-            // start recorder and sampling timer
+            // Auto-start Python GUI by sending START_TRIAL
+            Task.Run(() =>
+            {
+                try
+                {
+                    using (var client = new TcpClient())
+                    {
+                        client.Connect("127.0.0.1", 9091);
+                        var writer = new StreamWriter(client.GetStream(), new UTF8Encoding(false));
+                        writer.Write("START_TRIAL");
+                        writer.Flush();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Failed to send START_TRIAL to Python GUI: " + ex.Message);
+                }
+            });
+
+            if (double.TryParse(this.txtYThreshold.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out double yThresh))
+            {
+                this.yThresholdTarget = yThresh;
+            }
+            else
+            {
+                this.yThresholdTarget = 1.0;
+            }
+            this.hasTriggeredChange = false;
+            // Start prediction session - capture to temp file first
             try
             {
-                // parse limits from UI
-                int maxFrames = 0;
-                double maxTimeSeconds = 0;
-                if (!int.TryParse(this.txtMaxFrames.Text, out maxFrames)) maxFrames = 0;
-                if (!double.TryParse(this.txtMaxTime.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out maxTimeSeconds)) maxTimeSeconds = 0;
-
-                this.recorder.MaxFrames = (maxFrames <= 0) ? int.MaxValue : maxFrames;
-                this.recorder.MaxTime = (maxTimeSeconds <= 0) ? TimeSpan.MaxValue : TimeSpan.FromSeconds(maxTimeSeconds);
-
-                // Save files into project-relative folder (under application output directory).
-                // Folders `RecordTrajectories\RawRecord` are expected to exist in the project (or as content copied to output).
-                var folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RecordTrajectories", "RawRecord");
+                var folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PredictionResults");
                 Directory.CreateDirectory(folder);
-                var filename1 = Path.Combine(folder, $"cam1_{DateTime.Now:yyyyMMdd_HHmm}.csv");
-                var filename2 = Path.Combine(folder, $"cam2_{DateTime.Now:yyyyMMdd_HHmm}.csv");
+                this.predictionCsvPath = Path.Combine(folder, "last_session_temp.csv");
 
-                // Determine which recorder(s) to start based on preferredRecorderTarget
-                var target = this.preferredRecorderTarget; // "Cam1", "Cam2" or null for both
-                bool startBoth = string.IsNullOrEmpty(target);
+                this.predictionCsvWriter = new StreamWriter(this.predictionCsvPath, false, new UTF8Encoding(false));
+                this.predictionCsvWriter.WriteLine("timestamp,actual_x,actual_y,actual_z,predicted_x,predicted_y,predicted_z,inference_ms,model_name,abs_err_x,abs_err_y,abs_err_z");
+                this.predictionCsvWriter.Flush();
 
-                if (startBoth || string.Equals(target, "Cam1", StringComparison.OrdinalIgnoreCase))
-                {
-                    this.recorder.Start(filename1, "Cam1", "1");
-                }
+                // Reset prediction state (offset/buffer)
+                this.predictionManager?.Reset();
 
-                if (startBoth || string.Equals(target, "Cam2", StringComparison.OrdinalIgnoreCase))
-                {
-                    try { this.recorderCam2.Start(filename2, "Cam2", "1"); } catch { }
-                }
+                this.isPredictionSessionActive = true;
+                this.txtSavePath.Text = "Capturing to temp file...";
+                this.lblRecording.Text = "Prediction: Active";
+                this.lblRecording.Foreground = new SolidColorBrush(Color.FromRgb(166, 227, 161)); // green
+                this.lblMAE.Text = "MAE: -";
+                this.lblMSE.Text = "MSE: -";
 
-                // show path and start timers
-                string savePathDisplay = "-";
-                if (startBoth)
-                {
-                    savePathDisplay = (this.recorder.CurrentFilePath ?? "-") + " ; " + (this.recorderCam2?.CurrentFilePath ?? "-");
-                }
-                else if (string.Equals(target, "Cam1", StringComparison.OrdinalIgnoreCase))
-                {
-                    savePathDisplay = this.recorder.CurrentFilePath ?? "-";
-                }
-                else if (string.Equals(target, "Cam2", StringComparison.OrdinalIgnoreCase))
-                {
-                    savePathDisplay = this.recorderCam2?.CurrentFilePath ?? "-";
-                }
-
-                this.txtSavePath.Text = "Save path: " + savePathDisplay;
-                this.samplingTimer.Interval = 1000.0 / this.recorder.FrequencyHz;
-                this.samplingTimer.Start();
-                this.uiTimer.Start();
-
-                this.lblRecording.Text = "Recording: Active";
+                // Also reset prediction manager buffer for clean start
+                this.predictionManager?.Reset();
+                this.LogEvent("Prediction Started");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to start recorder: " + ex.Message);
+                MessageBox.Show("Failed to start prediction session: " + ex.Message);
+            }
+        }
+
+        private void BtnConnectRos_Click(object sender, RoutedEventArgs e)
+        {
+            string ip = this.txtRosIp.Text.Trim();
+            try
+            {
+                if (this.rosClient != null) { this.rosClient.Close(); this.rosClient = null; }
+                this.rosClient = new TcpClient();
+                this.rosClient.Connect(ip, 9090);
+                this.rosWriter = new StreamWriter(this.rosClient.GetStream(), new UTF8Encoding(false));
+                this.rosWriter.AutoFlush = true;
+                this.lblBridgeStatus.Text = "Bridge: Connected";
+                this.lblBridgeStatus.Foreground = new SolidColorBrush(Color.FromRgb(166, 227, 161));
+                MessageBox.Show("Connected to ROS Server at " + ip + ":9090");
+            }
+            catch (Exception ex)
+            {
+                this.lblBridgeStatus.Text = "Bridge: Error";
+                this.lblBridgeStatus.Foreground = new SolidColorBrush(Color.FromRgb(243, 139, 168));
+                MessageBox.Show("ROS Connection Error: " + ex.Message);
             }
         }
 
@@ -886,32 +1211,73 @@ namespace Microsoft.Samples.Kinect.BodyBasics
         {
             try
             {
-                this.samplingTimer.Stop();
-                this.uiTimer.Stop();
-                this.recorder.Stop();
-                this.recorderCam2.Stop();
-                this.lblRecording.Text = "Recording: Inactive";
-                this.txtCountdown.Text = "Countdown: -";
-                this.txtSavePath.Text = "Save path: " + (this.recorder.CurrentFilePath ?? "-");
+                if (!this.isPredictionSessionActive) return;
+                this.isPredictionSessionActive = false;
+
+                if (this.predictionCsvWriter != null)
+                {
+                    this.predictionCsvWriter.Close();
+                    this.predictionCsvWriter = null;
+                }
+
+                // Ask for Scenario ID AFTER stop
+                var dialog = new ScenarioInputDialog();
+                if (dialog.ShowDialog() == true)
+                {
+                    this.currentTargetId = dialog.ScenarioId;
+                    
+                    // Rename temp to final
+                    string modelName = this.predictionManager?.ActiveModel ?? "unknown";
+                    string finalPath = Path.Combine(Path.GetDirectoryName(this.predictionCsvPath),
+                        $"prediction_{modelName}_s{this.currentTargetId}_{DateTime.Now:yyyyMMdd_HHmmss}.csv");
+                    
+                    if (File.Exists(this.predictionCsvPath))
+                    {
+                        File.Move(this.predictionCsvPath, finalPath);
+                        this.predictionCsvPath = finalPath;
+                    }
+                }
+
+                this.lblRecording.Text = "Prediction: Inactive";
+                this.lblRecording.Foreground = new SolidColorBrush(Color.FromRgb(250, 179, 135)); // orange
+                this.txtSavePath.Text = this.predictionCsvPath;
+
+                if (this.predictionSampleCount > 0)
+                {
+                    double maeAvg = (this.sumAbsErrX + this.sumAbsErrY + this.sumAbsErrZ) / (3.0 * this.predictionSampleCount);
+                    this.LogEvent($"Session Stopped. Samples: {this.predictionSampleCount}, MAE: {maeAvg:F4}");
+                    
+                    MessageBox.Show(string.Format(CultureInfo.InvariantCulture,
+                        "Prediction session saved.\n\nSamples: {0}\nMAE: {1:F4}\nFile: {2}",
+                        this.predictionSampleCount, maeAvg, this.predictionCsvPath ?? "-"));
+                }
+                else
+                {
+                    this.LogEvent("Session Stopped (No samples)");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to stop recorder: " + ex.Message);
+                MessageBox.Show("Failed to stop: " + ex.Message);
             }
         }
 
         private void BtnCalibrate_Click(object sender, RoutedEventArgs e)
         {
-            // Set world origin to current right hand (if available) and update floor
+            // Simple calibration: store current raw-swapped hand position as origin
             if (this.lastTrackingId.HasValue && this.kinectManager.TrackedBodyId.HasValue && this.lastTrackingId == this.kinectManager.TrackedBodyId)
             {
-                this.transformer.SetWorldOriginFromTarget(this.lastRightHand);
-                if (this.kinectManager.FloorClipPlane.HasValue)
-                {
-                    this.transformer.UpdateFloorPlane(this.kinectManager.FloorClipPlane.Value);
-                }
+                // Record current raw swapped position as calibration origin
+                this.calibOrigin = this.lastWorldSwapped;
+                this.isCalibrated = true;
 
-                MessageBox.Show("Calibration set from current right hand.");
+                this.LogEvent(string.Format(CultureInfo.InvariantCulture,
+                    "Calibrated Origin: X={0:F3}, Y={1:F3}, Z={2:F3}",
+                    this.calibOrigin.X, this.calibOrigin.Y, this.calibOrigin.Z));
+
+                MessageBox.Show(string.Format(CultureInfo.InvariantCulture,
+                    "Calibration set from right hand.\nOrigin: X={0:F3}, Y={1:F3}, Z={2:F3}\n\nAfter this, coordinates will show relative to this point.\nY increases = forward, Z increases = upward.",
+                    this.calibOrigin.X, this.calibOrigin.Y, this.calibOrigin.Z));
             }
             else
             {
@@ -919,74 +1285,9 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             }
         }
 
-        private void BtnCalibrateCam1_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.lastRawCam1.Z == 0)
-            {
-                MessageBox.Show("No Cam1 hand available to calibrate.");
-                return;
-            }
 
-            try
-            {
-                var profile = this.calibManager.Load("Cam1");
-                // compute translation t = -R * p_target so world origin is at target
-                var R = profile.RotationMatrix;
-                var p = new Vector3(this.lastRawCam1.X, this.lastRawCam1.Y, this.lastRawCam1.Z);
-                var rotated = new Vector3(
-                    R[0] * p.X + R[1] * p.Y + R[2] * p.Z,
-                    R[3] * p.X + R[4] * p.Y + R[5] * p.Z,
-                    R[6] * p.X + R[7] * p.Y + R[8] * p.Z);
 
-                profile.Translation = -rotated;
-                this.calibManager.Save("Cam1", profile);
-                this.cam1Calibrated = true;
-                this.lblCam1Status.Text = "Cam1 calibrated: ✔";
 
-                // mark this machine to prefer saving Cam1 recordings when starting
-                this.preferredRecorderTarget = "Cam1";
-
-                MessageBox.Show("Cam1 calibration saved.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Cam1 calibration failed: " + ex.Message);
-            }
-        }
-
-        private void BtnCalibrateCam2_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.lastRawCam2.Z == 0)
-            {
-                MessageBox.Show("No Cam2 hand available to calibrate.");
-                return;
-            }
-
-            try
-            {
-                var profile = this.calibManager.Load("Cam2");
-                var R = profile.RotationMatrix;
-                var p = new Vector3(this.lastRawCam2.X, this.lastRawCam2.Y, this.lastRawCam2.Z);
-                var rotated = new Vector3(
-                    R[0] * p.X + R[1] * p.Y + R[2] * p.Z,
-                    R[3] * p.X + R[4] * p.Y + R[5] * p.Z,
-                    R[6] * p.X + R[7] * p.Y + R[8] * p.Z);
-
-                profile.Translation = -rotated;
-                this.calibManager.Save("Cam2", profile);
-                this.cam2Calibrated = true;
-                this.lblCam2Status.Text = "Cam2 calibrated: ✔";
-
-                // mark this machine to prefer saving Cam2 recordings when starting
-                this.preferredRecorderTarget = "Cam2";
-
-                MessageBox.Show("Cam2 calibration saved.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Cam2 calibration failed: " + ex.Message);
-            }
-        }
 
         //private void CboMode_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         //{

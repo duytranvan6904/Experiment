@@ -1,0 +1,17 @@
+[1.050s] Invoking command in '/home/duy/Experiment/hrc_ws/build/experiment_logger': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Experiment/hrc_ws/build/experiment_logger/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/duy/Experiment/hrc_ws/build/experiment_logger/build --no-deps symlink_data
+[1.266s] running develop
+[1.388s] running egg_info
+[1.388s] writing experiment_logger.egg-info/PKG-INFO
+[1.388s] writing dependency_links to experiment_logger.egg-info/dependency_links.txt
+[1.388s] writing entry points to experiment_logger.egg-info/entry_points.txt
+[1.388s] writing requirements to experiment_logger.egg-info/requires.txt
+[1.388s] writing top-level names to experiment_logger.egg-info/top_level.txt
+[1.390s] reading manifest file 'experiment_logger.egg-info/SOURCES.txt'
+[1.390s] writing manifest file 'experiment_logger.egg-info/SOURCES.txt'
+[1.392s] running build_ext
+[1.392s] Creating /home/duy/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages/experiment-logger.egg-link (link to .)
+[1.393s] Installing logger_node script to /home/duy/Experiment/hrc_ws/install/experiment_logger/lib/experiment_logger
+[1.393s] 
+[1.393s] Installed /home/duy/Experiment/hrc_ws/build/experiment_logger
+[1.393s] running symlink_data
+[1.429s] Invoked command in '/home/duy/Experiment/hrc_ws/build/experiment_logger' returned '0': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Experiment/hrc_ws/build/experiment_logger/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/duy/Experiment/hrc_ws/build/experiment_logger/build --no-deps symlink_data

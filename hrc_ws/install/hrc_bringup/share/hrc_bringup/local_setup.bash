@@ -1,0 +1,1 @@
+/home/duy/Experiment/hrc_ws/build/hrc_bringup/ament_cmake_environment_hooks/local_setup.bash

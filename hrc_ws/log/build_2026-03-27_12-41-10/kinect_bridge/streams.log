@@ -1,0 +1,21 @@
+[1.107s] Invoking command in '/home/duy/Experiment/hrc_ws/src/kinect_bridge': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Experiment/hrc_ws/build/kinect_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/kinect_bridge build --build-base /home/duy/Experiment/hrc_ws/build/kinect_bridge/build install --record /home/duy/Experiment/hrc_ws/build/kinect_bridge/install.log --single-version-externally-managed install_data
+[1.299s] running egg_info
+[1.299s] writing ../../build/kinect_bridge/kinect_bridge.egg-info/PKG-INFO
+[1.300s] writing dependency_links to ../../build/kinect_bridge/kinect_bridge.egg-info/dependency_links.txt
+[1.300s] writing entry points to ../../build/kinect_bridge/kinect_bridge.egg-info/entry_points.txt
+[1.300s] writing requirements to ../../build/kinect_bridge/kinect_bridge.egg-info/requires.txt
+[1.300s] writing top-level names to ../../build/kinect_bridge/kinect_bridge.egg-info/top_level.txt
+[1.301s] reading manifest file '../../build/kinect_bridge/kinect_bridge.egg-info/SOURCES.txt'
+[1.302s] writing manifest file '../../build/kinect_bridge/kinect_bridge.egg-info/SOURCES.txt'
+[1.303s] running build
+[1.303s] running build_py
+[1.303s] running install
+[1.303s] running install_lib
+[1.304s] running install_data
+[1.304s] running install_egg_info
+[1.305s] removing '/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect_bridge-0.1.0-py3.10.egg-info' (and everything under it)
+[1.306s] Copying ../../build/kinect_bridge/kinect_bridge.egg-info to /home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect_bridge-0.1.0-py3.10.egg-info
+[1.306s] running install_scripts
+[1.325s] Installing bridge_node script to /home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/kinect_bridge
+[1.325s] writing list of installed files to '/home/duy/Experiment/hrc_ws/build/kinect_bridge/install.log'
+[1.352s] Invoked command in '/home/duy/Experiment/hrc_ws/src/kinect_bridge' returned '0': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Experiment/hrc_ws/build/kinect_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/kinect_bridge build --build-base /home/duy/Experiment/hrc_ws/build/kinect_bridge/build install --record /home/duy/Experiment/hrc_ws/build/kinect_bridge/install.log --single-version-externally-managed install_data

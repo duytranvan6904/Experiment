@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: kinect-bridge
+Version: 0.1.0
+Summary: TCP bridge from Windows Kinect C# app to ROS 2
+Home-page: UNKNOWN
+Maintainer: Duy
+Maintainer-email: duy@experiment.local
+License: MIT
+Platform: UNKNOWN
+
+UNKNOWN
+

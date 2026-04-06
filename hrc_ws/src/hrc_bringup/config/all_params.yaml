@@ -1,0 +1,30 @@
+# Combined parameters for all HRC nodes
+# Can be loaded with: --params-file config/all_params.yaml
+
+kinect_bridge:
+  ros__parameters:
+    tcp_host: "0.0.0.0"
+    tcp_port: 9090
+    connection_timeout: 5.0
+    source_name: "kinect_cam1"
+
+trajectory_predictor:
+  ros__parameters:
+    # TODO: Set this to your actual model directory
+    model_dir: "/home/duy/Experiment/Trained model"
+    default_model: "gru"
+    scaler_x_file: "scaler_x.pkl"
+    scaler_y_file: "scaler_y.pkl"
+    window_size: 20
+    num_features: 3
+    auto_start: false
+    clear_on_tracking_lost: 1.0
+    model_files:
+      rnn: "rnn_velocity_3_layers.h5"
+      gru: "gru_velocity_3_layers.h5"
+      lstm: "lstm_velocity_3_layers.h5"
+
+experiment_logger:
+  ros__parameters:
+    log_dir: "/home/duy/hrc_logs"
+    auto_start: true

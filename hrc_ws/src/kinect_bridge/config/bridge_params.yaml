@@ -1,0 +1,8 @@
+# Bridge parameters
+kinect_bridge:
+  ros__parameters:
+    tcp_host: "0.0.0.0"        # Listen on all interfaces
+    tcp_port: 9090              # TCP port for Kinect C# app
+    publish_rate: 20.0          # Hz - match Kinect frame rate
+    connection_timeout: 5.0     # seconds before reporting disconnect
+    source_name: "kinect_cam1"  # Source identifier
