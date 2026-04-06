@@ -10,7 +10,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
 {
     public partial class TrajectoryPlot : UserControl
     {
-        private const int MaxPoints = 200;
+        private const int MaxPoints = 60;
         private readonly List<double> measuredBuffer = new List<double>();
         private readonly List<double> predictedBuffer = new List<double>();
 
