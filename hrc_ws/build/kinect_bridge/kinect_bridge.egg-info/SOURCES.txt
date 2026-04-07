@@ -12,4 +12,11 @@ config/bridge_params.yaml
 kinect_bridge/__init__.py
 kinect_bridge/bridge_node.py
 kinect_bridge/mock_kinect_sender.py
+kinect_bridge.egg-info/PKG-INFO
+kinect_bridge.egg-info/SOURCES.txt
+kinect_bridge.egg-info/dependency_links.txt
+kinect_bridge.egg-info/entry_points.txt
+kinect_bridge.egg-info/requires.txt
+kinect_bridge.egg-info/top_level.txt
+kinect_bridge.egg-info/zip-safe
 resource/kinect_bridge

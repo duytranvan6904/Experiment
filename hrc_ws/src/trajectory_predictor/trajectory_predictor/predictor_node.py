@@ -81,9 +81,10 @@ class PredictorNode(Node):
 
         # ── Subscribers ──────────────────────────────────────────────────────
         self.create_subscription(HandState, '/hand_position', self._on_hand, 10)
-        # Nếu bridge publish tọa độ thô (trước khi predict), cũng lắng nghe
-        self.create_subscription(
-            HandPrediction, '/predicted_position', self._on_bridge_data, 10)
+
+        # Cầu nối TCP commands (start/stop)
+        self.create_subscription(String, '/bridge/start_command', self._on_start_command, 5)
+        self.create_subscription(String, '/bridge/stop_command', self._on_stop_command, 5)
 
         # Model switch command từ UI hay bridge
         self.create_subscription(String, '/predictor/model_cmd', self._on_model_cmd, 5)
@@ -244,16 +245,16 @@ class PredictorNode(Node):
             return
         self._ingest_point(msg.x, msg.y, msg.z)
 
-    def _on_bridge_data(self, msg: HandPrediction):
-        """
-        Nhận từ /predicted_position (output của bridge_node).
-        Bridge node publish raw XYZ ở đây (trong pipeline mới, bridge
-        publish HandPrediction với inference_time_ms=0 để forward tọa độ gốc).
-        """
-        # Chỉ dùng nếu /hand_position không hoạt động
-        # (bridge gửi raw coords qua HandPrediction với model_name='raw')
-        if msg.model_name == 'raw' or msg.model_name == '':
-            self._ingest_point(msg.x, msg.y, msg.z)
+    def _on_start_command(self, msg: String):
+        """Nhận lệnh start từ Windows, bắt đầu inference."""
+        self._predicting = True
+        self.get_logger().info('[Predictor] Predicting STARTED via bridge command')
+
+    def _on_stop_command(self, msg: String):
+        """Nhận lệnh stop từ Windows, dừng inference và xóa buffer."""
+        self._predicting = False
+        self._buffer.clear()
+        self.get_logger().info(f'[Predictor] Predicting STOPPED via bridge command (scenario: {msg.data})')
 
     def _ingest_point(self, x: float, y: float, z: float):
         self._last_data_time = time.time()

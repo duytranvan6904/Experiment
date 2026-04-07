@@ -1,2 +1,1 @@
-source;share/hrc_bringup/environment/ament_prefix_path.sh
-source;share/hrc_bringup/environment/path.sh
+/home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup/ament_cmake_environment_hooks/local_setup.dsv

@@ -1,0 +1,258 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-12bb100cdd46f49caab9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						17,
+						18
+					]
+				},
+				{
+					"build" : "human_hand_msgs__py",
+					"jsonFile" : "directory-human_hand_msgs__py-c436b6573cae84c44582.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "human_hand_msgs__rs",
+					"jsonFile" : "directory-human_hand_msgs__rs-28594b865209f24a4205.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__rs",
+					"targetIndexes" : 
+					[
+						16
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2
+					],
+					"name" : "human_hand_msgs",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_human_hand_msgs_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_human_hand_msgs_egg-637f4927a5f6db4d90df.json",
+					"name" : "ament_cmake_python_build_human_hand_msgs_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_copy_human_hand_msgs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_copy_human_hand_msgs-07319298c978e45d2f4d.json",
+					"name" : "ament_cmake_python_copy_human_hand_msgs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs-538278d81e85a78fe2fc.json",
+					"name" : "human_hand_msgs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__cpp-899fccc42235acc3f854.json",
+					"name" : "human_hand_msgs__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "human_hand_msgs__py::@3c2c5e3bc711dd4b83e6",
+					"jsonFile" : "target-human_hand_msgs__py-de510aff0a376e77c780.json",
+					"name" : "human_hand_msgs__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__rosidl_generator_c-05f3cf93346c25b20236.json",
+					"name" : "human_hand_msgs__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__rosidl_generator_py-ef06d558951e98159ad1.json",
+					"name" : "human_hand_msgs__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__rosidl_typesupport_c-3be848cb880817746af6.json",
+					"name" : "human_hand_msgs__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__rosidl_typesupport_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__rosidl_typesupport_c__pyext-8981e7f312b35c8b106a.json",
+					"name" : "human_hand_msgs__rosidl_typesupport_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__rosidl_typesupport_cpp-e6a668fc758067bc9372.json",
+					"name" : "human_hand_msgs__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__rosidl_typesupport_fastrtps_c-533b77c2f85f8e5cc383.json",
+					"name" : "human_hand_msgs__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__rosidl_typesupport_fastrtps_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__rosidl_typesupport_fastrtps_c__pyext-c591abca279ebffdfc96.json",
+					"name" : "human_hand_msgs__rosidl_typesupport_fastrtps_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__rosidl_typesupport_fastrtps_cpp-d0f6d84c74eaa50de061.json",
+					"name" : "human_hand_msgs__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__rosidl_typesupport_introspection_c-c8d243b6ec56ce9b6415.json",
+					"name" : "human_hand_msgs__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__rosidl_typesupport_introspection_c__pyext::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__rosidl_typesupport_introspection_c__pyext-5e3f5bb85e771cf69ee3.json",
+					"name" : "human_hand_msgs__rosidl_typesupport_introspection_c__pyext",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs__rosidl_typesupport_introspection_cpp-77333cd8fd15ff624609.json",
+					"name" : "human_hand_msgs__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "human_hand_msgs__rs::@d91098f0d33d37da0080",
+					"jsonFile" : "target-human_hand_msgs__rs-de989c6cc92d0fdd38d4.json",
+					"name" : "human_hand_msgs__rs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "human_hand_msgs_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-human_hand_msgs_uninstall-0ab405fc95d46344900c.json",
+					"name" : "human_hand_msgs_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-da3bbea16afebe2d8cec.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs",
+		"source" : "/home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

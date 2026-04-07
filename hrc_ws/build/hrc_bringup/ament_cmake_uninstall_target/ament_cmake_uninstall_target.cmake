@@ -55,3 +55,6 @@ endforeach()
 message(STATUS "Execute custom uninstall script")
 
 # begin of custom uninstall code
+
+# uninstall files installed using the symlink install functions
+include("/home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup/ament_cmake_symlink_install/ament_cmake_symlink_install_uninstall_script.cmake")

@@ -897,7 +897,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 }
 
                 // Stream raw coordinates to ROS (Ubuntu Bridge)
-                if (this.isPredictionSessionActive && this.rosWriter != null)
+                if (this.rosWriter != null)
                 {
                     try
                     {
@@ -998,6 +998,19 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             this.hasTriggeredChange = false;
             
             this.isPredictionSessionActive = true;
+            if (this.rosWriter != null)
+            {
+                try
+                {
+                    string json = $"{{\"command\": \"start\"}}\n";
+                    this.rosWriter.Write(json);
+                    this.rosWriter.Flush();
+                }
+                catch (Exception ex)
+                {
+                    this.LogEvent("TCP Start Send error: " + ex.Message);
+                }
+            }
             this.lblRecording.Text = "Streaming: Active";
             this.lblRecording.Foreground = new SolidColorBrush(Color.FromRgb(166, 227, 161)); // green
             this.LogEvent("Streaming Started");

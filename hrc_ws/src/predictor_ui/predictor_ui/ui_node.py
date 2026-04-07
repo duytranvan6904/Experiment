@@ -125,6 +125,18 @@ class PredictorUiNode(Node):
                 self._fps_counter_p = 0
         self._fps_t = now
 
+    def reset_buffers(self):
+        with self._lock:
+            self._meas['x'].clear()
+            self._meas['y'].clear()
+            self._meas['z'].clear()
+            self._pred['x'].clear()
+            self._pred['y'].clear()
+            self._pred['z'].clear()
+            self._t_meas.clear()
+            self._t_pred.clear()
+            self.get_logger().info('[UI] Graph buffers reset')
+
     def get_buffers(self):
         with self._lock:
             return (
@@ -244,21 +256,12 @@ class DashboardWindow:
 
         ctrl.addStretch()
 
-        # Predictor toggle
-        self.btn_pred = QtWidgets.QPushButton('▶ Start Prediction')
-        self.btn_pred.setFixedWidth(160)
-        self.btn_pred.setCheckable(True)
-        self.btn_pred.setStyleSheet(self._btn_style('#1a6b2e', '#2ba347'))
-        self.btn_pred.clicked.connect(self._toggle_prediction)
-        ctrl.addWidget(self.btn_pred)
-
-        # Logger toggle
-        self.btn_log = QtWidgets.QPushButton('⏺ Start Logging')
-        self.btn_log.setFixedWidth(160)
-        self.btn_log.setCheckable(True)
-        self.btn_log.setStyleSheet(self._btn_style('#6b1a1a', '#c0392b'))
-        self.btn_log.clicked.connect(self._toggle_logging)
-        ctrl.addWidget(self.btn_log)
+        # Reset Graph button
+        self.btn_reset = QtWidgets.QPushButton('⟳ Reset Graph')
+        self.btn_reset.setFixedWidth(160)
+        self.btn_reset.setStyleSheet(self._btn_style('#6b1a1a', '#c0392b'))
+        self.btn_reset.clicked.connect(self._reset_graph)
+        ctrl.addWidget(self.btn_reset)
 
         main_layout.addLayout(ctrl)
 
@@ -274,17 +277,12 @@ class DashboardWindow:
         return (
             f'QPushButton {{ background: {bg_off}; color: #e0e0e0; border: none; '
             f'border-radius: 4px; padding: 6px 10px; font-weight: bold; }}'
-            f'QPushButton:checked {{ background: {bg_on}; }}'
             f'QPushButton:hover {{ opacity: 0.85; }}'
+            f'QPushButton:pressed {{ background: {bg_on}; }}'
         )
 
-    def _toggle_prediction(self, checked):
-        self.node.call_predictor_toggle(checked)
-        self.btn_pred.setText('⏸ Stop Prediction' if checked else '▶ Start Prediction')
-
-    def _toggle_logging(self, checked):
-        self.node.call_logger_toggle(checked)
-        self.btn_log.setText('⏹ Stop Logging' if checked else '⏺ Start Logging')
+    def _reset_graph(self):
+        self.node.reset_buffers()
 
     def _refresh(self):
         (mx, my, mz, px, py, pz,

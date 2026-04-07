@@ -52,7 +52,8 @@ class ExperimentLoggerNode(Node):
         # Subscribers
         self.create_subscription(HandState, '/hand_position', self._on_hand, 10)
         self.create_subscription(HandPrediction, '/ml/predicted_position', self._on_prediction, 10)
-        # Stop command from bridge (scenario_id string from Windows)
+        # Commands from bridge
+        self.create_subscription(String, '/bridge/start_command', self._on_start_command, 5)
         self.create_subscription(String, '/bridge/stop_command', self._on_stop_command, 5)
 
         # Service to toggle recording
@@ -104,6 +105,13 @@ class ExperimentLoggerNode(Node):
             finally:
                 self.csv_file = None
                 self.csv_writer = None
+
+    def _on_start_command(self, msg: String):
+        """Nhận lệnh start từ bridge khi Windows bấm Start Prediction."""
+        self.get_logger().info('Start command received from bridge. Auto-starting logger.')
+        if not self.is_logging:
+            self.is_logging = True
+            self._start_logging()
 
     def _on_stop_command(self, msg: String):
         """Nhận scenario_id từ bridge khi Windows bấm Stop."""

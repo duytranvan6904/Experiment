@@ -20,7 +20,7 @@ import time
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
-from human_hand_msgs.msg import HandPrediction, SystemStatus
+from human_hand_msgs.msg import HandPrediction, SystemStatus, HandState
 
 
 class KinectBridgeNode(Node):
@@ -41,11 +41,12 @@ class KinectBridgeNode(Node):
         self.source_name = self.get_parameter('source_name').value
 
         # Publishers
-        # Raw XYZ from Kinect (forwarded as HandPrediction with model_name='raw')
-        self.pred_pub = self.create_publisher(HandPrediction, '/predicted_position', 10)
+        self.hand_pub = self.create_publisher(HandState, '/hand_position', 10)
         self.status_pub = self.create_publisher(SystemStatus, '/system_status', 10)
-        # Stop command: publishes scenario_id string when Windows sends stop
+        
+        # Stop and Start commands from Windows
         self.stop_pub = self.create_publisher(String, '/bridge/stop_command', 5)
+        self.start_pub = self.create_publisher(String, '/bridge/start_command', 5)
 
         # Status tracking
         self.connected = False
@@ -148,22 +149,25 @@ class KinectBridgeNode(Node):
                 stop_msg = String()
                 stop_msg.data = scenario_id
                 self.stop_pub.publish(stop_msg)
+            elif cmd == 'start':
+                self.get_logger().info('Start command received')
+                start_msg = String()
+                start_msg.data = 'start'
+                self.start_pub.publish(start_msg)
             else:
                 self.get_logger().warn(f'Unknown command: {cmd}')
             return
 
         # ── Normal hand position frame ───────────────────────────────────────
-        msg = HandPrediction()
-        msg.header.stamp = self.get_clock().now().to_msg()
-        msg.header.frame_id = 'kinect_world'
-        msg.x = float(data.get('x', 0.0))
-        msg.y = float(data.get('y', 0.0))
-        msg.z = float(data.get('z', 0.0))
-        msg.inference_time_ms = 0.0
-        msg.model_name = 'raw'   # Đánh dấu đây là raw XYZ, chưa qua predict
-        msg.prediction_confidence = 1.0
+        state_msg = HandState()
+        state_msg.header.stamp = self.get_clock().now().to_msg()
+        state_msg.header.frame_id = 'kinect_world'
+        state_msg.x = float(data.get('x', 0.0))
+        state_msg.y = float(data.get('y', 0.0))
+        state_msg.z = float(data.get('z', 0.0))
+        state_msg.is_tracked = True
 
-        self.pred_pub.publish(msg)
+        self.hand_pub.publish(state_msg)
 
         # Update stats
         self.last_receive_time = time.time()
