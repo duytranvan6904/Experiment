@@ -72,6 +72,7 @@ class PredictorNode(Node):
         self._worker_proc: subprocess.Popen | None = None
         self._worker_lock = threading.Lock()
         self._pending_model_switch: str | None = None
+        self._last_ema_pred = None
 
         # ── Publishers ───────────────────────────────────────────────────────
         self.pred_pub = self.create_publisher(
@@ -256,12 +257,14 @@ class PredictorNode(Node):
     def _on_start_command(self, msg: String):
         """Nhận lệnh start từ Windows, bắt đầu inference."""
         self._predicting = True
+        self._last_ema_pred = None
         self.get_logger().info('[Predictor] Predicting STARTED via bridge command')
 
     def _on_stop_command(self, msg: String):
         """Nhận lệnh stop từ Windows, dừng inference và xóa buffer."""
         self._predicting = False
         self._buffer.clear()
+        self._last_ema_pred = None
         self.get_logger().info(f'[Predictor] Predicting STOPPED via bridge command (scenario: {msg.data})')
 
     def _ingest_point(self, x: float, y: float, z: float):
@@ -272,7 +275,7 @@ class PredictorNode(Node):
             return
 
         if len(self._buffer) < self.window_size:
-            # Zero-pad ở đầu
+            # Zero-pad at the beginning
             pad_count = self.window_size - len(self._buffer)
             padded = [[0.0, 0.0, 0.0]] * pad_count + list(self._buffer)
         else:
@@ -296,6 +299,7 @@ class PredictorNode(Node):
         response.message = 'Predicting STARTED' if self._predicting else 'Predicting STOPPED'
         if not self._predicting:
             self._buffer.clear()
+            self._last_ema_pred = None
         self.get_logger().info(f'[Predictor] {response.message}')
         return response
 
@@ -336,6 +340,7 @@ class PredictorNode(Node):
             dt = time.time() - self._last_data_time
             if dt > self.clear_timeout and self._buffer:
                 self._buffer.clear()
+                self._last_ema_pred = None
                 self.get_logger().info(
                     f'[Predictor] Buffer cleared (no data for {dt:.1f}s)')
 

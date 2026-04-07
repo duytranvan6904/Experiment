@@ -104,15 +104,9 @@ class PredictorUiNode(Node):
         t = time.time()
         with self._lock:
             self._t_meas.append(t)
-            alpha = 0.3
-            if not self._meas['x']:
-                self._meas['x'].append(msg.x)
-                self._meas['y'].append(msg.y)
-                self._meas['z'].append(msg.z)
-            else:
-                self._meas['x'].append(alpha * msg.x + (1 - alpha) * self._meas['x'][-1])
-                self._meas['y'].append(alpha * msg.y + (1 - alpha) * self._meas['y'][-1])
-                self._meas['z'].append(alpha * msg.z + (1 - alpha) * self._meas['z'][-1])
+            self._meas['x'].append(msg.x)
+            self._meas['y'].append(msg.y)
+            self._meas['z'].append(msg.z)
             self._fps_counter_m += 1
 
     def _cb_pred(self, msg: HandPrediction):
