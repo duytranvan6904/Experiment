@@ -79,6 +79,9 @@ class PredictorUiNode(Node):
         self._logger_cli = self.create_client(SetBool, '/logger/toggle')
         self._predictor_cli = self.create_client(SetBool, '/predictor/toggle')
 
+        # ── Listen for bridge start to auto-reset ────────────────────────────
+        self.create_subscription(String, '/bridge/start_command', self._on_start_cmd, 10)
+
         # ── FPS timer ───────────────────────────────────────────────────────
         self.create_timer(1.0, self._update_fps)
 
@@ -91,15 +94,25 @@ class PredictorUiNode(Node):
 
     # ── ROS Callbacks ────────────────────────────────────────────────────────
 
+    def _on_start_cmd(self, msg: String):
+        self.reset_buffers()
+        self.get_logger().info('[UI] Auto-reset graphs on start prediction')
+
     def _cb_meas(self, msg: HandState):
         if not msg.is_tracked:
             return
         t = time.time()
         with self._lock:
             self._t_meas.append(t)
-            self._meas['x'].append(msg.x)
-            self._meas['y'].append(msg.y)
-            self._meas['z'].append(msg.z)
+            alpha = 0.3
+            if not self._meas['x']:
+                self._meas['x'].append(msg.x)
+                self._meas['y'].append(msg.y)
+                self._meas['z'].append(msg.z)
+            else:
+                self._meas['x'].append(alpha * msg.x + (1 - alpha) * self._meas['x'][-1])
+                self._meas['y'].append(alpha * msg.y + (1 - alpha) * self._meas['y'][-1])
+                self._meas['z'].append(alpha * msg.z + (1 - alpha) * self._meas['z'][-1])
             self._fps_counter_m += 1
 
     def _cb_pred(self, msg: HandPrediction):
@@ -124,6 +137,18 @@ class PredictorUiNode(Node):
                 self._fps_counter_m = 0
                 self._fps_counter_p = 0
         self._fps_t = now
+
+    def reset_buffers(self):
+        with self._lock:
+            self._meas['x'].clear()
+            self._meas['y'].clear()
+            self._meas['z'].clear()
+            self._pred['x'].clear()
+            self._pred['y'].clear()
+            self._pred['z'].clear()
+            self._t_meas.clear()
+            self._t_pred.clear()
+            self.get_logger().info('[UI] Graph buffers reset')
 
     def get_buffers(self):
         with self._lock:
@@ -244,21 +269,12 @@ class DashboardWindow:
 
         ctrl.addStretch()
 
-        # Predictor toggle
-        self.btn_pred = QtWidgets.QPushButton('▶ Start Prediction')
-        self.btn_pred.setFixedWidth(160)
-        self.btn_pred.setCheckable(True)
-        self.btn_pred.setStyleSheet(self._btn_style('#1a6b2e', '#2ba347'))
-        self.btn_pred.clicked.connect(self._toggle_prediction)
-        ctrl.addWidget(self.btn_pred)
-
-        # Logger toggle
-        self.btn_log = QtWidgets.QPushButton('⏺ Start Logging')
-        self.btn_log.setFixedWidth(160)
-        self.btn_log.setCheckable(True)
-        self.btn_log.setStyleSheet(self._btn_style('#6b1a1a', '#c0392b'))
-        self.btn_log.clicked.connect(self._toggle_logging)
-        ctrl.addWidget(self.btn_log)
+        # Reset Graph button
+        self.btn_reset = QtWidgets.QPushButton('⟳ Reset Graph')
+        self.btn_reset.setFixedWidth(160)
+        self.btn_reset.setStyleSheet(self._btn_style('#6b1a1a', '#c0392b'))
+        self.btn_reset.clicked.connect(self._reset_graph)
+        ctrl.addWidget(self.btn_reset)
 
         main_layout.addLayout(ctrl)
 
@@ -274,17 +290,12 @@ class DashboardWindow:
         return (
             f'QPushButton {{ background: {bg_off}; color: #e0e0e0; border: none; '
             f'border-radius: 4px; padding: 6px 10px; font-weight: bold; }}'
-            f'QPushButton:checked {{ background: {bg_on}; }}'
             f'QPushButton:hover {{ opacity: 0.85; }}'
+            f'QPushButton:pressed {{ background: {bg_on}; }}'
         )
 
-    def _toggle_prediction(self, checked):
-        self.node.call_predictor_toggle(checked)
-        self.btn_pred.setText('⏸ Stop Prediction' if checked else '▶ Start Prediction')
-
-    def _toggle_logging(self, checked):
-        self.node.call_logger_toggle(checked)
-        self.btn_log.setText('⏹ Stop Logging' if checked else '⏺ Start Logging')
+    def _reset_graph(self):
+        self.node.reset_buffers()
 
     def _refresh(self):
         (mx, my, mz, px, py, pz,
@@ -296,8 +307,9 @@ class DashboardWindow:
         for i in range(3):
             ym = axes_m[i]
             yp = axes_p[i]
-            xm = list(range(len(ym)))
-            xp = list(range(len(yp)))
+            # Align latest measurement and prediction points to the right side of the graph
+            xm = list(range(MAX_POINTS - len(ym), MAX_POINTS))
+            xp = list(range(MAX_POINTS - len(yp), MAX_POINTS))
             self.curves_m[i].setData(xm, ym)
             self.curves_p[i].setData(xp, yp)
 

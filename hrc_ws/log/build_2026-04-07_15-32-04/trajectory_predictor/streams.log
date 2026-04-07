@@ -1,0 +1,17 @@
+[6.030s] Invoking command in '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor': CMAKE_PREFIX_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs LD_LIBRARY_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build --no-deps symlink_data
+[7.209s] running develop
+[8.015s] running egg_info
+[8.015s] writing trajectory_predictor.egg-info/PKG-INFO
+[8.021s] writing dependency_links to trajectory_predictor.egg-info/dependency_links.txt
+[8.023s] writing entry points to trajectory_predictor.egg-info/entry_points.txt
+[8.023s] writing requirements to trajectory_predictor.egg-info/requires.txt
+[8.023s] writing top-level names to trajectory_predictor.egg-info/top_level.txt
+[8.026s] reading manifest file 'trajectory_predictor.egg-info/SOURCES.txt'
+[8.036s] writing manifest file 'trajectory_predictor.egg-info/SOURCES.txt'
+[8.045s] running build_ext
+[8.046s] Creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory-predictor.egg-link (link to .)
+[8.047s] Installing predictor_node script to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/trajectory_predictor
+[8.048s] 
+[8.048s] Installed /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor
+[8.052s] running symlink_data
+[8.138s] Invoked command in '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor' returned '0': CMAKE_PREFIX_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs LD_LIBRARY_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build --no-deps symlink_data

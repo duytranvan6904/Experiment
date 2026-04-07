@@ -14,7 +14,7 @@ def generate_launch_description():
     # ──── Launch arguments ────
     model_dir_arg = DeclareLaunchArgument(
         'model_dir',
-        default_value=os.path.expanduser('~/Downloads/GRU-Model-main'),
+        default_value='/home/duy/Documents/GitHub/Experiment/Trained model',
         description='Path to directory containing .h5 models and .pkl scalers'
     )
 

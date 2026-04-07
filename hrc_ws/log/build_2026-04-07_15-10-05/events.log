@@ -1,0 +1,98 @@
+[0.000000] (-) TimerEvent: {}
+[0.002010] (-) JobUnselected: {'identifier': 'experiment_logger'}
+[0.002410] (-) JobUnselected: {'identifier': 'hrc_bringup'}
+[0.002797] (-) JobUnselected: {'identifier': 'human_hand_msgs'}
+[0.002884] (-) JobUnselected: {'identifier': 'predictor_ui'}
+[0.002962] (kinect_bridge) JobQueued: {'identifier': 'kinect_bridge', 'dependencies': OrderedDict([('human_hand_msgs', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs')])}
+[0.003104] (trajectory_predictor) JobQueued: {'identifier': 'trajectory_predictor', 'dependencies': OrderedDict([('human_hand_msgs', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs')])}
+[0.003199] (kinect_bridge) JobStarted: {'identifier': 'kinect_bridge'}
+[0.028245] (trajectory_predictor) JobStarted: {'identifier': 'trajectory_predictor'}
+[0.099245] (-) TimerEvent: {}
+[0.199821] (-) TimerEvent: {}
+[0.300423] (-) TimerEvent: {}
+[0.401051] (-) TimerEvent: {}
+[0.501650] (-) TimerEvent: {}
+[0.602246] (-) TimerEvent: {}
+[0.702873] (-) TimerEvent: {}
+[0.806586] (-) TimerEvent: {}
+[0.907402] (-) TimerEvent: {}
+[1.008186] (-) TimerEvent: {}
+[1.109913] (-) TimerEvent: {}
+[1.210764] (-) TimerEvent: {}
+[1.311376] (-) TimerEvent: {}
+[1.412013] (-) TimerEvent: {}
+[1.512624] (-) TimerEvent: {}
+[1.613218] (-) TimerEvent: {}
+[1.713834] (-) TimerEvent: {}
+[1.814430] (-) TimerEvent: {}
+[1.915044] (-) TimerEvent: {}
+[2.015670] (-) TimerEvent: {}
+[2.116809] (-) TimerEvent: {}
+[2.217556] (-) TimerEvent: {}
+[2.318167] (-) TimerEvent: {}
+[2.418762] (-) TimerEvent: {}
+[2.519320] (-) TimerEvent: {}
+[2.619938] (-) TimerEvent: {}
+[2.720545] (-) TimerEvent: {}
+[2.821148] (-) TimerEvent: {}
+[2.921774] (-) TimerEvent: {}
+[3.022385] (-) TimerEvent: {}
+[3.123021] (-) TimerEvent: {}
+[3.223605] (-) TimerEvent: {}
+[3.324269] (-) TimerEvent: {}
+[3.401916] (kinect_bridge) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/build', '--no-deps', 'symlink_data'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'LANGUAGE': 'en_US:en', 'USER': 'duy', 'LC_TIME': 'vi_VN', 'XDG_SESSION_TYPE': 'wayland', 'ROS_PACKAGE_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/home/duy', 'OLDPWD': '/home/duy', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'LC_MONETARY': 'vi_VN', 'SYSTEMD_EXEC_PID': '1162', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'humble', 'LOGNAME': 'duy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'PKG_CONFIG_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig', 'USERNAME': 'duy', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/home/duy/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/duy:@/tmp/.ICE-unix/1126,unix/duy:/tmp/.ICE-unix/1126', 'PAPERSIZE': 'a4', 'XDG_MENU_PREFIX': 'gnome-', 'LC_ADDRESS': 'vi_VN', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/28cee6ff_e68d_44b7_a6b8_4dfaf3233ca9', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'LC_TELEPHONE': 'vi_VN', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.N2ZRN3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'GNOME_TERMINAL_SERVICE': ':1.159', 'SSH_AGENT_LAUNCHER': 'gnome-keyring', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'LC_NAME': 'vi_VN', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'LC_MEASUREMENT': 'vi_VN', 'LC_IDENTIFICATION': 'vi_VN', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'LC_NUMERIC': 'vi_VN', 'LC_PAPER': 'vi_VN', 'COLCON': '1', 'VTE_VERSION': '6800', 'CMAKE_PREFIX_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs'}, 'shell': False}
+[3.415254] (trajectory_predictor) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build', '--no-deps', 'symlink_data'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'LANGUAGE': 'en_US:en', 'USER': 'duy', 'LC_TIME': 'vi_VN', 'XDG_SESSION_TYPE': 'wayland', 'ROS_PACKAGE_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/home/duy', 'OLDPWD': '/home/duy', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'LC_MONETARY': 'vi_VN', 'SYSTEMD_EXEC_PID': '1162', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'humble', 'LOGNAME': 'duy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'PKG_CONFIG_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig', 'USERNAME': 'duy', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/home/duy/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/duy:@/tmp/.ICE-unix/1126,unix/duy:/tmp/.ICE-unix/1126', 'PAPERSIZE': 'a4', 'XDG_MENU_PREFIX': 'gnome-', 'LC_ADDRESS': 'vi_VN', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/28cee6ff_e68d_44b7_a6b8_4dfaf3233ca9', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'LC_TELEPHONE': 'vi_VN', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.N2ZRN3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'GNOME_TERMINAL_SERVICE': ':1.159', 'SSH_AGENT_LAUNCHER': 'gnome-keyring', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'LC_NAME': 'vi_VN', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'LC_MEASUREMENT': 'vi_VN', 'LC_IDENTIFICATION': 'vi_VN', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'LC_NUMERIC': 'vi_VN', 'LC_PAPER': 'vi_VN', 'COLCON': '1', 'VTE_VERSION': '6800', 'CMAKE_PREFIX_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs'}, 'shell': False}
+[3.424426] (-) TimerEvent: {}
+[3.525205] (-) TimerEvent: {}
+[3.625968] (-) TimerEvent: {}
+[3.726748] (-) TimerEvent: {}
+[3.827558] (-) TimerEvent: {}
+[3.928304] (-) TimerEvent: {}
+[4.029081] (-) TimerEvent: {}
+[4.129856] (-) TimerEvent: {}
+[4.230603] (-) TimerEvent: {}
+[4.331369] (-) TimerEvent: {}
+[4.425657] (kinect_bridge) StdoutLine: {'line': b'running develop\n'}
+[4.429908] (trajectory_predictor) StdoutLine: {'line': b'running develop\n'}
+[4.431534] (-) TimerEvent: {}
+[4.532219] (-) TimerEvent: {}
+[4.632993] (-) TimerEvent: {}
+[4.733766] (-) TimerEvent: {}
+[4.834531] (-) TimerEvent: {}
+[4.935277] (-) TimerEvent: {}
+[5.036094] (-) TimerEvent: {}
+[5.067892] (kinect_bridge) StdoutLine: {'line': b'running egg_info\n'}
+[5.068860] (kinect_bridge) StdoutLine: {'line': b'writing kinect_bridge.egg-info/PKG-INFO\n'}
+[5.069830] (kinect_bridge) StdoutLine: {'line': b'writing dependency_links to kinect_bridge.egg-info/dependency_links.txt\n'}
+[5.070563] (kinect_bridge) StdoutLine: {'line': b'writing entry points to kinect_bridge.egg-info/entry_points.txt\n'}
+[5.071276] (kinect_bridge) StdoutLine: {'line': b'writing requirements to kinect_bridge.egg-info/requires.txt\n'}
+[5.071991] (kinect_bridge) StdoutLine: {'line': b'writing top-level names to kinect_bridge.egg-info/top_level.txt\n'}
+[5.080947] (kinect_bridge) StdoutLine: {'line': b"reading manifest file 'kinect_bridge.egg-info/SOURCES.txt'\n"}
+[5.081684] (trajectory_predictor) StdoutLine: {'line': b'running egg_info\n'}
+[5.082363] (trajectory_predictor) StdoutLine: {'line': b'writing trajectory_predictor.egg-info/PKG-INFO\n'}
+[5.083354] (trajectory_predictor) StdoutLine: {'line': b'writing dependency_links to trajectory_predictor.egg-info/dependency_links.txt\n'}
+[5.084121] (trajectory_predictor) StdoutLine: {'line': b'writing entry points to trajectory_predictor.egg-info/entry_points.txt\n'}
+[5.084890] (trajectory_predictor) StdoutLine: {'line': b'writing requirements to trajectory_predictor.egg-info/requires.txt\n'}
+[5.085567] (trajectory_predictor) StdoutLine: {'line': b'writing top-level names to trajectory_predictor.egg-info/top_level.txt\n'}
+[5.086181] (kinect_bridge) StdoutLine: {'line': b"writing manifest file 'kinect_bridge.egg-info/SOURCES.txt'\n"}
+[5.092118] (trajectory_predictor) StdoutLine: {'line': b"reading manifest file 'trajectory_predictor.egg-info/SOURCES.txt'\n"}
+[5.093204] (kinect_bridge) StdoutLine: {'line': b'running build_ext\n'}
+[5.094474] (kinect_bridge) StdoutLine: {'line': b'Creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect-bridge.egg-link (link to .)\n'}
+[5.096252] (trajectory_predictor) StdoutLine: {'line': b"writing manifest file 'trajectory_predictor.egg-info/SOURCES.txt'\n"}
+[5.098856] (kinect_bridge) StdoutLine: {'line': b'Installing bridge_node script to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/kinect_bridge\n'}
+[5.100183] (kinect_bridge) StdoutLine: {'line': b'\n'}
+[5.100930] (kinect_bridge) StdoutLine: {'line': b'Installed /home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge\n'}
+[5.101431] (kinect_bridge) StdoutLine: {'line': b'running symlink_data\n'}
+[5.102273] (trajectory_predictor) StdoutLine: {'line': b'running build_ext\n'}
+[5.103395] (trajectory_predictor) StdoutLine: {'line': b'Creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory-predictor.egg-link (link to .)\n'}
+[5.106813] (trajectory_predictor) StdoutLine: {'line': b'Installing predictor_node script to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/trajectory_predictor\n'}
+[5.107972] (trajectory_predictor) StdoutLine: {'line': b'\n'}
+[5.108697] (trajectory_predictor) StdoutLine: {'line': b'Installed /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor\n'}
+[5.109234] (trajectory_predictor) StdoutLine: {'line': b'running symlink_data\n'}
+[5.136289] (-) TimerEvent: {}
+[5.179105] (kinect_bridge) CommandEnded: {'returncode': 0}
+[5.226816] (kinect_bridge) JobEnded: {'identifier': 'kinect_bridge', 'rc': 0}
+[5.232004] (trajectory_predictor) CommandEnded: {'returncode': 0}
+[5.237953] (-) TimerEvent: {}
+[5.264913] (trajectory_predictor) JobEnded: {'identifier': 'trajectory_predictor', 'rc': 0}
+[5.267479] (-) EventReactorShutdown: {}

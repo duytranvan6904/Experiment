@@ -1,0 +1,17 @@
+[5.845s] Invoking command in '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger': CMAKE_PREFIX_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs LD_LIBRARY_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/build --no-deps symlink_data
+[6.986s] running develop
+[7.727s] running egg_info
+[7.728s] writing experiment_logger.egg-info/PKG-INFO
+[7.728s] writing dependency_links to experiment_logger.egg-info/dependency_links.txt
+[7.729s] writing entry points to experiment_logger.egg-info/entry_points.txt
+[7.730s] writing requirements to experiment_logger.egg-info/requires.txt
+[7.730s] writing top-level names to experiment_logger.egg-info/top_level.txt
+[7.736s] reading manifest file 'experiment_logger.egg-info/SOURCES.txt'
+[7.739s] writing manifest file 'experiment_logger.egg-info/SOURCES.txt'
+[7.744s] running build_ext
+[7.745s] Creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages/experiment-logger.egg-link (link to .)
+[7.749s] Installing logger_node script to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/experiment_logger
+[7.750s] 
+[7.751s] Installed /home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger
+[7.751s] running symlink_data
+[7.851s] Invoked command in '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger' returned '0': CMAKE_PREFIX_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs LD_LIBRARY_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/build --no-deps symlink_data

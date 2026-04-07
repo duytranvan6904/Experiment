@@ -15,12 +15,14 @@ import traceback
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 os.environ["PYTHONHASHSEED"] = "0"
+os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 
 import numpy as np
 # Set thread count to 1 for small models to avoid context switching overhead
 import tensorflow as tf
-tf.config.threading.set_intra_op_parallelism_threads(1)
-tf.config.threading.set_inter_op_parallelism_threads(1)
+# Allow default threading logic for optimal performance natively.
+# tf.config.threading.set_intra_op_parallelism_threads(1)
+# tf.config.threading.set_inter_op_parallelism_threads(1)
 
 # Pre-import scipy filter once at startup (not per-prediction)
 try:
@@ -124,8 +126,15 @@ def main():
 
             current_model = keras_load(path, compile=False, custom_objects=custom_objects)
             current_model_name = name
+            
+            # Use tf.function for JIT optimization of the prediction graph
+            @tf.function(reduce_retracing=True)
+            def fast_predict(x):
+                return current_model(x, training=False)
+                
+            current_model.fast_predict = fast_predict
             dummy = np.zeros((1, window_size, num_features), dtype=np.float32)
-            current_model.predict(dummy, verbose=0)
+            current_model.fast_predict(dummy) # warmup
             return True, f"Model '{name}' loaded OK"
         except Exception as e:
             return False, f"Load error: {e}"
@@ -203,8 +212,8 @@ def main():
                 input_scaled = scale_input(input_batch)
 
                 t0 = time.time()
-                # Fast branch: predict_on_batch avoids __call__ retracing overhead and verbose loop overhead
-                pred_tensor = current_model.predict_on_batch(input_scaled)
+                # Fast branch: compiled tf.function avoids dispatch overhead
+                pred_tensor = current_model.fast_predict(input_scaled)
                 if isinstance(pred_tensor, list):
                     pred_scaled = [t.numpy() if hasattr(t, 'numpy') else t for t in pred_tensor]
                 else:

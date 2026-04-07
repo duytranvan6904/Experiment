@@ -897,7 +897,7 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                 }
 
                 // Stream raw coordinates to ROS (Ubuntu Bridge)
-                if (this.rosWriter != null)
+                if (this.rosWriter != null && this.isPredictionSessionActive)
                 {
                     try
                     {
