@@ -65,8 +65,12 @@ namespace Microsoft.Samples.Kinect.BodyBasics
             {
                 string json = string.Format(
                     CultureInfo.InvariantCulture,
-                    "{{\"x\":{0:F6},\"y\":{1:F6},\"z\":{2:F6},\"id\":{3},\"ts\":\"{4:o}\",\"tracked\":true,\"confidence\":1.0}}\n",
-                    x, y, z, trackingId, timestamp);
+                    "{{\"x\": {0}, \"y\": {1}, \"z\": {2}, \"id\": {3}, \"ts\": \"{4:o}\", \"tracked\": true, \"confidence\": 1.0}}\n",
+                    x.ToString("F6", CultureInfo.InvariantCulture), 
+                    y.ToString("F6", CultureInfo.InvariantCulture), 
+                    z.ToString("F6", CultureInfo.InvariantCulture), 
+                    trackingId, 
+                    timestamp);
 
                 byte[] data = Encoding.UTF8.GetBytes(json);
 

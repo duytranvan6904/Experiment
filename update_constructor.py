@@ -70,8 +70,13 @@ old_pred_received = '''            this.predictionManager.PredictionReceived += 
                     try
                     {
                         string json = string.Format(CultureInfo.InvariantCulture,
-                            "{{\\"x\\": {0:F6}, \\"y\\": {1:F6}, \\"z\\": {2:F6}, \\"inference_ms\\": {3:F2}, \\"model_name\\": \\"{4}\\", \\"confidence\\": {5:F2}}}",
-                            res.FinalX, res.FinalY, res.FinalZ, res.inference_ms, res.model_name, 1.0);
+                            "{{\\"x\\": {0}, \\"y\\": {1}, \\"z\\": {2}, \\"inference_ms\\": {3}, \\"model_name\\": \\"{4}\\", \\"confidence\\": {5}}}",
+                            res.FinalX.ToString("F6", CultureInfo.InvariantCulture), 
+                            res.FinalY.ToString("F6", CultureInfo.InvariantCulture), 
+                            res.FinalZ.ToString("F6", CultureInfo.InvariantCulture), 
+                            res.inference_ms.ToString("F2", CultureInfo.InvariantCulture), 
+                            res.model_name, 
+                            (1.0).ToString("F2", CultureInfo.InvariantCulture));
                         this.rosWriter.WriteLine(json);
                     }
                     catch { }
@@ -146,8 +151,13 @@ new_pred_received = '''            this.predictionManager.PredictionReceived += 
                     try
                     {
                         string json = string.Format(CultureInfo.InvariantCulture,
-                            "{{\\"x\\": {0:F6}, \\"y\\": {1:F6}, \\"z\\": {2:F6}, \\"inference_ms\\": {3:F2}, \\"model_name\\": \\"{4}\\", \\"confidence\\": {5:F2}}}",
-                            res.FinalX, res.FinalY, res.FinalZ, res.inference_ms, res.model_name, 1.0);
+                            "{{\\"x\\": {0}, \\"y\\": {1}, \\"z\\": {2}, \\"inference_ms\\": {3}, \\"model_name\\": \\"{4}\\", \\"confidence\\": {5}}}",
+                            res.FinalX.ToString("F6", CultureInfo.InvariantCulture), 
+                            res.FinalY.ToString("F6", CultureInfo.InvariantCulture), 
+                            res.FinalZ.ToString("F6", CultureInfo.InvariantCulture), 
+                            res.inference_ms.ToString("F2", CultureInfo.InvariantCulture), 
+                            res.model_name, 
+                            (1.0).ToString("F2", CultureInfo.InvariantCulture));
                         this.rosWriter.WriteLine(json);
                     }
                     catch { }

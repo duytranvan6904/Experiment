@@ -902,8 +902,10 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                     try
                     {
                         string json = string.Format(CultureInfo.InvariantCulture,
-                            "{{\"x\": {0:F6}, \"y\": {1:F6}, \"z\": {2:F6}}}\n",
-                            cx, cy, cz);
+                            "{{\"x\": {0}, \"y\": {1}, \"z\": {2}}}\n",
+                            cx.ToString("F6", CultureInfo.InvariantCulture),
+                            cy.ToString("F6", CultureInfo.InvariantCulture),
+                            cz.ToString("F6", CultureInfo.InvariantCulture));
                         this.rosWriter.Write(json);
                         this.rosWriter.Flush();
                     }
