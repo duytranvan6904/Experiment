@@ -230,12 +230,20 @@ class PredictorNode(Node):
     def _send_to_worker(self, cmd: dict):
         with self._worker_lock:
             proc = self._worker_proc
-        if proc and proc.poll() is None and self._worker_ready:
+            ready = self._worker_ready
+        
+        if proc and proc.poll() is None and ready:
             try:
                 proc.stdin.write(json.dumps(cmd) + '\n')
                 proc.stdin.flush()
             except BrokenPipeError:
                 self.get_logger().error('[Predictor] Worker pipe broken')
+        else:
+            if cmd.get('cmd') == 'predict':
+                # Don't spam for every frame, but log once in a while if busy
+                pass
+            else:
+                self.get_logger().warn(f'[Predictor] Cannot send command {cmd.get("cmd")} - Worker NOT READY')
 
     # ── ROS Callbacks ────────────────────────────────────────────────────────
 

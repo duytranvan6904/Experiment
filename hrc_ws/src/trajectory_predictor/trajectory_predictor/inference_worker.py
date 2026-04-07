@@ -15,6 +15,7 @@ import traceback
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 os.environ["PYTHONHASHSEED"] = "0"
+os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 
 import numpy as np
 # Set thread count to 1 for small models to avoid context switching overhead
