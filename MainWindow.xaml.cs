@@ -904,7 +904,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         string json = string.Format(CultureInfo.InvariantCulture,
                             "{{\"x\": {0:F6}, \"y\": {1:F6}, \"z\": {2:F6}}}\n",
                             cx, cy, cz);
-                        this.rosWriter.WriteLine(json);
+                        this.rosWriter.Write(json);
+                        this.rosWriter.Flush();
                     }
                     catch { }
                 }
@@ -1040,7 +1041,8 @@ namespace Microsoft.Samples.Kinect.BodyBasics
                         try
                         {
                             string json = $"{{\"command\": \"stop\", \"scenario_id\": \"{this.currentTargetId}\"}}\n";
-                            this.rosWriter.WriteLine(json);
+                            this.rosWriter.Write(json);
+                            this.rosWriter.Flush();
                         }
                         catch (Exception ex)
                         {

@@ -135,7 +135,7 @@ class KinectBridgeNode(Node):
         try:
             data = json.loads(json_str)
         except json.JSONDecodeError as e:
-            self.get_logger().warn(f'Invalid JSON: {e}')
+            self.get_logger().warn(f'Invalid JSON: {e} | Content: {json_str!r}')
             return
 
         # ── Control command from Windows ────────────────────────────────────
