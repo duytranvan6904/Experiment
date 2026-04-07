@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/duy/Experiment/hrc_ws/src/human_hand_msgs
+CMAKE_SOURCE_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/duy/Experiment/hrc_ws/build/human_hand_msgs
+CMAKE_BINARY_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs
 
 # Utility rule file for human_hand_msgs.
 
@@ -66,10 +66,10 @@ include CMakeFiles/human_hand_msgs.dir/compiler_depend.make
 # Include the progress variables for this target.
 include CMakeFiles/human_hand_msgs.dir/progress.make
 
-CMakeFiles/human_hand_msgs: /home/duy/Experiment/hrc_ws/src/human_hand_msgs/msg/HandState.msg
-CMakeFiles/human_hand_msgs: /home/duy/Experiment/hrc_ws/src/human_hand_msgs/msg/HandPrediction.msg
-CMakeFiles/human_hand_msgs: /home/duy/Experiment/hrc_ws/src/human_hand_msgs/msg/SystemStatus.msg
-CMakeFiles/human_hand_msgs: /home/duy/Experiment/hrc_ws/src/human_hand_msgs/srv/SelectModel.srv
+CMakeFiles/human_hand_msgs: /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs/msg/HandState.msg
+CMakeFiles/human_hand_msgs: /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs/msg/HandPrediction.msg
+CMakeFiles/human_hand_msgs: /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs/msg/SystemStatus.msg
+CMakeFiles/human_hand_msgs: /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs/srv/SelectModel.srv
 CMakeFiles/human_hand_msgs: rosidl_cmake/srv/SelectModel_Request.msg
 CMakeFiles/human_hand_msgs: rosidl_cmake/srv/SelectModel_Response.msg
 CMakeFiles/human_hand_msgs: /opt/ros/humble/share/std_msgs/msg/Bool.idl
@@ -118,6 +118,6 @@ CMakeFiles/human_hand_msgs.dir/clean:
 .PHONY : CMakeFiles/human_hand_msgs.dir/clean
 
 CMakeFiles/human_hand_msgs.dir/depend:
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles/human_hand_msgs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles/human_hand_msgs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/human_hand_msgs.dir/depend
 

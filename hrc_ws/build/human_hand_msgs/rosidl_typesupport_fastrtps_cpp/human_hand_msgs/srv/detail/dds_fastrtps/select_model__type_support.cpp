@@ -47,7 +47,7 @@ cdr_deserialize(
   cdr >> ros_message.model_name;
 
   return true;
-}
+}  // NOLINT(readability/fn_size)
 
 size_t
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_human_hand_msgs
@@ -276,7 +276,7 @@ cdr_deserialize(
   cdr >> ros_message.active_model;
 
   return true;
-}
+}  // NOLINT(readability/fn_size)
 
 size_t
 ROSIDL_TYPESUPPORT_FASTRTPS_CPP_PUBLIC_human_hand_msgs

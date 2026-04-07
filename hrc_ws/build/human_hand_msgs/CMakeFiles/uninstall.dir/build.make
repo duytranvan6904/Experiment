@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/duy/Experiment/hrc_ws/src/human_hand_msgs
+CMAKE_SOURCE_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/duy/Experiment/hrc_ws/build/human_hand_msgs
+CMAKE_BINARY_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs
 
 # Utility rule file for uninstall.
 
@@ -78,6 +78,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/uninstall.dir/depend
 

@@ -965,10 +965,10 @@ def main():
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         try:
-            server.bind(('127.0.0.1', 9091))
+            server.bind(('0.0.0.0', 9091))
             server.listen(1)
             server.settimeout(1.0)
-            print("[TCP Listener] Listening on 127.0.0.1:9091 for Y_CROSSED signals...")
+            print("[TCP Listener] Listening on 0.0.0.0:9091 for Y_CROSSED signals...")
             while True:
                 try:
                     conn, addr = server.accept()

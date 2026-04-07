@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/duy/Experiment/hrc_ws/src/human_hand_msgs
+CMAKE_SOURCE_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/duy/Experiment/hrc_ws/build/human_hand_msgs
+CMAKE_BINARY_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs
 
 # Utility rule file for human_hand_msgs__cpp.
 
@@ -139,8 +139,8 @@ rosidl_generator_cpp/human_hand_msgs/msg/hand_state.hpp: /opt/ros/humble/share/s
 rosidl_generator_cpp/human_hand_msgs/msg/hand_state.hpp: /opt/ros/humble/share/std_msgs/msg/UInt8MultiArray.idl
 rosidl_generator_cpp/human_hand_msgs/msg/hand_state.hpp: /opt/ros/humble/share/builtin_interfaces/msg/Duration.idl
 rosidl_generator_cpp/human_hand_msgs/msg/hand_state.hpp: /opt/ros/humble/share/builtin_interfaces/msg/Time.idl
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code for ROS interfaces"
-	/usr/bin/python3 /opt/ros/humble/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_cpp__arguments.json
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code for ROS interfaces"
+	/usr/bin/python3 /opt/ros/humble/share/rosidl_generator_cpp/cmake/../../../lib/rosidl_generator_cpp/rosidl_generator_cpp --generator-arguments-file /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_cpp__arguments.json
 
 rosidl_generator_cpp/human_hand_msgs/msg/detail/hand_state__builder.hpp: rosidl_generator_cpp/human_hand_msgs/msg/hand_state.hpp
 	@$(CMAKE_COMMAND) -E touch_nocreate rosidl_generator_cpp/human_hand_msgs/msg/detail/hand_state__builder.hpp
@@ -232,6 +232,6 @@ CMakeFiles/human_hand_msgs__cpp.dir/clean:
 .PHONY : CMakeFiles/human_hand_msgs__cpp.dir/clean
 
 CMakeFiles/human_hand_msgs__cpp.dir/depend:
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles/human_hand_msgs__cpp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles/human_hand_msgs__cpp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/human_hand_msgs__cpp.dir/depend
 

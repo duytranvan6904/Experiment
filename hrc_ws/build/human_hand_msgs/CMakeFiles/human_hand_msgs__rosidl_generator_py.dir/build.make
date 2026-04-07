@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/duy/Experiment/hrc_ws/src/human_hand_msgs
+CMAKE_SOURCE_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/duy/Experiment/hrc_ws/build/human_hand_msgs
+CMAKE_BINARY_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs
 
 # Include any dependencies generated for this target.
 include CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/depend.make
@@ -72,58 +72,58 @@ include CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/flags.make
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o: CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/flags.make
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o: rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o: CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o -MF CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o.d -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o -c /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o -MF CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o.d -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o -c /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c > CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c > CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.i
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.s
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o: CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/flags.make
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o: rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o: CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o -MF CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o.d -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o -c /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o -MF CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o.d -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o -c /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c > CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c > CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.i
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.s
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o: CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/flags.make
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o: rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o: CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o -MF CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o.d -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o -c /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o -MF CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o.d -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o -c /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c > CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c > CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.i
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.s
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o: CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/flags.make
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o: rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o: CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o -MF CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o.d -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o -c /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o -MF CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o.d -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o -c /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c > CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c > CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.i
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c -o CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.s
 
 # Object files for target human_hand_msgs__rosidl_generator_py
 human_hand_msgs__rosidl_generator_py_OBJECTS = \
@@ -153,7 +153,7 @@ rosidl_generator_py/human_hand_msgs/libhuman_hand_msgs__rosidl_generator_py.so: 
 rosidl_generator_py/human_hand_msgs/libhuman_hand_msgs__rosidl_generator_py.so: /opt/ros/humble/lib/librosidl_runtime_c.so
 rosidl_generator_py/human_hand_msgs/libhuman_hand_msgs__rosidl_generator_py.so: /opt/ros/humble/lib/librcutils.so
 rosidl_generator_py/human_hand_msgs/libhuman_hand_msgs__rosidl_generator_py.so: CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C shared library rosidl_generator_py/human_hand_msgs/libhuman_hand_msgs__rosidl_generator_py.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C shared library rosidl_generator_py/human_hand_msgs/libhuman_hand_msgs__rosidl_generator_py.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -165,6 +165,6 @@ CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/clean:
 .PHONY : CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/clean
 
 CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/depend:
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/depend
 

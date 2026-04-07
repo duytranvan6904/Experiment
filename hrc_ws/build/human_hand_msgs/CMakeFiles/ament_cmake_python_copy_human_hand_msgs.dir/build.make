@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/duy/Experiment/hrc_ws/src/human_hand_msgs
+CMAKE_SOURCE_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/duy/Experiment/hrc_ws/build/human_hand_msgs
+CMAKE_BINARY_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs
 
 # Utility rule file for ament_cmake_python_copy_human_hand_msgs.
 
@@ -67,7 +67,7 @@ include CMakeFiles/ament_cmake_python_copy_human_hand_msgs.dir/compiler_depend.m
 include CMakeFiles/ament_cmake_python_copy_human_hand_msgs.dir/progress.make
 
 CMakeFiles/ament_cmake_python_copy_human_hand_msgs:
-	/usr/bin/cmake -E copy_directory /home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs/ament_cmake_python/human_hand_msgs/human_hand_msgs
+	/usr/bin/cmake -E copy_directory /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_py/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/ament_cmake_python/human_hand_msgs/human_hand_msgs
 
 ament_cmake_python_copy_human_hand_msgs: CMakeFiles/ament_cmake_python_copy_human_hand_msgs
 ament_cmake_python_copy_human_hand_msgs: CMakeFiles/ament_cmake_python_copy_human_hand_msgs.dir/build.make
@@ -82,6 +82,6 @@ CMakeFiles/ament_cmake_python_copy_human_hand_msgs.dir/clean:
 .PHONY : CMakeFiles/ament_cmake_python_copy_human_hand_msgs.dir/clean
 
 CMakeFiles/ament_cmake_python_copy_human_hand_msgs.dir/depend:
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles/ament_cmake_python_copy_human_hand_msgs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles/ament_cmake_python_copy_human_hand_msgs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ament_cmake_python_copy_human_hand_msgs.dir/depend
 

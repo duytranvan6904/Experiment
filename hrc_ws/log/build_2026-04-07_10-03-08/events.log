@@ -1,0 +1,880 @@
+[0.000000] (-) TimerEvent: {}
+[0.003314] (human_hand_msgs) JobQueued: {'identifier': 'human_hand_msgs', 'dependencies': OrderedDict()}
+[0.003473] (experiment_logger) JobQueued: {'identifier': 'experiment_logger', 'dependencies': OrderedDict([('human_hand_msgs', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs')])}
+[0.003627] (kinect_bridge) JobQueued: {'identifier': 'kinect_bridge', 'dependencies': OrderedDict([('human_hand_msgs', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs')])}
+[0.003761] (predictor_ui) JobQueued: {'identifier': 'predictor_ui', 'dependencies': OrderedDict([('human_hand_msgs', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs')])}
+[0.003894] (trajectory_predictor) JobQueued: {'identifier': 'trajectory_predictor', 'dependencies': OrderedDict([('human_hand_msgs', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs')])}
+[0.004028] (hrc_bringup) JobQueued: {'identifier': 'hrc_bringup', 'dependencies': OrderedDict([('human_hand_msgs', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs'), ('experiment_logger', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger'), ('kinect_bridge', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge'), ('predictor_ui', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui'), ('trajectory_predictor', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor')])}
+[0.004227] (human_hand_msgs) JobStarted: {'identifier': 'human_hand_msgs'}
+[0.035021] (human_hand_msgs) JobProgress: {'identifier': 'human_hand_msgs', 'progress': 'cmake'}
+[0.036750] (human_hand_msgs) Command: {'cmd': ['/usr/bin/cmake', '/home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs', '-DCATKIN_INSTALL_INTO_PREFIX_ROOT=0', '-DCMAKE_INSTALL_PREFIX=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'vi:en_US:en'), ('USER', 'duy'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/duy'), ('OLDPWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'vi_VN'), ('SYSTEMD_EXEC_PID', '9651'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'duy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'duy'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/duy:@/tmp/.ICE-unix/9623,unix/duy:/tmp/.ICE-unix/9623'), ('PAPERSIZE', 'a4'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'vi_VN'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/b55caca2_dafb_4c05_be9d_c2539cf12131'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'vi_VN.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'vi_VN'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.YPITN3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.143'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('VTE_VERSION', '6800')]), 'shell': False}
+[0.098638] (-) TimerEvent: {}
+[0.199309] (-) TimerEvent: {}
+[0.293064] (human_hand_msgs) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.299436] (-) TimerEvent: {}
+[0.400043] (-) TimerEvent: {}
+[0.500639] (-) TimerEvent: {}
+[0.557641] (human_hand_msgs) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[0.591093] (human_hand_msgs) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.600779] (-) TimerEvent: {}
+[0.701374] (-) TimerEvent: {}
+[0.802139] (-) TimerEvent: {}
+[0.828557] (human_hand_msgs) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.861492] (human_hand_msgs) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.863673] (human_hand_msgs) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.865688] (human_hand_msgs) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.878946] (human_hand_msgs) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.902324] (-) TimerEvent: {}
+[1.003096] (-) TimerEvent: {}
+[1.103850] (-) TimerEvent: {}
+[1.196989] (human_hand_msgs) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[1.204010] (-) TimerEvent: {}
+[1.232246] (human_hand_msgs) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[1.233803] (human_hand_msgs) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[1.236560] (human_hand_msgs) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[1.247624] (human_hand_msgs) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[1.304239] (-) TimerEvent: {}
+[1.404990] (-) TimerEvent: {}
+[1.505788] (-) TimerEvent: {}
+[1.606569] (-) TimerEvent: {}
+[1.707376] (-) TimerEvent: {}
+[1.808087] (-) TimerEvent: {}
+[1.825865] (human_hand_msgs) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[1.908303] (-) TimerEvent: {}
+[2.016445] (-) TimerEvent: {}
+[2.117204] (-) TimerEvent: {}
+[2.217863] (-) TimerEvent: {}
+[2.251581] (human_hand_msgs) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.2.1 (/opt/ros/humble/share/rosidl_default_generators/cmake)\n'}
+[2.264891] (human_hand_msgs) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[2.290874] (human_hand_msgs) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[2.318052] (-) TimerEvent: {}
+[2.418625] (-) TimerEvent: {}
+[2.467158] (human_hand_msgs) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[2.518780] (-) TimerEvent: {}
+[2.619353] (-) TimerEvent: {}
+[2.641399] (human_hand_msgs) StdoutLine: {'line': b'-- Found std_msgs: 4.9.1 (/opt/ros/humble/share/std_msgs/cmake)\n'}
+[2.719555] (-) TimerEvent: {}
+[2.820218] (-) TimerEvent: {}
+[2.920823] (-) TimerEvent: {}
+[3.021447] (-) TimerEvent: {}
+[3.122138] (-) TimerEvent: {}
+[3.222770] (-) TimerEvent: {}
+[3.323353] (-) TimerEvent: {}
+[3.423948] (-) TimerEvent: {}
+[3.524755] (-) TimerEvent: {}
+[3.625502] (-) TimerEvent: {}
+[3.726106] (-) TimerEvent: {}
+[3.826862] (-) TimerEvent: {}
+[3.927437] (-) TimerEvent: {}
+[3.933324] (human_hand_msgs) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)\n'}
+[4.027592] (-) TimerEvent: {}
+[4.128193] (-) TimerEvent: {}
+[4.228965] (-) TimerEvent: {}
+[4.329765] (-) TimerEvent: {}
+[4.430487] (-) TimerEvent: {}
+[4.531077] (-) TimerEvent: {}
+[4.631671] (-) TimerEvent: {}
+[4.732370] (-) TimerEvent: {}
+[4.809135] (human_hand_msgs) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[4.832565] (-) TimerEvent: {}
+[4.933142] (-) TimerEvent: {}
+[5.033732] (-) TimerEvent: {}
+[5.134352] (-) TimerEvent: {}
+[5.234920] (-) TimerEvent: {}
+[5.335494] (-) TimerEvent: {}
+[5.436084] (-) TimerEvent: {}
+[5.536824] (-) TimerEvent: {}
+[5.637399] (-) TimerEvent: {}
+[5.737959] (-) TimerEvent: {}
+[5.838607] (-) TimerEvent: {}
+[5.939217] (-) TimerEvent: {}
+[5.981425] (human_hand_msgs) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[6.039347] (-) TimerEvent: {}
+[6.066667] (human_hand_msgs) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.10.12", minimum required is "3.6") \n'}
+[6.072063] (human_hand_msgs) StdoutLine: {'line': b'-- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)\n'}
+[6.139507] (-) TimerEvent: {}
+[6.169382] (human_hand_msgs) StdoutLine: {'line': b'-- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.10.so (found suitable version "3.10.12", minimum required is "3.5") \n'}
+[6.170098] (human_hand_msgs) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[6.170539] (human_hand_msgs) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10\n'}
+[6.170829] (human_hand_msgs) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so\n'}
+[6.239728] (-) TimerEvent: {}
+[6.248412] (human_hand_msgs) StdoutLine: {'line': b'-- Found PythonExtra: .so  \n'}
+[6.339921] (-) TimerEvent: {}
+[6.440723] (-) TimerEvent: {}
+[6.541284] (-) TimerEvent: {}
+[6.641885] (-) TimerEvent: {}
+[6.742478] (-) TimerEvent: {}
+[6.756900] (human_hand_msgs) StdoutLine: {'line': b'-- Configuring done\n'}
+[6.842652] (-) TimerEvent: {}
+[6.913278] (human_hand_msgs) StdoutLine: {'line': b'-- Generating done\n'}
+[6.922482] (human_hand_msgs) StderrLine: {'line': b'\x1b[33mCMake Warning:\n'}
+[6.923078] (human_hand_msgs) StderrLine: {'line': b'  Manually-specified variables were not used by the project:\n'}
+[6.923410] (human_hand_msgs) StderrLine: {'line': b'\n'}
+[6.923704] (human_hand_msgs) StderrLine: {'line': b'    CATKIN_INSTALL_INTO_PREFIX_ROOT\n'}
+[6.923954] (human_hand_msgs) StderrLine: {'line': b'\n'}
+[6.924215] (human_hand_msgs) StderrLine: {'line': b'\x1b[0m\n'}
+[6.942809] (-) TimerEvent: {}
+[6.964035] (human_hand_msgs) StdoutLine: {'line': b'-- Build files have been written to: /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs\n'}
+[6.983142] (human_hand_msgs) CommandEnded: {'returncode': 0}
+[6.985092] (human_hand_msgs) JobProgress: {'identifier': 'human_hand_msgs', 'progress': 'build'}
+[6.989200] (human_hand_msgs) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs', '--', '-j12', '-l12'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'vi:en_US:en'), ('USER', 'duy'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/duy'), ('OLDPWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'vi_VN'), ('SYSTEMD_EXEC_PID', '9651'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'duy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'duy'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/duy:@/tmp/.ICE-unix/9623,unix/duy:/tmp/.ICE-unix/9623'), ('PAPERSIZE', 'a4'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'vi_VN'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/b55caca2_dafb_4c05_be9d_c2539cf12131'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'vi_VN.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'vi_VN'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.YPITN3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.143'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('VTE_VERSION', '6800')]), 'shell': False}
+[7.043323] (-) TimerEvent: {}
+[7.119261] (human_hand_msgs) StdoutLine: {'line': b'[  1%] \x1b[34m\x1b[1mGenerating C code for ROS interfaces\x1b[0m\n'}
+[7.143515] (-) TimerEvent: {}
+[7.152497] (human_hand_msgs) StdoutLine: {'line': b'[  3%] \x1b[34m\x1b[1mGenerating Rust code for ROS interfaces\x1b[0m\n'}
+[7.153348] (human_hand_msgs) StdoutLine: {'line': b'[  5%] \x1b[34m\x1b[1mGenerating C++ code for ROS interfaces\x1b[0m\n'}
+[7.181424] (human_hand_msgs) StdoutLine: {'line': b'[  5%] Built target ament_cmake_python_copy_human_hand_msgs\n'}
+[7.243644] (-) TimerEvent: {}
+[7.344221] (-) TimerEvent: {}
+[7.444743] (-) TimerEvent: {}
+[7.545297] (-) TimerEvent: {}
+[7.646021] (-) TimerEvent: {}
+[7.746610] (-) TimerEvent: {}
+[7.847194] (-) TimerEvent: {}
+[7.947732] (-) TimerEvent: {}
+[8.048318] (-) TimerEvent: {}
+[8.145199] (human_hand_msgs) StdoutLine: {'line': b'running egg_info\n'}
+[8.147646] (human_hand_msgs) StdoutLine: {'line': b'creating human_hand_msgs.egg-info\n'}
+[8.148218] (human_hand_msgs) StdoutLine: {'line': b'writing human_hand_msgs.egg-info/PKG-INFO\n'}
+[8.148533] (-) TimerEvent: {}
+[8.149076] (human_hand_msgs) StdoutLine: {'line': b'writing dependency_links to human_hand_msgs.egg-info/dependency_links.txt\n'}
+[8.149588] (human_hand_msgs) StdoutLine: {'line': b'writing top-level names to human_hand_msgs.egg-info/top_level.txt\n'}
+[8.150023] (human_hand_msgs) StdoutLine: {'line': b"writing manifest file 'human_hand_msgs.egg-info/SOURCES.txt'\n"}
+[8.158126] (human_hand_msgs) StdoutLine: {'line': b"reading manifest file 'human_hand_msgs.egg-info/SOURCES.txt'\n"}
+[8.160376] (human_hand_msgs) StdoutLine: {'line': b"writing manifest file 'human_hand_msgs.egg-info/SOURCES.txt'\n"}
+[8.242289] (human_hand_msgs) StdoutLine: {'line': b'[  5%] Built target ament_cmake_python_build_human_hand_msgs_egg\n'}
+[8.248733] (-) TimerEvent: {}
+[8.349303] (-) TimerEvent: {}
+[8.449873] (-) TimerEvent: {}
+[8.550606] (-) TimerEvent: {}
+[8.651325] (-) TimerEvent: {}
+[8.711091] (human_hand_msgs) StdoutLine: {'line': b'[  5%] Built target human_hand_msgs__rs\n'}
+[8.751492] (-) TimerEvent: {}
+[8.852220] (-) TimerEvent: {}
+[8.952913] (-) TimerEvent: {}
+[9.053636] (-) TimerEvent: {}
+[9.154393] (-) TimerEvent: {}
+[9.255941] (-) TimerEvent: {}
+[9.357066] (-) TimerEvent: {}
+[9.358764] (human_hand_msgs) StdoutLine: {'line': b'[  7%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_generator_c.dir/rosidl_generator_c/human_hand_msgs/msg/detail/system_status__functions.c.o\x1b[0m\n'}
+[9.359682] (human_hand_msgs) StdoutLine: {'line': b'[  8%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_generator_c.dir/rosidl_generator_c/human_hand_msgs/msg/detail/hand_prediction__functions.c.o\x1b[0m\n'}
+[9.360197] (human_hand_msgs) StdoutLine: {'line': b'[  8%] Built target human_hand_msgs__cpp\n'}
+[9.366406] (human_hand_msgs) StdoutLine: {'line': b'[ 10%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_generator_c.dir/rosidl_generator_c/human_hand_msgs/msg/detail/hand_state__functions.c.o\x1b[0m\n'}
+[9.370117] (human_hand_msgs) StdoutLine: {'line': b'[ 12%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_generator_c.dir/rosidl_generator_c/human_hand_msgs/srv/detail/select_model__functions.c.o\x1b[0m\n'}
+[9.398201] (human_hand_msgs) StdoutLine: {'line': b'[ 16%] \x1b[34m\x1b[1mGenerating C++ type support dispatch for ROS interfaces\x1b[0m\n'}
+[9.398964] (human_hand_msgs) StdoutLine: {'line': b'[ 16%] \x1b[34m\x1b[1mGenerating C++ introspection for ROS interfaces\x1b[0m\n'}
+[9.401808] (human_hand_msgs) StdoutLine: {'line': b'[ 17%] \x1b[34m\x1b[1mGenerating C++ type support for eProsima Fast-RTPS\x1b[0m\n'}
+[9.457266] (-) TimerEvent: {}
+[9.558041] (-) TimerEvent: {}
+[9.626676] (human_hand_msgs) StdoutLine: {'line': b'[ 19%] \x1b[32m\x1b[1mLinking C shared library libhuman_hand_msgs__rosidl_generator_c.so\x1b[0m\n'}
+[9.658269] (-) TimerEvent: {}
+[9.756407] (human_hand_msgs) StdoutLine: {'line': b'[ 19%] Built target human_hand_msgs__rosidl_generator_c\n'}
+[9.758414] (-) TimerEvent: {}
+[9.790873] (human_hand_msgs) StdoutLine: {'line': b'[ 21%] \x1b[34m\x1b[1mGenerating C introspection for ROS interfaces\x1b[0m\n'}
+[9.793298] (human_hand_msgs) StdoutLine: {'line': b'[ 23%] \x1b[34m\x1b[1mGenerating C type support for eProsima Fast-RTPS\x1b[0m\n'}
+[9.805232] (human_hand_msgs) StdoutLine: {'line': b'[ 25%] \x1b[34m\x1b[1mGenerating C type support dispatch for ROS interfaces\x1b[0m\n'}
+[9.858616] (-) TimerEvent: {}
+[9.959386] (-) TimerEvent: {}
+[10.060121] (-) TimerEvent: {}
+[10.160877] (-) TimerEvent: {}
+[10.261717] (-) TimerEvent: {}
+[10.362665] (-) TimerEvent: {}
+[10.463418] (-) TimerEvent: {}
+[10.564193] (-) TimerEvent: {}
+[10.664946] (-) TimerEvent: {}
+[10.765764] (-) TimerEvent: {}
+[10.866527] (-) TimerEvent: {}
+[10.967276] (-) TimerEvent: {}
+[11.067984] (-) TimerEvent: {}
+[11.162289] (human_hand_msgs) StdoutLine: {'line': b'[ 26%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/human_hand_msgs/msg/hand_prediction__type_support.cpp.o\x1b[0m\n'}
+[11.167535] (human_hand_msgs) StdoutLine: {'line': b'[ 28%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/human_hand_msgs/msg/system_status__type_support.cpp.o\x1b[0m\n'}
+[11.168186] (-) TimerEvent: {}
+[11.168980] (human_hand_msgs) StdoutLine: {'line': b'[ 30%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/human_hand_msgs/srv/select_model__type_support.cpp.o\x1b[0m\n'}
+[11.174039] (human_hand_msgs) StdoutLine: {'line': b'[ 32%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/human_hand_msgs/msg/hand_state__type_support.cpp.o\x1b[0m\n'}
+[11.270316] (-) TimerEvent: {}
+[11.364873] (human_hand_msgs) StdoutLine: {'line': b'[ 35%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/human_hand_msgs/msg/detail/hand_prediction__type_support.cpp.o\x1b[0m\n'}
+[11.367768] (human_hand_msgs) StdoutLine: {'line': b'[ 35%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/human_hand_msgs/srv/detail/select_model__type_support.cpp.o\x1b[0m\n'}
+[11.368416] (human_hand_msgs) StdoutLine: {'line': b'[ 37%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/human_hand_msgs/msg/detail/hand_state__type_support.cpp.o\x1b[0m\n'}
+[11.370718] (-) TimerEvent: {}
+[11.380406] (human_hand_msgs) StdoutLine: {'line': b'[ 39%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/human_hand_msgs/msg/detail/system_status__type_support.cpp.o\x1b[0m\n'}
+[11.470905] (-) TimerEvent: {}
+[11.571691] (-) TimerEvent: {}
+[11.673434] (-) TimerEvent: {}
+[11.774429] (-) TimerEvent: {}
+[11.848278] (human_hand_msgs) StdoutLine: {'line': b'[ 41%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/human_hand_msgs/msg/hand_state__type_support.cpp.o\x1b[0m\n'}
+[11.878772] (-) TimerEvent: {}
+[11.979879] (-) TimerEvent: {}
+[12.044317] (human_hand_msgs) StdoutLine: {'line': b'[ 42%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/human_hand_msgs/msg/detail/dds_fastrtps/hand_state__type_support.cpp.o\x1b[0m\n'}
+[12.060602] (human_hand_msgs) StdoutLine: {'line': b'[ 44%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/human_hand_msgs/msg/hand_prediction__type_support.cpp.o\x1b[0m\n'}
+[12.080059] (-) TimerEvent: {}
+[12.183305] (-) TimerEvent: {}
+[12.230882] (human_hand_msgs) StdoutLine: {'line': b'[ 46%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/human_hand_msgs/msg/system_status__type_support.cpp.o\x1b[0m\n'}
+[12.283509] (-) TimerEvent: {}
+[12.362307] (human_hand_msgs) StdoutLine: {'line': b'[ 48%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/human_hand_msgs/msg/detail/hand_state__type_support.c.o\x1b[0m\n'}
+[12.383687] (-) TimerEvent: {}
+[12.409361] (human_hand_msgs) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/human_hand_msgs/srv/select_model__type_support.cpp.o\x1b[0m\n'}
+[12.483886] (-) TimerEvent: {}
+[12.585314] (-) TimerEvent: {}
+[12.590045] (human_hand_msgs) StdoutLine: {'line': b'[ 51%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/human_hand_msgs/msg/detail/hand_prediction__type_support.c.o\x1b[0m\n'}
+[12.608645] (human_hand_msgs) StdoutLine: {'line': b'[ 53%] \x1b[32m\x1b[1mLinking CXX shared library libhuman_hand_msgs__rosidl_typesupport_c.so\x1b[0m\n'}
+[12.679480] (human_hand_msgs) StdoutLine: {'line': b'[ 55%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/human_hand_msgs/msg/detail/hand_state__type_support_c.cpp.o\x1b[0m\n'}
+[12.685474] (-) TimerEvent: {}
+[12.783246] (human_hand_msgs) StdoutLine: {'line': b'[ 57%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/human_hand_msgs/msg/detail/system_status__type_support.c.o\x1b[0m\n'}
+[12.788277] (-) TimerEvent: {}
+[12.861815] (human_hand_msgs) StdoutLine: {'line': b'[ 57%] Built target human_hand_msgs__rosidl_typesupport_c\n'}
+[12.888479] (-) TimerEvent: {}
+[12.905376] (human_hand_msgs) StdoutLine: {'line': b'[ 58%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/human_hand_msgs/srv/detail/select_model__type_support.c.o\x1b[0m\n'}
+[12.981375] (human_hand_msgs) StdoutLine: {'line': b'[ 60%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/human_hand_msgs/msg/detail/dds_fastrtps/hand_prediction__type_support.cpp.o\x1b[0m\n'}
+[12.988665] (-) TimerEvent: {}
+[13.020406] (human_hand_msgs) StdoutLine: {'line': b'[ 62%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/human_hand_msgs/msg/detail/hand_prediction__type_support_c.cpp.o\x1b[0m\n'}
+[13.028459] (human_hand_msgs) StdoutLine: {'line': b'[ 64%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/human_hand_msgs/msg/detail/system_status__type_support_c.cpp.o\x1b[0m\n'}
+[13.029239] (human_hand_msgs) StdoutLine: {'line': b'[ 66%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/human_hand_msgs/srv/detail/select_model__type_support_c.cpp.o\x1b[0m\n'}
+[13.038325] (human_hand_msgs) StdoutLine: {'line': b'[ 67%] \x1b[32m\x1b[1mLinking CXX shared library libhuman_hand_msgs__rosidl_typesupport_cpp.so\x1b[0m\n'}
+[13.088864] (-) TimerEvent: {}
+[13.121434] (human_hand_msgs) StdoutLine: {'line': b'[ 69%] \x1b[32m\x1b[1mLinking C shared library libhuman_hand_msgs__rosidl_typesupport_introspection_c.so\x1b[0m\n'}
+[13.190322] (-) TimerEvent: {}
+[13.291099] (-) TimerEvent: {}
+[13.312136] (human_hand_msgs) StdoutLine: {'line': b'[ 69%] Built target human_hand_msgs__rosidl_typesupport_introspection_c\n'}
+[13.339326] (human_hand_msgs) StdoutLine: {'line': b'[ 69%] Built target human_hand_msgs__rosidl_typesupport_cpp\n'}
+[13.358305] (human_hand_msgs) StdoutLine: {'line': b'[ 71%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/human_hand_msgs/msg/detail/dds_fastrtps/system_status__type_support.cpp.o\x1b[0m\n'}
+[13.380058] (human_hand_msgs) StdoutLine: {'line': b'[ 73%] \x1b[32mBuilding CXX object CMakeFiles/human_hand_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/human_hand_msgs/srv/detail/dds_fastrtps/select_model__type_support.cpp.o\x1b[0m\n'}
+[13.394322] (-) TimerEvent: {}
+[13.495493] (-) TimerEvent: {}
+[13.596632] (-) TimerEvent: {}
+[13.697455] (-) TimerEvent: {}
+[13.800323] (-) TimerEvent: {}
+[13.901120] (-) TimerEvent: {}
+[14.003697] (-) TimerEvent: {}
+[14.077932] (human_hand_msgs) StdoutLine: {'line': b'[ 75%] \x1b[32m\x1b[1mLinking CXX shared library libhuman_hand_msgs__rosidl_typesupport_introspection_cpp.so\x1b[0m\n'}
+[14.103909] (-) TimerEvent: {}
+[14.204820] (-) TimerEvent: {}
+[14.305952] (-) TimerEvent: {}
+[14.407200] (-) TimerEvent: {}
+[14.446366] (human_hand_msgs) StdoutLine: {'line': b'[ 75%] Built target human_hand_msgs__rosidl_typesupport_introspection_cpp\n'}
+[14.507350] (-) TimerEvent: {}
+[14.608149] (-) TimerEvent: {}
+[14.708973] (-) TimerEvent: {}
+[14.809792] (-) TimerEvent: {}
+[14.910553] (-) TimerEvent: {}
+[15.011155] (-) TimerEvent: {}
+[15.111730] (-) TimerEvent: {}
+[15.212341] (-) TimerEvent: {}
+[15.262196] (human_hand_msgs) StdoutLine: {'line': b'[ 76%] \x1b[32m\x1b[1mLinking CXX shared library libhuman_hand_msgs__rosidl_typesupport_fastrtps_c.so\x1b[0m\n'}
+[15.312502] (-) TimerEvent: {}
+[15.413117] (-) TimerEvent: {}
+[15.473692] (human_hand_msgs) StdoutLine: {'line': b'[ 78%] \x1b[32m\x1b[1mLinking CXX shared library libhuman_hand_msgs__rosidl_typesupport_fastrtps_cpp.so\x1b[0m\n'}
+[15.513362] (-) TimerEvent: {}
+[15.517390] (human_hand_msgs) StdoutLine: {'line': b'[ 78%] Built target human_hand_msgs__rosidl_typesupport_fastrtps_c\n'}
+[15.613566] (-) TimerEvent: {}
+[15.714214] (-) TimerEvent: {}
+[15.737232] (human_hand_msgs) StdoutLine: {'line': b'[ 78%] Built target human_hand_msgs__rosidl_typesupport_fastrtps_cpp\n'}
+[15.799331] (human_hand_msgs) StdoutLine: {'line': b'[ 78%] Built target human_hand_msgs\n'}
+[15.814374] (-) TimerEvent: {}
+[15.864298] (human_hand_msgs) StdoutLine: {'line': b'[ 80%] \x1b[34m\x1b[1mGenerating Python code for ROS interfaces\x1b[0m\n'}
+[15.914569] (-) TimerEvent: {}
+[16.015195] (-) TimerEvent: {}
+[16.115730] (-) TimerEvent: {}
+[16.216311] (-) TimerEvent: {}
+[16.316905] (-) TimerEvent: {}
+[16.417545] (-) TimerEvent: {}
+[16.518152] (-) TimerEvent: {}
+[16.618797] (-) TimerEvent: {}
+[16.719524] (-) TimerEvent: {}
+[16.820140] (-) TimerEvent: {}
+[16.920843] (-) TimerEvent: {}
+[17.021399] (-) TimerEvent: {}
+[17.122066] (-) TimerEvent: {}
+[17.222809] (-) TimerEvent: {}
+[17.323412] (-) TimerEvent: {}
+[17.423946] (-) TimerEvent: {}
+[17.524523] (-) TimerEvent: {}
+[17.625127] (-) TimerEvent: {}
+[17.725738] (-) TimerEvent: {}
+[17.826355] (-) TimerEvent: {}
+[17.926910] (-) TimerEvent: {}
+[18.027484] (-) TimerEvent: {}
+[18.128090] (-) TimerEvent: {}
+[18.228684] (-) TimerEvent: {}
+[18.329317] (-) TimerEvent: {}
+[18.429890] (-) TimerEvent: {}
+[18.530526] (-) TimerEvent: {}
+[18.631299] (-) TimerEvent: {}
+[18.731977] (-) TimerEvent: {}
+[18.832535] (-) TimerEvent: {}
+[18.933121] (-) TimerEvent: {}
+[19.033718] (-) TimerEvent: {}
+[19.102447] (human_hand_msgs) StdoutLine: {'line': b'[ 80%] Built target human_hand_msgs__py\n'}
+[19.133966] (-) TimerEvent: {}
+[19.166041] (human_hand_msgs) StdoutLine: {'line': b'[ 83%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_prediction_s.c.o\x1b[0m\n'}
+[19.166812] (human_hand_msgs) StdoutLine: {'line': b'[ 83%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_system_status_s.c.o\x1b[0m\n'}
+[19.167340] (human_hand_msgs) StdoutLine: {'line': b'[ 85%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/srv/_select_model_s.c.o\x1b[0m\n'}
+[19.167925] (human_hand_msgs) StdoutLine: {'line': b'[ 87%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_generator_py.dir/rosidl_generator_py/human_hand_msgs/msg/_hand_state_s.c.o\x1b[0m\n'}
+[19.234184] (-) TimerEvent: {}
+[19.334938] (-) TimerEvent: {}
+[19.435703] (-) TimerEvent: {}
+[19.536496] (-) TimerEvent: {}
+[19.610428] (human_hand_msgs) StdoutLine: {'line': b'[ 89%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/human_hand_msgs/libhuman_hand_msgs__rosidl_generator_py.so\x1b[0m\n'}
+[19.636645] (-) TimerEvent: {}
+[19.737247] (-) TimerEvent: {}
+[19.754414] (human_hand_msgs) StdoutLine: {'line': b'[ 89%] Built target human_hand_msgs__rosidl_generator_py\n'}
+[19.819046] (human_hand_msgs) StdoutLine: {'line': b'[ 92%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/human_hand_msgs/_human_hand_msgs_s.ep.rosidl_typesupport_fastrtps_c.c.o\x1b[0m\n'}
+[19.819813] (human_hand_msgs) StdoutLine: {'line': b'[ 92%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/human_hand_msgs/_human_hand_msgs_s.ep.rosidl_typesupport_introspection_c.c.o\x1b[0m\n'}
+[19.821230] (human_hand_msgs) StdoutLine: {'line': b'[ 94%] \x1b[32mBuilding C object CMakeFiles/human_hand_msgs__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/human_hand_msgs/_human_hand_msgs_s.ep.rosidl_typesupport_c.c.o\x1b[0m\n'}
+[19.837472] (-) TimerEvent: {}
+[19.938271] (-) TimerEvent: {}
+[20.039041] (-) TimerEvent: {}
+[20.139816] (-) TimerEvent: {}
+[20.240625] (-) TimerEvent: {}
+[20.244577] (human_hand_msgs) StdoutLine: {'line': b'[ 96%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\x1b[0m\n'}
+[20.246983] (human_hand_msgs) StdoutLine: {'line': b'[ 98%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\x1b[0m\n'}
+[20.293057] (human_hand_msgs) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\x1b[0m\n'}
+[20.340776] (-) TimerEvent: {}
+[20.379414] (human_hand_msgs) StdoutLine: {'line': b'[100%] Built target human_hand_msgs__rosidl_typesupport_introspection_c__pyext\n'}
+[20.386673] (human_hand_msgs) StdoutLine: {'line': b'[100%] Built target human_hand_msgs__rosidl_typesupport_fastrtps_c__pyext\n'}
+[20.430279] (human_hand_msgs) StdoutLine: {'line': b'[100%] Built target human_hand_msgs__rosidl_typesupport_c__pyext\n'}
+[20.440925] (-) TimerEvent: {}
+[20.468879] (human_hand_msgs) CommandEnded: {'returncode': 0}
+[20.472109] (human_hand_msgs) JobProgress: {'identifier': 'human_hand_msgs', 'progress': 'install'}
+[20.500302] (human_hand_msgs) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'vi:en_US:en'), ('USER', 'duy'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/duy'), ('OLDPWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'vi_VN'), ('SYSTEMD_EXEC_PID', '9651'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'duy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'duy'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/duy:@/tmp/.ICE-unix/9623,unix/duy:/tmp/.ICE-unix/9623'), ('PAPERSIZE', 'a4'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'vi_VN'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/b55caca2_dafb_4c05_be9d_c2539cf12131'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'vi_VN.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'vi_VN'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.YPITN3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.143'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('VTE_VERSION', '6800')]), 'shell': False}
+[20.527966] (human_hand_msgs) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[20.528662] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/ament_index/resource_index/rosidl_interfaces/human_hand_msgs\n'}
+[20.529150] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs\n'}
+[20.529662] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg\n'}
+[20.530202] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail\n'}
+[20.530705] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__functions.h\n'}
+[20.531078] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__functions.c\n'}
+[20.531686] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__type_support.h\n'}
+[20.532008] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__functions.h\n'}
+[20.532318] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__struct.h\n'}
+[20.532764] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__struct.h\n'}
+[20.533183] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__type_support.h\n'}
+[20.533466] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__struct.h\n'}
+[20.533806] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__functions.c\n'}
+[20.534187] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__type_support.h\n'}
+[20.534538] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__functions.h\n'}
+[20.534852] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__functions.c\n'}
+[20.535202] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/hand_state.h\n'}
+[20.535547] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/system_status.h\n'}
+[20.535787] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/hand_prediction.h\n'}
+[20.536129] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/rosidl_generator_c__visibility_control.h\n'}
+[20.536525] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv\n'}
+[20.536992] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail\n'}
+[20.537516] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__functions.c\n'}
+[20.537918] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__struct.h\n'}
+[20.538218] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__type_support.h\n'}
+[20.538556] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__functions.h\n'}
+[20.538784] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/select_model.h\n'}
+[20.539107] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/environment/library_path.sh\n'}
+[20.539426] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/environment/library_path.dsv\n'}
+[20.539998] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_generator_c.so\n'}
+[20.541010] (-) TimerEvent: {}
+[20.541431] (human_hand_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_generator_c.so" to ""\n'}
+[20.541849] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs\n'}
+[20.542106] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg\n'}
+[20.542531] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail\n'}
+[20.542773] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__rosidl_typesupport_fastrtps_c.h\n'}
+[20.543017] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__rosidl_typesupport_fastrtps_c.h\n'}
+[20.543352] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__rosidl_typesupport_fastrtps_c.h\n'}
+[20.543694] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[20.543933] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv\n'}
+[20.544241] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail\n'}
+[20.544545] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__rosidl_typesupport_fastrtps_c.h\n'}
+[20.544777] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_fastrtps_c.so\n'}
+[20.545630] (human_hand_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_fastrtps_c.so" to ""\n'}
+[20.545972] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs\n'}
+[20.546310] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg\n'}
+[20.546632] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail\n'}
+[20.546878] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__rosidl_typesupport_introspection_c.h\n'}
+[20.547235] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__type_support.c\n'}
+[20.547546] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__type_support.c\n'}
+[20.547778] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__rosidl_typesupport_introspection_c.h\n'}
+[20.548095] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__rosidl_typesupport_introspection_c.h\n'}
+[20.548430] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__type_support.c\n'}
+[20.548750] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[20.549096] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv\n'}
+[20.549426] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail\n'}
+[20.549669] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__rosidl_typesupport_introspection_c.h\n'}
+[20.550040] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__type_support.c\n'}
+[20.550537] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_introspection_c.so\n'}
+[20.551392] (human_hand_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_introspection_c.so" to ""\n'}
+[20.551871] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_c.so\n'}
+[20.552752] (human_hand_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_c.so" to ""\n'}
+[20.553383] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs\n'}
+[20.553795] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg\n'}
+[20.554072] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail\n'}
+[20.554541] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__traits.hpp\n'}
+[20.554857] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__struct.hpp\n'}
+[20.555288] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__type_support.hpp\n'}
+[20.555607] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__builder.hpp\n'}
+[20.555852] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__builder.hpp\n'}
+[20.556193] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__builder.hpp\n'}
+[20.556568] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__type_support.hpp\n'}
+[20.556809] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__struct.hpp\n'}
+[20.557127] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__traits.hpp\n'}
+[20.557468] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__traits.hpp\n'}
+[20.557761] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__struct.hpp\n'}
+[20.558075] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__type_support.hpp\n'}
+[20.558403] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/system_status.hpp\n'}
+[20.558686] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/hand_prediction.hpp\n'}
+[20.558999] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/rosidl_generator_cpp__visibility_control.hpp\n'}
+[20.559377] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/hand_state.hpp\n'}
+[20.559706] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv\n'}
+[20.560048] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail\n'}
+[20.560392] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__struct.hpp\n'}
+[20.560706] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__traits.hpp\n'}
+[20.561001] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__type_support.hpp\n'}
+[20.561414] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__builder.hpp\n'}
+[20.561796] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/select_model.hpp\n'}
+[20.562086] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs\n'}
+[20.562554] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg\n'}
+[20.562955] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail\n'}
+[20.563207] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[20.563527] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[20.563770] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[20.564091] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/dds_fastrtps\n'}
+[20.564455] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[20.564747] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv\n'}
+[20.564987] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail\n'}
+[20.565298] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[20.565602] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/dds_fastrtps\n'}
+[20.565832] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_fastrtps_cpp.so\n'}
+[20.566642] (human_hand_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_fastrtps_cpp.so" to ""\n'}
+[20.567015] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs\n'}
+[20.567340] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg\n'}
+[20.567672] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail\n'}
+[20.568090] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__rosidl_typesupport_introspection_cpp.hpp\n'}
+[20.568627] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__rosidl_typesupport_introspection_cpp.hpp\n'}
+[20.569081] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_state__type_support.cpp\n'}
+[20.569681] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__type_support.cpp\n'}
+[20.570182] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/hand_prediction__rosidl_typesupport_introspection_cpp.hpp\n'}
+[20.570801] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/msg/detail/system_status__type_support.cpp\n'}
+[20.571265] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv\n'}
+[20.571801] (human_hand_msgs) StdoutLine: {'line': b'-- Up-to-date: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail\n'}
+[20.572230] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__rosidl_typesupport_introspection_cpp.hpp\n'}
+[20.572773] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/include/human_hand_msgs/human_hand_msgs/srv/detail/select_model__type_support.cpp\n'}
+[20.573117] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_introspection_cpp.so\n'}
+[20.573420] (human_hand_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_introspection_cpp.so" to ""\n'}
+[20.573846] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_cpp.so\n'}
+[20.574272] (human_hand_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_typesupport_cpp.so" to ""\n'}
+[20.574546] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/environment/pythonpath.sh\n'}
+[20.574882] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/environment/pythonpath.dsv\n'}
+[20.575276] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs-0.1.0-py3.10.egg-info\n'}
+[20.575661] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs-0.1.0-py3.10.egg-info/top_level.txt\n'}
+[20.576009] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs-0.1.0-py3.10.egg-info/SOURCES.txt\n'}
+[20.576382] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs-0.1.0-py3.10.egg-info/dependency_links.txt\n'}
+[20.576743] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs-0.1.0-py3.10.egg-info/PKG-INFO\n'}
+[20.577072] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs\n'}
+[20.577442] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/_human_hand_msgs_s.ep.rosidl_typesupport_introspection_c.c\n'}
+[20.577795] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\n'}
+[20.578109] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/libhuman_hand_msgs__rosidl_generator_py.so\n'}
+[20.578603] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg\n'}
+[20.578914] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg/_hand_prediction_s.c\n'}
+[20.579235] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg/_hand_state.py\n'}
+[20.579564] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg/_hand_prediction.py\n'}
+[20.579941] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg/__init__.py\n'}
+[20.580339] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg/_system_status.py\n'}
+[20.580855] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg/_system_status_s.c\n'}
+[20.581241] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg/_hand_state_s.c\n'}
+[20.581597] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\n'}
+[20.581907] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/_human_hand_msgs_s.ep.rosidl_typesupport_c.c\n'}
+[20.582243] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/__init__.py\n'}
+[20.582571] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/srv\n'}
+[20.582894] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/srv/_select_model.py\n'}
+[20.583244] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/srv/__init__.py\n'}
+[20.583656] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/srv/_select_model_s.c\n'}
+[20.583999] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\n'}
+[20.584343] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/_human_hand_msgs_s.ep.rosidl_typesupport_fastrtps_c.c\n'}
+[20.641229] (-) TimerEvent: {}
+[20.740257] (human_hand_msgs) StdoutLine: {'line': b"Listing '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs'...\n"}
+[20.740723] (human_hand_msgs) StdoutLine: {'line': b"Compiling '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/__init__.py'...\n"}
+[20.740998] (human_hand_msgs) StdoutLine: {'line': b"Listing '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg'...\n"}
+[20.741257] (-) TimerEvent: {}
+[20.741565] (human_hand_msgs) StdoutLine: {'line': b"Compiling '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg/__init__.py'...\n"}
+[20.741925] (human_hand_msgs) StdoutLine: {'line': b"Compiling '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg/_hand_prediction.py'...\n"}
+[20.742194] (human_hand_msgs) StdoutLine: {'line': b"Compiling '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg/_hand_state.py'...\n"}
+[20.742456] (human_hand_msgs) StdoutLine: {'line': b"Compiling '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/msg/_system_status.py'...\n"}
+[20.742688] (human_hand_msgs) StdoutLine: {'line': b"Listing '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/srv'...\n"}
+[20.742915] (human_hand_msgs) StdoutLine: {'line': b"Compiling '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/srv/__init__.py'...\n"}
+[20.743143] (human_hand_msgs) StdoutLine: {'line': b"Compiling '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/srv/_select_model.py'...\n"}
+[20.757738] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so\n'}
+[20.758852] (human_hand_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so" to ""\n'}
+[20.759481] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so\n'}
+[20.760644] (human_hand_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so" to ""\n'}
+[20.761271] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so\n'}
+[20.762259] (human_hand_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages/human_hand_msgs/human_hand_msgs_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so" to ""\n'}
+[20.762910] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_generator_py.so\n'}
+[20.763690] (human_hand_msgs) StdoutLine: {'line': b'-- Set runtime path of "/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/libhuman_hand_msgs__rosidl_generator_py.so" to ""\n'}
+[20.764227] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/ament_index/resource_index/rust_packages/human_hand_msgs\n'}
+[20.764735] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/rust\n'}
+[20.765221] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/rust/src\n'}
+[20.765966] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/rust/src/lib.rs\n'}
+[20.766483] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/rust/src/srv.rs\n'}
+[20.766778] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/rust/src/msg\n'}
+[20.767030] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/rust/src/msg/rmw.rs\n'}
+[20.767314] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/rust/src/msg.rs\n'}
+[20.767707] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/rust/src/srv\n'}
+[20.767945] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/rust/src/srv/rmw.rs\n'}
+[20.768200] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/rust/Cargo.toml\n'}
+[20.768539] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/rust/build.rs\n'}
+[20.768801] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/msg/HandState.idl\n'}
+[20.769224] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/msg/HandPrediction.idl\n'}
+[20.769768] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/msg/SystemStatus.idl\n'}
+[20.770222] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/srv/SelectModel.idl\n'}
+[20.770802] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/msg/HandState.msg\n'}
+[20.771253] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/msg/HandPrediction.msg\n'}
+[20.771887] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/msg/SystemStatus.msg\n'}
+[20.772413] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/srv/SelectModel.srv\n'}
+[20.772936] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/srv/SelectModel_Request.msg\n'}
+[20.773433] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/srv/SelectModel_Response.msg\n'}
+[20.773711] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/ament_index/resource_index/package_run_dependencies/human_hand_msgs\n'}
+[20.774120] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/ament_index/resource_index/parent_prefix_path/human_hand_msgs\n'}
+[20.774511] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/environment/ament_prefix_path.sh\n'}
+[20.774839] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/environment/ament_prefix_path.dsv\n'}
+[20.775184] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/environment/path.sh\n'}
+[20.775522] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/environment/path.dsv\n'}
+[20.776060] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/local_setup.bash\n'}
+[20.776492] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/local_setup.sh\n'}
+[20.776927] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/local_setup.zsh\n'}
+[20.777408] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/local_setup.dsv\n'}
+[20.777912] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/package.dsv\n'}
+[20.778385] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/ament_index/resource_index/packages/human_hand_msgs\n'}
+[20.778946] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/export_human_hand_msgs__rosidl_generator_cExport.cmake\n'}
+[20.779445] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/export_human_hand_msgs__rosidl_generator_cExport-noconfig.cmake\n'}
+[20.779975] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/export_human_hand_msgs__rosidl_typesupport_fastrtps_cExport.cmake\n'}
+[20.780528] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/export_human_hand_msgs__rosidl_typesupport_fastrtps_cExport-noconfig.cmake\n'}
+[20.781065] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/human_hand_msgs__rosidl_typesupport_introspection_cExport.cmake\n'}
+[20.781615] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/human_hand_msgs__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[20.782149] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/human_hand_msgs__rosidl_typesupport_cExport.cmake\n'}
+[20.782656] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/human_hand_msgs__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[20.783043] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/export_human_hand_msgs__rosidl_generator_cppExport.cmake\n'}
+[20.783549] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/export_human_hand_msgs__rosidl_typesupport_fastrtps_cppExport.cmake\n'}
+[20.784037] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/export_human_hand_msgs__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake\n'}
+[20.784757] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/human_hand_msgs__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[20.785275] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/human_hand_msgs__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[20.786005] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/human_hand_msgs__rosidl_typesupport_cppExport.cmake\n'}
+[20.786749] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/human_hand_msgs__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[20.787362] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/export_human_hand_msgs__rosidl_generator_pyExport.cmake\n'}
+[20.787953] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/export_human_hand_msgs__rosidl_generator_pyExport-noconfig.cmake\n'}
+[20.788589] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/rosidl_cmake-extras.cmake\n'}
+[20.789048] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[20.789472] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[20.789910] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[20.790283] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[20.790632] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[20.791114] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[20.791618] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/human_hand_msgsConfig.cmake\n'}
+[20.791951] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/cmake/human_hand_msgsConfig-version.cmake\n'}
+[20.792491] (human_hand_msgs) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share/human_hand_msgs/package.xml\n'}
+[20.799183] (human_hand_msgs) CommandEnded: {'returncode': 0}
+[20.841519] (-) TimerEvent: {}
+[20.880438] (human_hand_msgs) JobEnded: {'identifier': 'human_hand_msgs', 'rc': 0}
+[20.882533] (experiment_logger) JobStarted: {'identifier': 'experiment_logger'}
+[20.898330] (kinect_bridge) JobStarted: {'identifier': 'kinect_bridge'}
+[20.914212] (predictor_ui) JobStarted: {'identifier': 'predictor_ui'}
+[20.930199] (trajectory_predictor) JobStarted: {'identifier': 'trajectory_predictor'}
+[20.942340] (-) TimerEvent: {}
+[21.043051] (-) TimerEvent: {}
+[21.143915] (-) TimerEvent: {}
+[21.244786] (-) TimerEvent: {}
+[21.345643] (-) TimerEvent: {}
+[21.446472] (-) TimerEvent: {}
+[21.547303] (-) TimerEvent: {}
+[21.648139] (-) TimerEvent: {}
+[21.748764] (-) TimerEvent: {}
+[21.849433] (-) TimerEvent: {}
+[21.950057] (-) TimerEvent: {}
+[22.050691] (-) TimerEvent: {}
+[22.151467] (-) TimerEvent: {}
+[22.252085] (-) TimerEvent: {}
+[22.352745] (-) TimerEvent: {}
+[22.453545] (-) TimerEvent: {}
+[22.554291] (-) TimerEvent: {}
+[22.654888] (-) TimerEvent: {}
+[22.755501] (-) TimerEvent: {}
+[22.856141] (-) TimerEvent: {}
+[22.956803] (-) TimerEvent: {}
+[23.057595] (-) TimerEvent: {}
+[23.158279] (-) TimerEvent: {}
+[23.258886] (-) TimerEvent: {}
+[23.359521] (-) TimerEvent: {}
+[23.460194] (-) TimerEvent: {}
+[23.560777] (-) TimerEvent: {}
+[23.661383] (-) TimerEvent: {}
+[23.761990] (-) TimerEvent: {}
+[23.862619] (-) TimerEvent: {}
+[23.963275] (-) TimerEvent: {}
+[24.063872] (-) TimerEvent: {}
+[24.164499] (-) TimerEvent: {}
+[24.265160] (-) TimerEvent: {}
+[24.365832] (-) TimerEvent: {}
+[24.466521] (-) TimerEvent: {}
+[24.567303] (-) TimerEvent: {}
+[24.667977] (-) TimerEvent: {}
+[24.768748] (-) TimerEvent: {}
+[24.869377] (-) TimerEvent: {}
+[24.970089] (-) TimerEvent: {}
+[25.070771] (-) TimerEvent: {}
+[25.171451] (-) TimerEvent: {}
+[25.272088] (-) TimerEvent: {}
+[25.372725] (-) TimerEvent: {}
+[25.473346] (-) TimerEvent: {}
+[25.574009] (-) TimerEvent: {}
+[25.674644] (-) TimerEvent: {}
+[25.775284] (-) TimerEvent: {}
+[25.875877] (-) TimerEvent: {}
+[25.976547] (-) TimerEvent: {}
+[26.077194] (-) TimerEvent: {}
+[26.177799] (-) TimerEvent: {}
+[26.278531] (-) TimerEvent: {}
+[26.320327] (kinect_bridge) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/kinect_bridge', 'build', '--build-base', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/build', 'install', '--record', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/src/kinect_bridge', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'LANGUAGE': 'vi:en_US:en', 'USER': 'duy', 'LC_TIME': 'vi_VN', 'XDG_SESSION_TYPE': 'wayland', 'ROS_PACKAGE_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/home/duy', 'OLDPWD': '/home/duy/Documents/GitHub/Experiment/hrc_ws', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'LC_MONETARY': 'vi_VN', 'SYSTEMD_EXEC_PID': '9651', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'humble', 'LOGNAME': 'duy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'PKG_CONFIG_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig', 'USERNAME': 'duy', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/duy:@/tmp/.ICE-unix/9623,unix/duy:/tmp/.ICE-unix/9623', 'PAPERSIZE': 'a4', 'XDG_MENU_PREFIX': 'gnome-', 'LC_ADDRESS': 'vi_VN', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/b55caca2_dafb_4c05_be9d_c2539cf12131', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'vi_VN.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'LC_TELEPHONE': 'vi_VN', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.YPITN3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'GNOME_TERMINAL_SERVICE': ':1.143', 'SSH_AGENT_LAUNCHER': 'gnome-keyring', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'LC_NAME': 'vi_VN', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'LC_MEASUREMENT': 'vi_VN', 'LC_IDENTIFICATION': 'vi_VN', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'LC_NUMERIC': 'vi_VN', 'LC_PAPER': 'vi_VN', 'COLCON': '1', 'VTE_VERSION': '6800', 'CMAKE_PREFIX_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs'}, 'shell': False}
+[26.330806] (experiment_logger) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/experiment_logger', 'build', '--build-base', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/build', 'install', '--record', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/src/experiment_logger', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'LANGUAGE': 'vi:en_US:en', 'USER': 'duy', 'LC_TIME': 'vi_VN', 'XDG_SESSION_TYPE': 'wayland', 'ROS_PACKAGE_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/home/duy', 'OLDPWD': '/home/duy/Documents/GitHub/Experiment/hrc_ws', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'LC_MONETARY': 'vi_VN', 'SYSTEMD_EXEC_PID': '9651', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'humble', 'LOGNAME': 'duy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'PKG_CONFIG_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig', 'USERNAME': 'duy', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/duy:@/tmp/.ICE-unix/9623,unix/duy:/tmp/.ICE-unix/9623', 'PAPERSIZE': 'a4', 'XDG_MENU_PREFIX': 'gnome-', 'LC_ADDRESS': 'vi_VN', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/b55caca2_dafb_4c05_be9d_c2539cf12131', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'vi_VN.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'LC_TELEPHONE': 'vi_VN', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.YPITN3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'GNOME_TERMINAL_SERVICE': ':1.143', 'SSH_AGENT_LAUNCHER': 'gnome-keyring', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'LC_NAME': 'vi_VN', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'LC_MEASUREMENT': 'vi_VN', 'LC_IDENTIFICATION': 'vi_VN', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'LC_NUMERIC': 'vi_VN', 'LC_PAPER': 'vi_VN', 'COLCON': '1', 'VTE_VERSION': '6800', 'CMAKE_PREFIX_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs'}, 'shell': False}
+[26.340636] (trajectory_predictor) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/trajectory_predictor', 'build', '--build-base', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build', 'install', '--record', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/src/trajectory_predictor', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'LANGUAGE': 'vi:en_US:en', 'USER': 'duy', 'LC_TIME': 'vi_VN', 'XDG_SESSION_TYPE': 'wayland', 'ROS_PACKAGE_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/home/duy', 'OLDPWD': '/home/duy/Documents/GitHub/Experiment/hrc_ws', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'LC_MONETARY': 'vi_VN', 'SYSTEMD_EXEC_PID': '9651', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'humble', 'LOGNAME': 'duy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'PKG_CONFIG_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig', 'USERNAME': 'duy', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/duy:@/tmp/.ICE-unix/9623,unix/duy:/tmp/.ICE-unix/9623', 'PAPERSIZE': 'a4', 'XDG_MENU_PREFIX': 'gnome-', 'LC_ADDRESS': 'vi_VN', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/b55caca2_dafb_4c05_be9d_c2539cf12131', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'vi_VN.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'LC_TELEPHONE': 'vi_VN', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.YPITN3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'GNOME_TERMINAL_SERVICE': ':1.143', 'SSH_AGENT_LAUNCHER': 'gnome-keyring', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'LC_NAME': 'vi_VN', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'LC_MEASUREMENT': 'vi_VN', 'LC_IDENTIFICATION': 'vi_VN', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'LC_NUMERIC': 'vi_VN', 'LC_PAPER': 'vi_VN', 'COLCON': '1', 'VTE_VERSION': '6800', 'CMAKE_PREFIX_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs'}, 'shell': False}
+[26.353920] (predictor_ui) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/predictor_ui', 'build', '--build-base', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui/build', 'install', '--record', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/src/predictor_ui', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'LANGUAGE': 'vi:en_US:en', 'USER': 'duy', 'LC_TIME': 'vi_VN', 'XDG_SESSION_TYPE': 'wayland', 'ROS_PACKAGE_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/home/duy', 'OLDPWD': '/home/duy/Documents/GitHub/Experiment/hrc_ws', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'LC_MONETARY': 'vi_VN', 'SYSTEMD_EXEC_PID': '9651', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'humble', 'LOGNAME': 'duy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'PKG_CONFIG_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig', 'USERNAME': 'duy', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/duy:@/tmp/.ICE-unix/9623,unix/duy:/tmp/.ICE-unix/9623', 'PAPERSIZE': 'a4', 'XDG_MENU_PREFIX': 'gnome-', 'LC_ADDRESS': 'vi_VN', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/b55caca2_dafb_4c05_be9d_c2539cf12131', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'vi_VN.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'LC_TELEPHONE': 'vi_VN', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.YPITN3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'GNOME_TERMINAL_SERVICE': ':1.143', 'SSH_AGENT_LAUNCHER': 'gnome-keyring', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'LC_NAME': 'vi_VN', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'LC_MEASUREMENT': 'vi_VN', 'LC_IDENTIFICATION': 'vi_VN', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'LC_NUMERIC': 'vi_VN', 'LC_PAPER': 'vi_VN', 'COLCON': '1', 'VTE_VERSION': '6800', 'CMAKE_PREFIX_PATH': '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs'}, 'shell': False}
+[26.378714] (-) TimerEvent: {}
+[26.479565] (-) TimerEvent: {}
+[26.580439] (-) TimerEvent: {}
+[26.681256] (-) TimerEvent: {}
+[26.781873] (-) TimerEvent: {}
+[26.882541] (-) TimerEvent: {}
+[26.983205] (-) TimerEvent: {}
+[27.083805] (-) TimerEvent: {}
+[27.184453] (-) TimerEvent: {}
+[27.276591] (trajectory_predictor) StdoutLine: {'line': b'running egg_info\n'}
+[27.278924] (trajectory_predictor) StdoutLine: {'line': b'creating ../../build/trajectory_predictor/trajectory_predictor.egg-info\n'}
+[27.279576] (trajectory_predictor) StdoutLine: {'line': b'writing ../../build/trajectory_predictor/trajectory_predictor.egg-info/PKG-INFO\n'}
+[27.280150] (kinect_bridge) StdoutLine: {'line': b'running egg_info\n'}
+[27.281032] (trajectory_predictor) StdoutLine: {'line': b'writing dependency_links to ../../build/trajectory_predictor/trajectory_predictor.egg-info/dependency_links.txt\n'}
+[27.281732] (trajectory_predictor) StdoutLine: {'line': b'writing entry points to ../../build/trajectory_predictor/trajectory_predictor.egg-info/entry_points.txt\n'}
+[27.282230] (trajectory_predictor) StdoutLine: {'line': b'writing requirements to ../../build/trajectory_predictor/trajectory_predictor.egg-info/requires.txt\n'}
+[27.282727] (trajectory_predictor) StdoutLine: {'line': b'writing top-level names to ../../build/trajectory_predictor/trajectory_predictor.egg-info/top_level.txt\n'}
+[27.283403] (trajectory_predictor) StdoutLine: {'line': b"writing manifest file '../../build/trajectory_predictor/trajectory_predictor.egg-info/SOURCES.txt'\n"}
+[27.284144] (kinect_bridge) StdoutLine: {'line': b'creating ../../build/kinect_bridge/kinect_bridge.egg-info\n'}
+[27.284793] (-) TimerEvent: {}
+[27.285386] (kinect_bridge) StdoutLine: {'line': b'writing ../../build/kinect_bridge/kinect_bridge.egg-info/PKG-INFO\n'}
+[27.285998] (kinect_bridge) StdoutLine: {'line': b'writing dependency_links to ../../build/kinect_bridge/kinect_bridge.egg-info/dependency_links.txt\n'}
+[27.286426] (kinect_bridge) StdoutLine: {'line': b'writing entry points to ../../build/kinect_bridge/kinect_bridge.egg-info/entry_points.txt\n'}
+[27.286923] (kinect_bridge) StdoutLine: {'line': b'writing requirements to ../../build/kinect_bridge/kinect_bridge.egg-info/requires.txt\n'}
+[27.287429] (kinect_bridge) StdoutLine: {'line': b'writing top-level names to ../../build/kinect_bridge/kinect_bridge.egg-info/top_level.txt\n'}
+[27.287742] (kinect_bridge) StdoutLine: {'line': b"writing manifest file '../../build/kinect_bridge/kinect_bridge.egg-info/SOURCES.txt'\n"}
+[27.288627] (trajectory_predictor) StdoutLine: {'line': b"reading manifest file '../../build/trajectory_predictor/trajectory_predictor.egg-info/SOURCES.txt'\n"}
+[27.290377] (experiment_logger) StdoutLine: {'line': b'running egg_info\n'}
+[27.291664] (trajectory_predictor) StdoutLine: {'line': b"writing manifest file '../../build/trajectory_predictor/trajectory_predictor.egg-info/SOURCES.txt'\n"}
+[27.292156] (trajectory_predictor) StdoutLine: {'line': b'running build\n'}
+[27.292485] (trajectory_predictor) StdoutLine: {'line': b'running build_py\n'}
+[27.293021] (experiment_logger) StdoutLine: {'line': b'creating ../../build/experiment_logger/experiment_logger.egg-info\n'}
+[27.293504] (trajectory_predictor) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build\n'}
+[27.293824] (trajectory_predictor) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib\n'}
+[27.294126] (trajectory_predictor) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor\n'}
+[27.295016] (trajectory_predictor) StdoutLine: {'line': b'copying trajectory_predictor/inference_worker.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor\n'}
+[27.295566] (trajectory_predictor) StdoutLine: {'line': b'copying trajectory_predictor/model_manager.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor\n'}
+[27.296315] (trajectory_predictor) StdoutLine: {'line': b'copying trajectory_predictor/__init__.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor\n'}
+[27.296779] (trajectory_predictor) StdoutLine: {'line': b'copying trajectory_predictor/predictor_node.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor\n'}
+[27.297101] (kinect_bridge) StdoutLine: {'line': b"reading manifest file '../../build/kinect_bridge/kinect_bridge.egg-info/SOURCES.txt'\n"}
+[27.297535] (experiment_logger) StdoutLine: {'line': b'writing ../../build/experiment_logger/experiment_logger.egg-info/PKG-INFO\n'}
+[27.297977] (experiment_logger) StdoutLine: {'line': b'writing dependency_links to ../../build/experiment_logger/experiment_logger.egg-info/dependency_links.txt\n'}
+[27.299076] (experiment_logger) StdoutLine: {'line': b'writing entry points to ../../build/experiment_logger/experiment_logger.egg-info/entry_points.txt\n'}
+[27.299532] (trajectory_predictor) StdoutLine: {'line': b'running install\n'}
+[27.300049] (experiment_logger) StdoutLine: {'line': b'writing requirements to ../../build/experiment_logger/experiment_logger.egg-info/requires.txt\n'}
+[27.300414] (experiment_logger) StdoutLine: {'line': b'writing top-level names to ../../build/experiment_logger/experiment_logger.egg-info/top_level.txt\n'}
+[27.301014] (trajectory_predictor) StdoutLine: {'line': b'running install_lib\n'}
+[27.301593] (kinect_bridge) StdoutLine: {'line': b"writing manifest file '../../build/kinect_bridge/kinect_bridge.egg-info/SOURCES.txt'\n"}
+[27.301876] (kinect_bridge) StdoutLine: {'line': b'running build\n'}
+[27.302151] (kinect_bridge) StdoutLine: {'line': b'running build_py\n'}
+[27.302466] (kinect_bridge) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/build\n'}
+[27.302833] (kinect_bridge) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/build/lib\n'}
+[27.303082] (kinect_bridge) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/build/lib/kinect_bridge\n'}
+[27.303379] (kinect_bridge) StdoutLine: {'line': b'copying kinect_bridge/mock_kinect_sender.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/build/lib/kinect_bridge\n'}
+[27.303639] (kinect_bridge) StdoutLine: {'line': b'copying kinect_bridge/__init__.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/build/lib/kinect_bridge\n'}
+[27.303891] (experiment_logger) StdoutLine: {'line': b"writing manifest file '../../build/experiment_logger/experiment_logger.egg-info/SOURCES.txt'\n"}
+[27.304151] (kinect_bridge) StdoutLine: {'line': b'copying kinect_bridge/bridge_node.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/build/lib/kinect_bridge\n'}
+[27.304428] (kinect_bridge) StdoutLine: {'line': b'running install\n'}
+[27.304673] (trajectory_predictor) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor\n'}
+[27.305253] (trajectory_predictor) StdoutLine: {'line': b'copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor/inference_worker.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor\n'}
+[27.305531] (trajectory_predictor) StdoutLine: {'line': b'copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor/model_manager.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor\n'}
+[27.305983] (kinect_bridge) StdoutLine: {'line': b'running install_lib\n'}
+[27.306277] (experiment_logger) StdoutLine: {'line': b"reading manifest file '../../build/experiment_logger/experiment_logger.egg-info/SOURCES.txt'\n"}
+[27.306553] (trajectory_predictor) StdoutLine: {'line': b'copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor/__init__.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor\n'}
+[27.306833] (trajectory_predictor) StdoutLine: {'line': b'copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor/predictor_node.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor\n'}
+[27.307086] (trajectory_predictor) StdoutLine: {'line': b'byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor/inference_worker.py to inference_worker.cpython-310.pyc\n'}
+[27.307362] (kinect_bridge) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect_bridge\n'}
+[27.307809] (kinect_bridge) StdoutLine: {'line': b'copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/build/lib/kinect_bridge/mock_kinect_sender.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect_bridge\n'}
+[27.308070] (kinect_bridge) StdoutLine: {'line': b'copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/build/lib/kinect_bridge/__init__.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect_bridge\n'}
+[27.308503] (kinect_bridge) StdoutLine: {'line': b'copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/build/lib/kinect_bridge/bridge_node.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect_bridge\n'}
+[27.308757] (experiment_logger) StdoutLine: {'line': b"writing manifest file '../../build/experiment_logger/experiment_logger.egg-info/SOURCES.txt'\n"}
+[27.309102] (experiment_logger) StdoutLine: {'line': b'running build\n'}
+[27.309367] (experiment_logger) StdoutLine: {'line': b'running build_py\n'}
+[27.309607] (experiment_logger) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/build\n'}
+[27.309845] (experiment_logger) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/build/lib\n'}
+[27.310079] (experiment_logger) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/build/lib/experiment_logger\n'}
+[27.310357] (experiment_logger) StdoutLine: {'line': b'copying experiment_logger/__init__.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/build/lib/experiment_logger\n'}
+[27.310610] (experiment_logger) StdoutLine: {'line': b'copying experiment_logger/logger_node.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/build/lib/experiment_logger\n'}
+[27.310962] (kinect_bridge) StdoutLine: {'line': b'byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect_bridge/mock_kinect_sender.py to mock_kinect_sender.cpython-310.pyc\n'}
+[27.311264] (experiment_logger) StdoutLine: {'line': b'running install\n'}
+[27.311515] (experiment_logger) StdoutLine: {'line': b'running install_lib\n'}
+[27.311946] (trajectory_predictor) StdoutLine: {'line': b'byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor/model_manager.py to model_manager.cpython-310.pyc\n'}
+[27.312774] (trajectory_predictor) StdoutLine: {'line': b'byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor/__init__.py to __init__.cpython-310.pyc\n'}
+[27.313273] (kinect_bridge) StdoutLine: {'line': b'byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect_bridge/__init__.py to __init__.cpython-310.pyc\n'}
+[27.314051] (kinect_bridge) StdoutLine: {'line': b'byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect_bridge/bridge_node.py to bridge_node.cpython-310.pyc\n'}
+[27.314562] (trajectory_predictor) StdoutLine: {'line': b'byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor/predictor_node.py to predictor_node.cpython-310.pyc\n'}
+[27.315028] (experiment_logger) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages/experiment_logger\n'}
+[27.315456] (experiment_logger) StdoutLine: {'line': b'copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/build/lib/experiment_logger/__init__.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages/experiment_logger\n'}
+[27.315732] (experiment_logger) StdoutLine: {'line': b'copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/build/lib/experiment_logger/logger_node.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages/experiment_logger\n'}
+[27.316228] (experiment_logger) StdoutLine: {'line': b'byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages/experiment_logger/__init__.py to __init__.cpython-310.pyc\n'}
+[27.316815] (experiment_logger) StdoutLine: {'line': b'byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages/experiment_logger/logger_node.py to logger_node.cpython-310.pyc\n'}
+[27.317831] (kinect_bridge) StdoutLine: {'line': b'running install_data\n'}
+[27.318703] (kinect_bridge) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/share/ament_index\n'}
+[27.319338] (kinect_bridge) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/share/ament_index/resource_index\n'}
+[27.319645] (kinect_bridge) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/share/ament_index/resource_index/packages\n'}
+[27.319915] (kinect_bridge) StdoutLine: {'line': b'copying resource/kinect_bridge -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/share/ament_index/resource_index/packages\n'}
+[27.320351] (kinect_bridge) StdoutLine: {'line': b'copying package.xml -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge\n'}
+[27.320825] (kinect_bridge) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/config\n'}
+[27.321075] (kinect_bridge) StdoutLine: {'line': b'copying config/bridge_params.yaml -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/share/kinect_bridge/config\n'}
+[27.321347] (kinect_bridge) StdoutLine: {'line': b'running install_egg_info\n'}
+[27.322387] (trajectory_predictor) StdoutLine: {'line': b'running install_data\n'}
+[27.323074] (trajectory_predictor) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/ament_index\n'}
+[27.323595] (trajectory_predictor) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/ament_index/resource_index\n'}
+[27.323889] (trajectory_predictor) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/ament_index/resource_index/packages\n'}
+[27.324373] (trajectory_predictor) StdoutLine: {'line': b'copying resource/trajectory_predictor -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/ament_index/resource_index/packages\n'}
+[27.324644] (trajectory_predictor) StdoutLine: {'line': b'copying package.xml -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor\n'}
+[27.324893] (trajectory_predictor) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/config\n'}
+[27.325138] (trajectory_predictor) StdoutLine: {'line': b'copying config/predictor_params.yaml -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/config\n'}
+[27.325578] (trajectory_predictor) StdoutLine: {'line': b'running install_egg_info\n'}
+[27.326155] (experiment_logger) StdoutLine: {'line': b'running install_data\n'}
+[27.326638] (experiment_logger) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/share/ament_index\n'}
+[27.327284] (experiment_logger) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/share/ament_index/resource_index\n'}
+[27.327608] (kinect_bridge) StdoutLine: {'line': b'Copying ../../build/kinect_bridge/kinect_bridge.egg-info to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages/kinect_bridge-0.1.0-py3.10.egg-info\n'}
+[27.327901] (experiment_logger) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/share/ament_index/resource_index/packages\n'}
+[27.328160] (experiment_logger) StdoutLine: {'line': b'copying resource/experiment_logger -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/share/ament_index/resource_index/packages\n'}
+[27.328687] (experiment_logger) StdoutLine: {'line': b'copying package.xml -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/share/experiment_logger\n'}
+[27.329062] (experiment_logger) StdoutLine: {'line': b'running install_egg_info\n'}
+[27.330385] (kinect_bridge) StdoutLine: {'line': b'running install_scripts\n'}
+[27.331726] (trajectory_predictor) StdoutLine: {'line': b'Copying ../../build/trajectory_predictor/trajectory_predictor.egg-info to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor-0.1.0-py3.10.egg-info\n'}
+[27.333722] (predictor_ui) StdoutLine: {'line': b'running egg_info\n'}
+[27.334464] (experiment_logger) StdoutLine: {'line': b'Copying ../../build/experiment_logger/experiment_logger.egg-info to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages/experiment_logger-0.1.0-py3.10.egg-info\n'}
+[27.335309] (trajectory_predictor) StdoutLine: {'line': b'running install_scripts\n'}
+[27.336332] (predictor_ui) StdoutLine: {'line': b'creating ../../build/predictor_ui/predictor_ui.egg-info\n'}
+[27.337336] (predictor_ui) StdoutLine: {'line': b'writing ../../build/predictor_ui/predictor_ui.egg-info/PKG-INFO\n'}
+[27.338124] (experiment_logger) StdoutLine: {'line': b'running install_scripts\n'}
+[27.338622] (predictor_ui) StdoutLine: {'line': b'writing dependency_links to ../../build/predictor_ui/predictor_ui.egg-info/dependency_links.txt\n'}
+[27.339060] (predictor_ui) StdoutLine: {'line': b'writing entry points to ../../build/predictor_ui/predictor_ui.egg-info/entry_points.txt\n'}
+[27.339634] (predictor_ui) StdoutLine: {'line': b'writing requirements to ../../build/predictor_ui/predictor_ui.egg-info/requires.txt\n'}
+[27.340191] (predictor_ui) StdoutLine: {'line': b'writing top-level names to ../../build/predictor_ui/predictor_ui.egg-info/top_level.txt\n'}
+[27.340981] (predictor_ui) StdoutLine: {'line': b"writing manifest file '../../build/predictor_ui/predictor_ui.egg-info/SOURCES.txt'\n"}
+[27.347568] (predictor_ui) StdoutLine: {'line': b"reading manifest file '../../build/predictor_ui/predictor_ui.egg-info/SOURCES.txt'\n"}
+[27.350471] (predictor_ui) StdoutLine: {'line': b"writing manifest file '../../build/predictor_ui/predictor_ui.egg-info/SOURCES.txt'\n"}
+[27.351057] (predictor_ui) StdoutLine: {'line': b'running build\n'}
+[27.351414] (predictor_ui) StdoutLine: {'line': b'running build_py\n'}
+[27.351881] (predictor_ui) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui/build\n'}
+[27.352375] (predictor_ui) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui/build/lib\n'}
+[27.352939] (predictor_ui) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui/build/lib/predictor_ui\n'}
+[27.353365] (predictor_ui) StdoutLine: {'line': b'copying predictor_ui/__init__.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui/build/lib/predictor_ui\n'}
+[27.353659] (predictor_ui) StdoutLine: {'line': b'copying predictor_ui/ui_node.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui/build/lib/predictor_ui\n'}
+[27.354134] (predictor_ui) StdoutLine: {'line': b'running install\n'}
+[27.354940] (predictor_ui) StdoutLine: {'line': b'running install_lib\n'}
+[27.358096] (predictor_ui) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui\n'}
+[27.358590] (predictor_ui) StdoutLine: {'line': b'copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui/build/lib/predictor_ui/__init__.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui\n'}
+[27.359078] (predictor_ui) StdoutLine: {'line': b'copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui/build/lib/predictor_ui/ui_node.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui\n'}
+[27.360692] (predictor_ui) StdoutLine: {'line': b'byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui/__init__.py to __init__.cpython-310.pyc\n'}
+[27.361487] (predictor_ui) StdoutLine: {'line': b'byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui/ui_node.py to ui_node.cpython-310.pyc\n'}
+[27.372911] (predictor_ui) StdoutLine: {'line': b'running install_data\n'}
+[27.373617] (predictor_ui) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/share/ament_index\n'}
+[27.373950] (predictor_ui) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/share/ament_index/resource_index\n'}
+[27.374518] (predictor_ui) StdoutLine: {'line': b'creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/share/ament_index/resource_index/packages\n'}
+[27.374939] (predictor_ui) StdoutLine: {'line': b'copying resource/predictor_ui -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/share/ament_index/resource_index/packages\n'}
+[27.375234] (predictor_ui) StdoutLine: {'line': b'copying package.xml -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/share/predictor_ui\n'}
+[27.375503] (predictor_ui) StdoutLine: {'line': b'running install_egg_info\n'}
+[27.383456] (predictor_ui) StdoutLine: {'line': b'Copying ../../build/predictor_ui/predictor_ui.egg-info to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui-0.1.0-py3.10.egg-info\n'}
+[27.384913] (-) TimerEvent: {}
+[27.388270] (predictor_ui) StdoutLine: {'line': b'running install_scripts\n'}
+[27.418087] (trajectory_predictor) StdoutLine: {'line': b'Installing predictor_node script to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/trajectory_predictor\n'}
+[27.419444] (trajectory_predictor) StdoutLine: {'line': b"writing list of installed files to '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/install.log'\n"}
+[27.420578] (kinect_bridge) StdoutLine: {'line': b'Installing bridge_node script to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/kinect_bridge\n'}
+[27.422122] (experiment_logger) StdoutLine: {'line': b'Installing logger_node script to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/experiment_logger\n'}
+[27.422565] (kinect_bridge) StdoutLine: {'line': b"writing list of installed files to '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/kinect_bridge/install.log'\n"}
+[27.423143] (experiment_logger) StdoutLine: {'line': b"writing list of installed files to '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/experiment_logger/install.log'\n"}
+[27.473811] (predictor_ui) StdoutLine: {'line': b'Installing ui_node script to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/lib/predictor_ui\n'}
+[27.475097] (predictor_ui) StdoutLine: {'line': b"writing list of installed files to '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/predictor_ui/install.log'\n"}
+[27.485091] (-) TimerEvent: {}
+[27.505311] (trajectory_predictor) CommandEnded: {'returncode': 0}
+[27.530041] (trajectory_predictor) JobEnded: {'identifier': 'trajectory_predictor', 'rc': 0}
+[27.533615] (experiment_logger) CommandEnded: {'returncode': 0}
+[27.557108] (experiment_logger) JobEnded: {'identifier': 'experiment_logger', 'rc': 0}
+[27.563074] (kinect_bridge) CommandEnded: {'returncode': 0}
+[27.585375] (-) TimerEvent: {}
+[27.588504] (kinect_bridge) JobEnded: {'identifier': 'kinect_bridge', 'rc': 0}
+[27.590637] (predictor_ui) CommandEnded: {'returncode': 0}
+[27.615213] (predictor_ui) JobEnded: {'identifier': 'predictor_ui', 'rc': 0}
+[27.618133] (hrc_bringup) JobStarted: {'identifier': 'hrc_bringup'}
+[27.648226] (hrc_bringup) JobProgress: {'identifier': 'hrc_bringup', 'progress': 'cmake'}
+[27.651617] (hrc_bringup) Command: {'cmd': ['/usr/bin/cmake', '/home/duy/Documents/GitHub/Experiment/hrc_ws/src/hrc_bringup', '-DCMAKE_INSTALL_PREFIX=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'vi:en_US:en'), ('USER', 'duy'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'wayland'), ('ROS_PACKAGE_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/duy'), ('OLDPWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'vi_VN'), ('SYSTEMD_EXEC_PID', '9651'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'duy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('PKG_CONFIG_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig'), ('USERNAME', 'duy'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/duy:@/tmp/.ICE-unix/9623,unix/duy:/tmp/.ICE-unix/9623'), ('PAPERSIZE', 'a4'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'vi_VN'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/b55caca2_dafb_4c05_be9d_c2539cf12131'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'vi_VN.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'vi_VN'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.YPITN3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.143'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs')]), 'shell': False}
+[27.685586] (-) TimerEvent: {}
+[27.786221] (-) TimerEvent: {}
+[27.837258] (hrc_bringup) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[27.886365] (-) TimerEvent: {}
+[27.986926] (-) TimerEvent: {}
+[28.039455] (hrc_bringup) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[28.065128] (hrc_bringup) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[28.087123] (-) TimerEvent: {}
+[28.187747] (-) TimerEvent: {}
+[28.288356] (-) TimerEvent: {}
+[28.291649] (hrc_bringup) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[28.324714] (hrc_bringup) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[28.325660] (hrc_bringup) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[28.327237] (hrc_bringup) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[28.339532] (hrc_bringup) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[28.388554] (-) TimerEvent: {}
+[28.489346] (-) TimerEvent: {}
+[28.589962] (-) TimerEvent: {}
+[28.622794] (hrc_bringup) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[28.671066] (hrc_bringup) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[28.672187] (hrc_bringup) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[28.674069] (hrc_bringup) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[28.680324] (hrc_bringup) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[28.690127] (-) TimerEvent: {}
+[28.790822] (-) TimerEvent: {}
+[28.891437] (-) TimerEvent: {}
+[28.992135] (-) TimerEvent: {}
+[29.092864] (-) TimerEvent: {}
+[29.193593] (-) TimerEvent: {}
+[29.293011] (hrc_bringup) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[29.293689] (-) TimerEvent: {}
+[29.394220] (-) TimerEvent: {}
+[29.494980] (-) TimerEvent: {}
+[29.595597] (-) TimerEvent: {}
+[29.696215] (-) TimerEvent: {}
+[29.796973] (-) TimerEvent: {}
+[29.897600] (-) TimerEvent: {}
+[29.916979] (hrc_bringup) StdoutLine: {'line': b'-- Configuring done\n'}
+[29.926422] (hrc_bringup) StdoutLine: {'line': b'-- Generating done\n'}
+[29.933071] (hrc_bringup) StdoutLine: {'line': b'-- Build files have been written to: /home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup\n'}
+[29.945127] (hrc_bringup) CommandEnded: {'returncode': 0}
+[29.949522] (hrc_bringup) JobProgress: {'identifier': 'hrc_bringup', 'progress': 'build'}
+[29.949658] (hrc_bringup) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup', '--', '-j12', '-l12'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'vi:en_US:en'), ('USER', 'duy'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'wayland'), ('ROS_PACKAGE_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/duy'), ('OLDPWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'vi_VN'), ('SYSTEMD_EXEC_PID', '9651'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'duy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('PKG_CONFIG_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig'), ('USERNAME', 'duy'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/duy:@/tmp/.ICE-unix/9623,unix/duy:/tmp/.ICE-unix/9623'), ('PAPERSIZE', 'a4'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'vi_VN'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/b55caca2_dafb_4c05_be9d_c2539cf12131'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'vi_VN.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'vi_VN'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.YPITN3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.143'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs')]), 'shell': False}
+[29.997746] (-) TimerEvent: {}
+[30.069895] (hrc_bringup) CommandEnded: {'returncode': 0}
+[30.072401] (hrc_bringup) JobProgress: {'identifier': 'hrc_bringup', 'progress': 'install'}
+[30.074510] (hrc_bringup) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup'], 'cwd': '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'vi:en_US:en'), ('USER', 'duy'), ('LC_TIME', 'vi_VN'), ('XDG_SESSION_TYPE', 'wayland'), ('ROS_PACKAGE_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/duy'), ('OLDPWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('LC_MONETARY', 'vi_VN'), ('SYSTEMD_EXEC_PID', '9651'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'duy'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('PKG_CONFIG_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig'), ('USERNAME', 'duy'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/duy:@/tmp/.ICE-unix/9623,unix/duy:/tmp/.ICE-unix/9623'), ('PAPERSIZE', 'a4'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'vi_VN'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/b55caca2_dafb_4c05_be9d_c2539cf12131'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'vi_VN.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('LC_TELEPHONE', 'vi_VN'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.YPITN3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.143'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'vi_VN'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'vi_VN'), ('LC_IDENTIFICATION', 'vi_VN'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/kinect_bridge/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/experiment_logger/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'vi_VN'), ('LC_PAPER', 'vi_VN'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs')]), 'shell': False}
+[30.097904] (-) TimerEvent: {}
+[30.101151] (hrc_bringup) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[30.101978] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/launch\n'}
+[30.102650] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/launch/full_pipeline.launch.py\n'}
+[30.102971] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/config\n'}
+[30.103266] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/config/all_params.yaml\n'}
+[30.103832] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/ament_index/resource_index/package_run_dependencies/hrc_bringup\n'}
+[30.104433] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/ament_index/resource_index/parent_prefix_path/hrc_bringup\n'}
+[30.105085] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/environment/ament_prefix_path.sh\n'}
+[30.105766] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/environment/ament_prefix_path.dsv\n'}
+[30.106259] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/environment/path.sh\n'}
+[30.106703] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/environment/path.dsv\n'}
+[30.107079] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/local_setup.bash\n'}
+[30.107467] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/local_setup.sh\n'}
+[30.107842] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/local_setup.zsh\n'}
+[30.108233] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/local_setup.dsv\n'}
+[30.108592] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/package.dsv\n'}
+[30.109063] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/ament_index/resource_index/packages/hrc_bringup\n'}
+[30.109695] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/cmake/hrc_bringupConfig.cmake\n'}
+[30.110116] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/cmake/hrc_bringupConfig-version.cmake\n'}
+[30.110674] (hrc_bringup) StdoutLine: {'line': b'-- Installing: /home/duy/Documents/GitHub/Experiment/hrc_ws/install/hrc_bringup/share/hrc_bringup/package.xml\n'}
+[30.117475] (hrc_bringup) CommandEnded: {'returncode': 0}
+[30.164063] (hrc_bringup) JobEnded: {'identifier': 'hrc_bringup', 'rc': 0}
+[30.167211] (-) EventReactorShutdown: {}

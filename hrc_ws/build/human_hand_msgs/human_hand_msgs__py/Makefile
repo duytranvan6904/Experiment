@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/duy/Experiment/hrc_ws/src/human_hand_msgs
+CMAKE_SOURCE_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/src/human_hand_msgs
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/duy/Experiment/hrc_ws/build/human_hand_msgs
+CMAKE_BINARY_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_progress_start /home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles /home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__py//CMakeFiles/progress.marks
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 human_hand_msgs__py/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/duy/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles 0
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -E cmake_progress_start /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__py//CMakeFiles/progress.marks
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 human_hand_msgs__py/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 human_hand_msgs__py/clean
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 human_hand_msgs__py/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,22 +158,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 human_hand_msgs__py/preinstall
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 human_hand_msgs__py/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 human_hand_msgs__py/preinstall
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 human_hand_msgs__py/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 human_hand_msgs__py/CMakeFiles/human_hand_msgs__py.dir/rule:
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 human_hand_msgs__py/CMakeFiles/human_hand_msgs__py.dir/rule
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 human_hand_msgs__py/CMakeFiles/human_hand_msgs__py.dir/rule
 .PHONY : human_hand_msgs__py/CMakeFiles/human_hand_msgs__py.dir/rule
 
 # Convenience name for target.
@@ -182,7 +182,7 @@ human_hand_msgs__py: human_hand_msgs__py/CMakeFiles/human_hand_msgs__py.dir/rule
 
 # fast build rule for target.
 human_hand_msgs__py/fast:
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f human_hand_msgs__py/CMakeFiles/human_hand_msgs__py.dir/build.make human_hand_msgs__py/CMakeFiles/human_hand_msgs__py.dir/build
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(MAKE) $(MAKESILENT) -f human_hand_msgs__py/CMakeFiles/human_hand_msgs__py.dir/build.make human_hand_msgs__py/CMakeFiles/human_hand_msgs__py.dir/build
 .PHONY : human_hand_msgs__py/fast
 
 # Help Target
@@ -210,6 +210,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/duy/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

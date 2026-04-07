@@ -1,12 +1,12 @@
 {
   "package_name": "human_hand_msgs",
-  "output_dir": "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_cpp/human_hand_msgs",
+  "output_dir": "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_cpp/human_hand_msgs",
   "template_dir": "/opt/ros/humble/share/rosidl_generator_cpp/cmake/../resource",
   "idl_tuples": [
-    "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs:msg/HandState.idl",
-    "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs:msg/HandPrediction.idl",
-    "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs:msg/SystemStatus.idl",
-    "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs:srv/SelectModel.idl"
+    "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs:msg/HandState.idl",
+    "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs:msg/HandPrediction.idl",
+    "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs:msg/SystemStatus.idl",
+    "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs:srv/SelectModel.idl"
   ],
   "ros_interface_dependencies": [
     "std_msgs:/opt/ros/humble/share/std_msgs/msg/Bool.idl",
@@ -58,10 +58,10 @@
     "/opt/ros/humble/share/rosidl_generator_cpp/cmake/../resource/srv__builder.hpp.em",
     "/opt/ros/humble/share/rosidl_generator_cpp/cmake/../resource/srv__struct.hpp.em",
     "/opt/ros/humble/share/rosidl_generator_cpp/cmake/../resource/srv__traits.hpp.em",
-    "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs/msg/HandState.idl",
-    "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs/msg/HandPrediction.idl",
-    "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs/msg/SystemStatus.idl",
-    "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs/srv/SelectModel.idl",
+    "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs/msg/HandState.idl",
+    "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs/msg/HandPrediction.idl",
+    "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs/msg/SystemStatus.idl",
+    "/home/duy/Documents/GitHub/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs/srv/SelectModel.idl",
     "/opt/ros/humble/share/std_msgs/msg/Bool.idl",
     "/opt/ros/humble/share/std_msgs/msg/Byte.idl",
     "/opt/ros/humble/share/std_msgs/msg/ByteMultiArray.idl",

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/duy/Experiment/hrc_ws/src/hrc_bringup
+CMAKE_SOURCE_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/src/hrc_bringup
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/duy/Experiment/hrc_ws/build/hrc_bringup
+CMAKE_BINARY_DIR = /home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup
 
 # Utility rule file for uninstall.
 
@@ -78,6 +78,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /home/duy/Experiment/hrc_ws/build/hrc_bringup && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Experiment/hrc_ws/src/hrc_bringup /home/duy/Experiment/hrc_ws/src/hrc_bringup /home/duy/Experiment/hrc_ws/build/hrc_bringup /home/duy/Experiment/hrc_ws/build/hrc_bringup /home/duy/Experiment/hrc_ws/build/hrc_bringup/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/duy/Documents/GitHub/Experiment/hrc_ws/src/hrc_bringup /home/duy/Documents/GitHub/Experiment/hrc_ws/src/hrc_bringup /home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup /home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup /home/duy/Documents/GitHub/Experiment/hrc_ws/build/hrc_bringup/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/uninstall.dir/depend
 

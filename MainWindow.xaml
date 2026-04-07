@@ -24,12 +24,11 @@
             <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="#6c7086" FontFamily="Segoe UI" FontSize="14" Margin="0,0,10,0">Body Basics – Prediction Evaluation</TextBlock>
         </Grid>
 
-        <!-- Main Content: 3 columns -->
+        <!-- Main Content: 2 columns -->
         <Grid Grid.Row="1" Background="#11111b">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="260" />
+                <ColumnDefinition Width="320" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="1.5*" />
             </Grid.ColumnDefinitions>
 
             <!-- 1. LEFT COLUMN: Controls -->
@@ -41,7 +40,7 @@
                         <!-- ROS Connection -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                             <TextBlock VerticalAlignment="Center" Foreground="#cdd6f4" Margin="0,0,4,0" FontSize="11">ROS IP:</TextBlock>
-                            <TextBox Name="txtRosIp" Width="100" Text="10.98.106.246" FontSize="11"/>
+                            <TextBox Name="txtRosIp" Width="100" Text="10.98.135.125" FontSize="11"/>
                             <Button Name="btnConnectRos" Width="55" Margin="4,0,0,0" Click="BtnConnectRos_Click" FontSize="10">Connect</Button>
                         </StackPanel>
 
@@ -97,45 +96,22 @@
                             </ListBox>
                         </GroupBox>
 
-                        <!-- Model Selection -->
-                        <GroupBox Header="Model" Foreground="#89b4fa" Padding="4" FontSize="10" Margin="0,0,0,6">
-                            <StackPanel Orientation="Horizontal">
-                                <RadioButton Name="rbGru" Content="GRU" IsChecked="True" Checked="Model_Checked" Foreground="#cdd6f4" Margin="0,0,6,0"/>
-                                <RadioButton Name="rbRnn" Content="RNN" Checked="Model_Checked" Foreground="#cdd6f4" Margin="0,0,6,0"/>
-                                <RadioButton Name="rbLstm" Content="LSTM" Checked="Model_Checked" Foreground="#cdd6f4"/>
-                            </StackPanel>
-                        </GroupBox>
-
-                        <!-- Performance -->
-                        <GroupBox Header="Performance" Foreground="#89b4fa" Padding="4" FontSize="10" Margin="0,0,0,6">
-                            <StackPanel>
-                                <TextBlock Name="lblActiveModel" Text="Model: GRU" Foreground="#a6e3a1"/>
-                                <TextBlock Name="lblBufferStatus" Text="Buffer: 0/20" Foreground="#fab387"/>
-                                <TextBlock Name="lblInferenceTime" Text="Inference: 0.0ms" Foreground="#f5e0dc"/>
-                                <TextBlock Name="lblBridgeStatus" Text="Bridge: Disconnected" Foreground="#f38ba8"/>
-                                <TextBlock Name="lblMAE" Text="MAE: -" Foreground="#89dceb"/>
-                                <TextBlock Name="lblMSE" Text="MSE: -" Foreground="#89dceb"/>
-                            </StackPanel>
-                        </GroupBox>
-
                         <TextBlock Name="txtSavePath" Text="-" TextWrapping="Wrap" FontSize="8" Foreground="#585b70" Margin="0,4,0,0"/>
-                        <Button Name="btnResetPlots" Content="Reset Graphs" Click="BtnResetPlots_Click" 
-                                Margin="0,4,0,0" Background="#313244" Foreground="#cdd6f4" FontSize="10" Padding="4,2"/>
                     </StackPanel>
                 </ScrollViewer>
             </Border>
 
-            <!-- 2. CENTER COLUMN: Camera at Top -->
+            <!-- 2. CENTER COLUMN: Camera at Top (ENLARGED) -->
             <Grid Grid.Column="1" Background="#11111b" Margin="15,0,15,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="0" Margin="0,15,0,15" Background="#181825" BorderBrush="#313244" BorderThickness="1" CornerRadius="8" Padding="4" VerticalAlignment="Top">
-                    <StackPanel>
-                        <TextBlock Text="KINECT V2 LIVE FEED" Foreground="#89b4fa" FontSize="10" FontFamily="Segoe UI" Margin="0,0,0,4" HorizontalAlignment="Center" FontWeight="Bold"/>
-                        <Viewbox Stretch="Uniform" MaxHeight="360">
+                <Border Grid.Row="0" Margin="0,15,0,15" Background="#181825" BorderBrush="#313244" BorderThickness="1" CornerRadius="8" Padding="10" VerticalAlignment="Stretch">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="KINECT V2 LIVE FEED" Foreground="#89b4fa" FontSize="14" FontFamily="Segoe UI" Margin="0,0,0,10" HorizontalAlignment="Center" FontWeight="Bold"/>
+                        <Viewbox Stretch="Uniform">
                             <Grid>
                                 <Image Source="{Binding ColorImageSource}" Stretch="Uniform" />
                                 <Image Source="{Binding ImageSource}" Stretch="Uniform" />
@@ -144,27 +120,14 @@
                     </StackPanel>
                 </Border>
                 
-                <Border Grid.Row="1" Margin="0,0,0,15" BorderBrush="#313244" BorderThickness="1" CornerRadius="8" Background="#181825">
+                <Border Grid.Row="1" Margin="0,0,0,15" BorderBrush="#313244" BorderThickness="1" CornerRadius="8" Background="#181825" Visibility="Collapsed">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                         <TextBlock Text="RESERVED FOR DESTINATION ANALYSIS" Foreground="#45475a" FontSize="14" HorizontalAlignment="Center"/>
                         <TextBlock Text="(Area will contain future probability plots)" Foreground="#313244" FontSize="10" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                     </StackPanel>
                 </Border>
             </Grid>
-
-            <!-- 3. RIGHT COLUMN: Trajectory Dashboard -->
-            <Border Grid.Column="2" Background="#181825" BorderBrush="#313244" BorderThickness="1,0,0,0">
-                <Grid Margin="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <local:TrajectoryPlot x:Name="plotX" Title="X-Axis Trajectory" Grid.Row="0" Margin="0,23,0,46"/>
-                    <local:TrajectoryPlot x:Name="plotY" Title="Y-Axis Trajectory" Grid.Row="1" Margin="0,0,0,10"/>
-                    <local:TrajectoryPlot x:Name="plotZ" Title="Z-Axis Trajectory" Grid.Row="2"/>
-                </Grid>
-            </Border>
+        </Grid>
         </Grid>
 
         <!-- Status Bar -->

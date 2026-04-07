@@ -1,0 +1,45 @@
+[5.416s] Invoking command in '/home/duy/Documents/GitHub/Experiment/hrc_ws/src/trajectory_predictor': CMAKE_PREFIX_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs LD_LIBRARY_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/trajectory_predictor build --build-base /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build install --record /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/install.log --single-version-externally-managed install_data
+[6.345s] running egg_info
+[6.347s] creating ../../build/trajectory_predictor/trajectory_predictor.egg-info
+[6.348s] writing ../../build/trajectory_predictor/trajectory_predictor.egg-info/PKG-INFO
+[6.349s] writing dependency_links to ../../build/trajectory_predictor/trajectory_predictor.egg-info/dependency_links.txt
+[6.350s] writing entry points to ../../build/trajectory_predictor/trajectory_predictor.egg-info/entry_points.txt
+[6.351s] writing requirements to ../../build/trajectory_predictor/trajectory_predictor.egg-info/requires.txt
+[6.351s] writing top-level names to ../../build/trajectory_predictor/trajectory_predictor.egg-info/top_level.txt
+[6.352s] writing manifest file '../../build/trajectory_predictor/trajectory_predictor.egg-info/SOURCES.txt'
+[6.357s] reading manifest file '../../build/trajectory_predictor/trajectory_predictor.egg-info/SOURCES.txt'
+[6.360s] writing manifest file '../../build/trajectory_predictor/trajectory_predictor.egg-info/SOURCES.txt'
+[6.360s] running build
+[6.361s] running build_py
+[6.362s] creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build
+[6.362s] creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib
+[6.362s] creating /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor
+[6.363s] copying trajectory_predictor/inference_worker.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor
+[6.364s] copying trajectory_predictor/model_manager.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor
+[6.365s] copying trajectory_predictor/__init__.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor
+[6.365s] copying trajectory_predictor/predictor_node.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor
+[6.368s] running install
+[6.369s] running install_lib
+[6.373s] creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor
+[6.373s] copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor/inference_worker.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor
+[6.374s] copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor/model_manager.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor
+[6.375s] copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor/__init__.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor
+[6.375s] copying /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build/lib/trajectory_predictor/predictor_node.py -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor
+[6.375s] byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor/inference_worker.py to inference_worker.cpython-310.pyc
+[6.381s] byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor/model_manager.py to model_manager.cpython-310.pyc
+[6.381s] byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor/__init__.py to __init__.cpython-310.pyc
+[6.383s] byte-compiling /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor/predictor_node.py to predictor_node.cpython-310.pyc
+[6.391s] running install_data
+[6.391s] creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/ament_index
+[6.392s] creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/ament_index/resource_index
+[6.392s] creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/ament_index/resource_index/packages
+[6.393s] copying resource/trajectory_predictor -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/ament_index/resource_index/packages
+[6.393s] copying package.xml -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor
+[6.393s] creating /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/config
+[6.393s] copying config/predictor_params.yaml -> /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/share/trajectory_predictor/config
+[6.394s] running install_egg_info
+[6.400s] Copying ../../build/trajectory_predictor/trajectory_predictor.egg-info to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages/trajectory_predictor-0.1.0-py3.10.egg-info
+[6.404s] running install_scripts
+[6.487s] Installing predictor_node script to /home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/trajectory_predictor
+[6.488s] writing list of installed files to '/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/install.log'
+[6.575s] Invoked command in '/home/duy/Documents/GitHub/Experiment/hrc_ws/src/trajectory_predictor' returned '0': CMAKE_PREFIX_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs LD_LIBRARY_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/trajectory_predictor/lib/python3.10/site-packages:/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Documents/GitHub/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/trajectory_predictor build --build-base /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/build install --record /home/duy/Documents/GitHub/Experiment/hrc_ws/build/trajectory_predictor/install.log --single-version-externally-managed install_data
