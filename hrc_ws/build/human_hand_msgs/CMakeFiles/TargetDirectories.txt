@@ -30,3 +30,11 @@
 /home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__py/CMakeFiles/install.dir
 /home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__py/CMakeFiles/install/local.dir
 /home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__py/CMakeFiles/install/strip.dir
+/home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__rs/CMakeFiles/human_hand_msgs__rs.dir
+/home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__rs/CMakeFiles/test.dir
+/home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__rs/CMakeFiles/edit_cache.dir
+/home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__rs/CMakeFiles/rebuild_cache.dir
+/home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__rs/CMakeFiles/list_install_components.dir
+/home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__rs/CMakeFiles/install.dir
+/home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__rs/CMakeFiles/install/local.dir
+/home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__rs/CMakeFiles/install/strip.dir

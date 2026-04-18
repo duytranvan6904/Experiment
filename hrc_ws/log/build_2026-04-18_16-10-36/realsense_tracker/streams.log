@@ -1,0 +1,24 @@
+[1.067s] Invoking command in '/home/duy/Experiment/hrc_ws/src/realsense_tracker': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Experiment/hrc_ws/build/realsense_tracker/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/realsense_tracker/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/realsense_tracker build --build-base /home/duy/Experiment/hrc_ws/build/realsense_tracker/build install --record /home/duy/Experiment/hrc_ws/build/realsense_tracker/install.log --single-version-externally-managed install_data
+[1.400s] running egg_info
+[1.401s] writing ../../build/realsense_tracker/realsense_tracker.egg-info/PKG-INFO
+[1.401s] writing dependency_links to ../../build/realsense_tracker/realsense_tracker.egg-info/dependency_links.txt
+[1.402s] writing entry points to ../../build/realsense_tracker/realsense_tracker.egg-info/entry_points.txt
+[1.402s] writing requirements to ../../build/realsense_tracker/realsense_tracker.egg-info/requires.txt
+[1.402s] writing top-level names to ../../build/realsense_tracker/realsense_tracker.egg-info/top_level.txt
+[1.405s] reading manifest file '../../build/realsense_tracker/realsense_tracker.egg-info/SOURCES.txt'
+[1.408s] writing manifest file '../../build/realsense_tracker/realsense_tracker.egg-info/SOURCES.txt'
+[1.409s] running build
+[1.409s] running build_py
+[1.409s] copying realsense_tracker/realsense_node.py -> /home/duy/Experiment/hrc_ws/build/realsense_tracker/build/lib/realsense_tracker
+[1.409s] running install
+[1.409s] running install_lib
+[1.409s] copying /home/duy/Experiment/hrc_ws/build/realsense_tracker/build/lib/realsense_tracker/realsense_node.py -> /home/duy/Experiment/hrc_ws/install/realsense_tracker/lib/python3.10/site-packages/realsense_tracker
+[1.410s] byte-compiling /home/duy/Experiment/hrc_ws/install/realsense_tracker/lib/python3.10/site-packages/realsense_tracker/realsense_node.py to realsense_node.cpython-310.pyc
+[1.415s] running install_data
+[1.416s] running install_egg_info
+[1.420s] removing '/home/duy/Experiment/hrc_ws/install/realsense_tracker/lib/python3.10/site-packages/realsense_tracker-0.0.0-py3.10.egg-info' (and everything under it)
+[1.422s] Copying ../../build/realsense_tracker/realsense_tracker.egg-info to /home/duy/Experiment/hrc_ws/install/realsense_tracker/lib/python3.10/site-packages/realsense_tracker-0.0.0-py3.10.egg-info
+[1.422s] running install_scripts
+[1.454s] Installing realsense_node script to /home/duy/Experiment/hrc_ws/install/realsense_tracker/lib/realsense_tracker
+[1.455s] writing list of installed files to '/home/duy/Experiment/hrc_ws/build/realsense_tracker/install.log'
+[1.492s] Invoked command in '/home/duy/Experiment/hrc_ws/src/realsense_tracker' returned '0': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Experiment/hrc_ws/build/realsense_tracker/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/realsense_tracker/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/realsense_tracker build --build-base /home/duy/Experiment/hrc_ws/build/realsense_tracker/build install --record /home/duy/Experiment/hrc_ws/build/realsense_tracker/install.log --single-version-externally-managed install_data

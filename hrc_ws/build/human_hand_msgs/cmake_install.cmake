@@ -356,6 +356,14 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ament_index/resource_index/rust_packages" TYPE FILE FILES "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/ament_cmake_index/share/ament_index/resource_index/rust_packages/human_hand_msgs")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/human_hand_msgs" TYPE DIRECTORY FILES "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_generator_rs/human_hand_msgs/rust")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/human_hand_msgs/msg" TYPE FILE FILES "/home/duy/Experiment/hrc_ws/build/human_hand_msgs/rosidl_adapter/human_hand_msgs/msg/HandState.idl")
 endif()
 
@@ -653,6 +661,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__py/cmake_install.cmake")
+  include("/home/duy/Experiment/hrc_ws/build/human_hand_msgs/human_hand_msgs__rs/cmake_install.cmake")
 
 endif()
 

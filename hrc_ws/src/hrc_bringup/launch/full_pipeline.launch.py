@@ -18,10 +18,10 @@ def generate_launch_description():
         description='Path to directory containing .h5 models and .pkl scalers'
     )
 
-    tcp_port_arg = DeclareLaunchArgument(
-        'tcp_port',
-        default_value='9090',
-        description='TCP port for Kinect C# app connection'
+    rs_model_arg = DeclareLaunchArgument(
+        'rs_model_path',
+        default_value='/home/duy/Experiment/librealsense/pose_landmarker_full.task',
+        description='Path to MediaPipe pose landmarker model'
     )
 
     log_dir_arg = DeclareLaunchArgument(
@@ -32,16 +32,16 @@ def generate_launch_description():
 
     # ──── Nodes ────
 
-    bridge_node = Node(
-        package='kinect_bridge',
-        executable='bridge_node',
-        name='kinect_bridge',
+    realsense_node = Node(
+        package='realsense_tracker',
+        executable='realsense_node',
+        name='realsense_tracker',
         output='screen',
         parameters=[{
-            'tcp_host': '0.0.0.0',
-            'tcp_port': LaunchConfiguration('tcp_port'),
-            'connection_timeout': 5.0,
-            'source_name': 'kinect_cam1',
+            'model_path': LaunchConfiguration('rs_model_path'),
+            'offset_x': 0.0,
+            'offset_y': 0.0,
+            'offset_z': 0.0,
         }],
     )
 
@@ -87,9 +87,9 @@ def generate_launch_description():
     return LaunchDescription([
         env_fix,
         model_dir_arg,
-        tcp_port_arg,
+        rs_model_arg,
         log_dir_arg,
-        bridge_node,
+        realsense_node,
         predictor_node,
         logger_node,
         ui_node,

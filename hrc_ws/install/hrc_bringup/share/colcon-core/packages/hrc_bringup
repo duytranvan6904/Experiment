@@ -1,1 +1,1 @@
-experiment_logger:kinect_bridge:predictor_ui:trajectory_predictor
+experiment_logger:predictor_ui:realsense_tracker:trajectory_predictor
