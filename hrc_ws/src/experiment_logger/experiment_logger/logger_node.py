@@ -81,6 +81,7 @@ class ExperimentLoggerNode(Node):
                 'ros_timestamp_ns', 'wall_time',
                 'meas_x', 'meas_y', 'meas_z', 'is_tracked',
                 'pred_x', 'pred_y', 'pred_z',
+                'mae_x', 'mae_y', 'mae_z',
                 'inference_ms', 'buffer_size'
             ])
             self.csv_file.flush()
@@ -239,13 +240,18 @@ class ExperimentLoggerNode(Node):
             tracked = str(meas.is_tracked)
 
         px = py = pz = inf_ms = buf = ''
+        mae_x = mae_y = mae_z = ''
         if pred:
             px, py, pz = f'{pred.x:.6f}', f'{pred.y:.6f}', f'{pred.z:.6f}'
             inf_ms = f'{pred.inference_time_ms:.2f}'
             buf = str(pred.buffer_size)
+            if meas:
+                mae_x = f'{abs(pred.x - meas.x):.6f}'
+                mae_y = f'{abs(pred.y - meas.y):.6f}'
+                mae_z = f'{abs(pred.z - meas.z):.6f}'
 
         self.csv_writer.writerow([
-            now_ns, wall, mx, my, mz, tracked, px, py, pz, inf_ms, buf
+            now_ns, wall, mx, my, mz, tracked, px, py, pz, mae_x, mae_y, mae_z, inf_ms, buf
         ])
         self.row_count += 1
 

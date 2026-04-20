@@ -352,8 +352,14 @@ class DashboardWindow:
         for i in range(3):
             ym = axes_m[i]
             yp = axes_p[i]
+            
             xm = list(range(len(ym)))
-            xp = list(range(len(yp)))
+            
+            offset = len(ym) - len(yp)
+            if offset < 0:
+                offset = 0
+            xp = [x + offset for x in range(len(yp))]
+            
             self.curves_m[i].setData(xm, ym)
             self.curves_p[i].setData(xp, yp)
 

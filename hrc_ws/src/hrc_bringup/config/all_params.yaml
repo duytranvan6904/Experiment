@@ -5,14 +5,19 @@ experiment_logger:
 realsense_tracker:
   ros__parameters:
     model_path: /home/duy/Experiment/librealsense/pose_landmarker_full.task
-    offset_x: 0.060510896146297455
-    offset_y: 0.12283584475517273
-    offset_z: 0.7100000381469727
+    offset_x: 0.0029441434890031815
+    offset_y: 0.07468471676111221
+    offset_z: 0.9220000505447388
 trajectory_predictor:
   ros__parameters:
     auto_start: false
     clear_on_tracking_lost: 1.0
     default_model: gru
+    filter:
+      ema_alpha: 0.6
+      enabled: true
+      max_deviation: 0.1
+      max_rate: 0.06
     model_dir: /home/duy/Experiment/Trained model
     model_files:
       gru: gru_velocity_3_layers.h5

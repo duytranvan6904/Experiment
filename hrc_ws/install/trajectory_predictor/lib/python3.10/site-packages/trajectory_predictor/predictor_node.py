@@ -46,6 +46,16 @@ class PredictorNode(Node):
         # Path tới Python venv (nếu có), nếu không dùng sys.executable
         self.declare_parameter('venv_python', '')
 
+        # ── Output filter parameters ─────────────────────────────────────────
+        # Proximity clamp: max deviation from last measured position (m)
+        self.declare_parameter('filter.max_deviation', 0.15)
+        # Rate limiter: max change per frame (m). At ~30Hz, 0.07m ≈ 2.1 m/s
+        self.declare_parameter('filter.max_rate', 0.07)
+        # EMA smoothing factor (0 = no smoothing, 1 = raw prediction)
+        self.declare_parameter('filter.ema_alpha', 0.4)
+        # Enable/disable output filter
+        self.declare_parameter('filter.enabled', True)
+
         self.model_dir = self.get_parameter('model_dir').value
         self.default_model = self.get_parameter('default_model').value
         self.scaler_x_file = self.get_parameter('scaler_x_file').value
@@ -56,6 +66,12 @@ class PredictorNode(Node):
         self.clear_timeout = self.get_parameter('clear_on_tracking_lost').value
         venv_python = self.get_parameter('venv_python').value
         self.python_exe = venv_python if venv_python else sys.executable
+
+        # Filter config
+        self._filter_max_dev = self.get_parameter('filter.max_deviation').value
+        self._filter_max_rate = self.get_parameter('filter.max_rate').value
+        self._filter_ema_alpha = self.get_parameter('filter.ema_alpha').value
+        self._filter_enabled = self.get_parameter('filter.enabled').value
 
         self.model_files = {
             'rnn': self.get_parameter('model_files.rnn').value,
@@ -72,6 +88,11 @@ class PredictorNode(Node):
         self._worker_proc: subprocess.Popen | None = None
         self._worker_lock = threading.Lock()
         self._pending_model_switch: str | None = None
+
+        # ── Output filter state ──────────────────────────────────────────────
+        self._last_meas = [0.0, 0.0, 0.0]      # last measured position
+        self._last_filtered = None              # last filtered prediction [x,y,z]
+        self._filter_reject_count = 0
 
         # ── Publishers ───────────────────────────────────────────────────────
         self.pred_pub = self.create_publisher(
@@ -242,6 +263,7 @@ class PredictorNode(Node):
         """Nhận tọa độ từ /hand_position (HandState)."""
         if not msg.is_tracked:
             return
+        self._last_meas = [msg.x, msg.y, msg.z]
         self._ingest_point(msg.x, msg.y, msg.z)
 
     def _on_bridge_data(self, msg: HandPrediction):
@@ -287,18 +309,75 @@ class PredictorNode(Node):
         response.message = 'Predicting STARTED' if self._predicting else 'Predicting STOPPED'
         if not self._predicting:
             self._buffer.clear()
+            self._last_filtered = None
+            self._filter_reject_count = 0
         self.get_logger().info(f'[Predictor] {response.message}')
         return response
+
+    # ── Output Filter ────────────────────────────────────────────────────────
+
+    def _filter_prediction(self, raw_pred: list) -> list:
+        """3-layer output filter: proximity clamp → rate limiter → EMA.
+
+        Layer 1 — Proximity Clamp:
+            Giới hạn khoảng cách tối đa giữa dự đoán và vị trí thực tế.
+            Nếu sai lệch trên bất kỳ trục nào vượt quá max_deviation,
+            clamp giá trị đó lại gần vị trí đo được.
+
+        Layer 2 — Rate Limiter:
+            Giới hạn tốc độ thay đổi tối đa giữa 2 frame dự đoán liên tiếp.
+            Ngăn hiện tượng nhảy đột ngột (jerk) khi model bị spike.
+
+        Layer 3 — EMA Smoothing:
+            Exponential Moving Average để làm mượt tín hiệu đầu ra.
+            alpha nhỏ → mượt hơn nhưng trễ hơn.
+        """
+        filtered = [0.0, 0.0, 0.0]
+        meas = self._last_meas
+        max_dev = self._filter_max_dev
+        max_rate = self._filter_max_rate
+        alpha = self._filter_ema_alpha
+
+        # ── Layer 1: Proximity clamp ─────────────────────────────────────
+        for i in range(3):
+            deviation = raw_pred[i] - meas[i]
+            if abs(deviation) > max_dev:
+                # Clamp: giữ hướng nhưng giới hạn biên độ
+                clamped = meas[i] + max_dev * (1.0 if deviation > 0 else -1.0)
+                filtered[i] = clamped
+            else:
+                filtered[i] = raw_pred[i]
+
+        # ── Layer 2: Rate limiter ────────────────────────────────────────
+        if self._last_filtered is not None:
+            for i in range(3):
+                delta = filtered[i] - self._last_filtered[i]
+                if abs(delta) > max_rate:
+                    filtered[i] = self._last_filtered[i] + max_rate * (1.0 if delta > 0 else -1.0)
+
+        # ── Layer 3: EMA smoothing ───────────────────────────────────────
+        if self._last_filtered is not None:
+            for i in range(3):
+                filtered[i] = alpha * filtered[i] + (1.0 - alpha) * self._last_filtered[i]
+
+        self._last_filtered = filtered[:]
+        return filtered
 
     # ── Publishing ───────────────────────────────────────────────────────────
 
     def _publish_prediction(self, pred: list, inf_ms: float):
+        # Apply output filter if enabled
+        if self._filter_enabled:
+            filtered = self._filter_prediction(pred)
+        else:
+            filtered = pred
+
         msg = HandPrediction()
         msg.header.stamp = self.get_clock().now().to_msg()
         msg.header.frame_id = 'world'
-        msg.x = float(pred[0])
-        msg.y = float(pred[1])
-        msg.z = float(pred[2])
+        msg.x = float(filtered[0])
+        msg.y = float(filtered[1])
+        msg.z = float(filtered[2])
         msg.inference_time_ms = float(inf_ms)
         msg.model_name = self._current_model
         msg.prediction_confidence = 1.0
