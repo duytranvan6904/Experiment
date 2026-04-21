@@ -18,9 +18,11 @@ def generate_launch_description():
         description='Path to directory containing .h5 models and .pkl scalers'
     )
 
+    from ament_index_python.packages import get_package_share_directory
+
     rs_model_arg = DeclareLaunchArgument(
         'rs_model_path',
-        default_value='/home/duy/Experiment/librealsense/pose_landmarker_full.task',
+        default_value=os.path.join(get_package_share_directory('realsense_tracker'), 'models', 'pose_landmarker_full.task'),
         description='Path to MediaPipe pose landmarker model'
     )
 

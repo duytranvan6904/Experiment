@@ -4,7 +4,7 @@ experiment_logger:
     log_dir: /home/duy/hrc_logs
 realsense_tracker:
   ros__parameters:
-    model_path: /home/duy/Experiment/librealsense/pose_landmarker_full.task
+    # model_path is passed dynamically from the launch file
     offset_x: 0.0029441434890031815
     offset_y: 0.07468471676111221
     offset_z: 0.9220000505447388

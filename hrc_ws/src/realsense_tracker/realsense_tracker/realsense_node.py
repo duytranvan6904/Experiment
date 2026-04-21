@@ -56,7 +56,7 @@ class RealSenseTrackerNode(Node):
     def __init__(self):
         super().__init__('realsense_tracker')
 
-        self.declare_parameter('model_path', '/home/duy/Experiment/librealsense/pose_landmarker_full.task')
+        self.declare_parameter('model_path', '')
         self.declare_parameter('offset_x', 0.0)
         self.declare_parameter('offset_y', 0.0)
         self.declare_parameter('offset_z', 0.0)
