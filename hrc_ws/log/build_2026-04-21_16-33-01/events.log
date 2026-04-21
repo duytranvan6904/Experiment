@@ -1,0 +1,50 @@
+[0.000000] (-) TimerEvent: {}
+[0.000169] (-) JobUnselected: {'identifier': 'experiment_logger'}
+[0.000298] (-) JobUnselected: {'identifier': 'hrc_bringup'}
+[0.000638] (-) JobUnselected: {'identifier': 'human_hand_msgs'}
+[0.000648] (-) JobUnselected: {'identifier': 'predictor_ui'}
+[0.000657] (-) JobUnselected: {'identifier': 'trajectory_predictor'}
+[0.000669] (realsense_tracker) JobQueued: {'identifier': 'realsense_tracker', 'dependencies': OrderedDict([('human_hand_msgs', '/home/duy/Experiment/hrc_ws/install/human_hand_msgs')])}
+[0.000684] (realsense_tracker) JobStarted: {'identifier': 'realsense_tracker'}
+[0.099748] (-) TimerEvent: {}
+[0.200118] (-) TimerEvent: {}
+[0.300446] (-) TimerEvent: {}
+[0.400728] (-) TimerEvent: {}
+[0.501365] (-) TimerEvent: {}
+[0.605648] (-) TimerEvent: {}
+[0.644302] (realsense_tracker) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/duy/Experiment/hrc_ws/build/realsense_tracker/build', '--no-deps', 'symlink_data'], 'cwd': '/home/duy/Experiment/hrc_ws/build/realsense_tracker', 'env': {'GJS_DEBUG_TOPICS': 'JS ERROR;JS LOG', 'LESSOPEN': '| /usr/bin/lesspipe %s', 'VSCODE_CWD': '/home/duy', 'USER': 'duy', 'LC_TIME': 'en_US.UTF-8', 'VSCODE_NLS_CONFIG': '{"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"/usr/share/antigravity/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}', 'XDG_SESSION_TYPE': 'wayland', 'ROS_PACKAGE_PATH': '/home/duy/Experiment/hrc_ws/install/human_hand_msgs/share', 'SHLVL': '0', 'LD_LIBRARY_PATH': '/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib:/usr/local/lib/nuitrack:/home/duy/kinectv2/install/libfreenect2/lib:/home/duy/kinectv2/install/kinect2_registration/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib:/usr/local/lib/nuitrack:/usr/local/lib/nuitrack', 'HOME': '/home/duy', 'CHROME_DESKTOP': 'antigravity.desktop', 'DESKTOP_SESSION': 'ubuntu', 'VSCODE_IPC_HOOK': '/run/user/1000/vscode-d3248cd9-1.10-main.sock', 'GIO_LAUNCHED_DESKTOP_FILE': '/usr/share/applications/antigravity.desktop', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'PAGER': 'cat', 'LC_MONETARY': 'en_US.UTF-8', 'MANAGERPID': '1098', 'SYSTEMD_EXEC_PID': '1223', 'IM_CONFIG_CHECK_ENV': '1', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'ANTIGRAVITY_AGENT': '1', 'GIO_LAUNCHED_DESKTOP_FILE_PID': '10269', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'COLCON_PREFIX_PATH': '/home/duy/kinectv2/install', 'ROS_DISTRO': 'humble', 'GTK_IM_MODULE': 'ibus', 'LOGNAME': 'duy', 'JOURNAL_STREAM': '8:9523', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'PKG_CONFIG_PATH': '/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig', 'USERNAME': 'duy', 'TERM': 'dumb', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'FC_FONTATIONS': '1', 'ROS_LOCALHOST_ONLY': '0', 'ANTIGRAVITY_EDITOR_APP_ROOT': '/usr/share/antigravity/resources/app', 'PATH': '/home/duy/.local/bin:/opt/ros/humble/bin:/home/duy/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/duy/libfreenect2/build/bin', 'SESSION_MANAGER': 'local/duy-Vivobook-ASUSLaptop-X1503ZA-A1503ZA:@/tmp/.ICE-unix/1193,unix/duy-Vivobook-ASUSLaptop-X1503ZA-A1503ZA:/tmp/.ICE-unix/1193', 'INVOCATION_ID': '29c728a386dd410d9cde3e9a5bf6d4be', 'PAPERSIZE': 'letter', 'XDG_MENU_PREFIX': 'gnome-', 'LC_ADDRESS': 'en_US.UTF-8', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'GDK_BACKEND': 'wayland', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'LC_TELEPHONE': 'en_US.UTF-8', 'RMW_IMPLEMENTATION': 'rmw_fastrtps_cpp', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.GRC9N3', 'LS_COLORS': '', 'SSH_AGENT_LAUNCHER': 'gnome-keyring', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'ROS_DOMAIN_ID': '0', 'AMENT_PREFIX_PATH': '/home/duy/kinectv2/install/kinect2_bridge:/home/duy/kinectv2/install/kinect2_registration:/opt/ros/humble', 'NUITRACK_HOME': '/usr/etc/nuitrack', 'SHELL': '/bin/bash', 'LC_NAME': 'en_US.UTF-8', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'LC_MEASUREMENT': 'en_US.UTF-8', 'GJS_DEBUG_OUTPUT': 'stderr', 'LC_IDENTIFICATION': 'en_US.UTF-8', 'QT_IM_MODULE': 'ibus', 'ANTIGRAVITY_TRAJECTORY_ID': '040c8091-88c2-4ed5-b63d-32de62903011', 'PWD': '/home/duy/Experiment/hrc_ws/build/realsense_tracker', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'VSCODE_CODE_CACHE_PATH': '/home/duy/.config/Antigravity/CachedData/15487b3041e65228cae24980a3f796c905ef582c', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/duy/Experiment/hrc_ws/build/realsense_tracker/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/realsense_tracker/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'LC_NUMERIC': 'en_US.UTF-8', 'LC_PAPER': 'en_US.UTF-8', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/duy/Experiment/hrc_ws/install/human_hand_msgs:/home/duy/kinectv2/install/libfreenect2:/home/duy/kinectv2/install/kinect2_bridge:/home/duy/kinectv2/install/kinect2_registration', 'VSCODE_PID': '10269'}, 'shell': False}
+[0.708288] (-) TimerEvent: {}
+[0.808747] (-) TimerEvent: {}
+[0.909231] (-) TimerEvent: {}
+[1.011461] (-) TimerEvent: {}
+[1.111987] (-) TimerEvent: {}
+[1.212970] (-) TimerEvent: {}
+[1.237476] (realsense_tracker) StdoutLine: {'line': b'running develop\n'}
+[1.313232] (-) TimerEvent: {}
+[1.390381] (realsense_tracker) StdoutLine: {'line': b'running egg_info\n'}
+[1.390571] (realsense_tracker) StdoutLine: {'line': b'creating realsense_tracker.egg-info\n'}
+[1.390668] (realsense_tracker) StdoutLine: {'line': b'writing realsense_tracker.egg-info/PKG-INFO\n'}
+[1.390922] (realsense_tracker) StdoutLine: {'line': b'writing dependency_links to realsense_tracker.egg-info/dependency_links.txt\n'}
+[1.391125] (realsense_tracker) StdoutLine: {'line': b'writing entry points to realsense_tracker.egg-info/entry_points.txt\n'}
+[1.391320] (realsense_tracker) StdoutLine: {'line': b'writing requirements to realsense_tracker.egg-info/requires.txt\n'}
+[1.391459] (realsense_tracker) StdoutLine: {'line': b'writing top-level names to realsense_tracker.egg-info/top_level.txt\n'}
+[1.391564] (realsense_tracker) StdoutLine: {'line': b"writing manifest file 'realsense_tracker.egg-info/SOURCES.txt'\n"}
+[1.392800] (realsense_tracker) StdoutLine: {'line': b"reading manifest file 'realsense_tracker.egg-info/SOURCES.txt'\n"}
+[1.393367] (realsense_tracker) StdoutLine: {'line': b"writing manifest file 'realsense_tracker.egg-info/SOURCES.txt'\n"}
+[1.394810] (realsense_tracker) StdoutLine: {'line': b'running build_ext\n'}
+[1.395137] (realsense_tracker) StdoutLine: {'line': b'Creating /home/duy/Experiment/hrc_ws/install/realsense_tracker/lib/python3.10/site-packages/realsense-tracker.egg-link (link to .)\n'}
+[1.395896] (realsense_tracker) StdoutLine: {'line': b'Installing realsense_node script to /home/duy/Experiment/hrc_ws/install/realsense_tracker/lib/realsense_tracker\n'}
+[1.396244] (realsense_tracker) StdoutLine: {'line': b'\n'}
+[1.396396] (realsense_tracker) StdoutLine: {'line': b'Installed /home/duy/Experiment/hrc_ws/build/realsense_tracker\n'}
+[1.396517] (realsense_tracker) StdoutLine: {'line': b'running symlink_data\n'}
+[1.396606] (realsense_tracker) StdoutLine: {'line': b'creating /home/duy/Experiment/hrc_ws/install/realsense_tracker/share/ament_index\n'}
+[1.396694] (realsense_tracker) StdoutLine: {'line': b'creating /home/duy/Experiment/hrc_ws/install/realsense_tracker/share/ament_index/resource_index\n'}
+[1.396804] (realsense_tracker) StdoutLine: {'line': b'creating /home/duy/Experiment/hrc_ws/install/realsense_tracker/share/ament_index/resource_index/packages\n'}
+[1.396890] (realsense_tracker) StdoutLine: {'line': b'symbolically linking /home/duy/Experiment/hrc_ws/build/realsense_tracker/resource/realsense_tracker -> /home/duy/Experiment/hrc_ws/install/realsense_tracker/share/ament_index/resource_index/packages\n'}
+[1.396980] (realsense_tracker) StdoutLine: {'line': b'symbolically linking /home/duy/Experiment/hrc_ws/build/realsense_tracker/package.xml -> /home/duy/Experiment/hrc_ws/install/realsense_tracker/share/realsense_tracker\n'}
+[1.397067] (realsense_tracker) StdoutLine: {'line': b'creating /home/duy/Experiment/hrc_ws/install/realsense_tracker/share/realsense_tracker/models\n'}
+[1.397155] (realsense_tracker) StdoutLine: {'line': b'symbolically linking /home/duy/Experiment/hrc_ws/build/realsense_tracker/models/pose_landmarker_full.task -> /home/duy/Experiment/hrc_ws/install/realsense_tracker/share/realsense_tracker/models\n'}
+[1.413463] (-) TimerEvent: {}
+[1.433978] (realsense_tracker) CommandEnded: {'returncode': 0}
+[1.450432] (realsense_tracker) JobEnded: {'identifier': 'realsense_tracker', 'rc': 0}
+[1.451118] (-) EventReactorShutdown: {}
