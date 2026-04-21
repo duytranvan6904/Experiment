@@ -1,1 +1,0 @@
-/home/duy/Experiment/hrc_ws/src/trajectory_predictor/setup.py

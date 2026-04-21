@@ -1,0 +1,24 @@
+[0.455s] Invoking command in '/home/duy/Experiment/hrc_ws/src/predictor_ui': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Experiment/hrc_ws/build/predictor_ui/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/predictor_ui build --build-base /home/duy/Experiment/hrc_ws/build/predictor_ui/build install --record /home/duy/Experiment/hrc_ws/build/predictor_ui/install.log --single-version-externally-managed install_data
+[0.659s] running egg_info
+[0.659s] writing ../../build/predictor_ui/predictor_ui.egg-info/PKG-INFO
+[0.659s] writing dependency_links to ../../build/predictor_ui/predictor_ui.egg-info/dependency_links.txt
+[0.659s] writing entry points to ../../build/predictor_ui/predictor_ui.egg-info/entry_points.txt
+[0.659s] writing requirements to ../../build/predictor_ui/predictor_ui.egg-info/requires.txt
+[0.659s] writing top-level names to ../../build/predictor_ui/predictor_ui.egg-info/top_level.txt
+[0.661s] reading manifest file '../../build/predictor_ui/predictor_ui.egg-info/SOURCES.txt'
+[0.661s] writing manifest file '../../build/predictor_ui/predictor_ui.egg-info/SOURCES.txt'
+[0.662s] running build
+[0.662s] running build_py
+[0.662s] copying predictor_ui/ui_node.py -> /home/duy/Experiment/hrc_ws/build/predictor_ui/build/lib/predictor_ui
+[0.662s] running install
+[0.662s] running install_lib
+[0.662s] copying /home/duy/Experiment/hrc_ws/build/predictor_ui/build/lib/predictor_ui/ui_node.py -> /home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui
+[0.663s] byte-compiling /home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui/ui_node.py to ui_node.cpython-310.pyc
+[0.666s] running install_data
+[0.666s] running install_egg_info
+[0.667s] removing '/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui-0.1.0-py3.10.egg-info' (and everything under it)
+[0.667s] Copying ../../build/predictor_ui/predictor_ui.egg-info to /home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages/predictor_ui-0.1.0-py3.10.egg-info
+[0.668s] running install_scripts
+[0.684s] Installing ui_node script to /home/duy/Experiment/hrc_ws/install/predictor_ui/lib/predictor_ui
+[0.684s] writing list of installed files to '/home/duy/Experiment/hrc_ws/build/predictor_ui/install.log'
+[0.703s] Invoked command in '/home/duy/Experiment/hrc_ws/src/predictor_ui' returned '0': CMAKE_PREFIX_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib:${LD_LIBRARY_PATH} PKG_CONFIG_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/x86_64-linux-gnu/pkgconfig:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/lib/pkgconfig PYTHONPATH=/home/duy/Experiment/hrc_ws/build/predictor_ui/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/duy/Experiment/hrc_ws/install/predictor_ui/lib/python3.10/site-packages:/home/duy/Experiment/hrc_ws/install/human_hand_msgs/local/lib/python3.10/dist-packages:${PYTHONPATH} ROS_PACKAGE_PATH=/home/duy/Experiment/hrc_ws/install/human_hand_msgs/share /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/predictor_ui build --build-base /home/duy/Experiment/hrc_ws/build/predictor_ui/build install --record /home/duy/Experiment/hrc_ws/build/predictor_ui/install.log --single-version-externally-managed install_data

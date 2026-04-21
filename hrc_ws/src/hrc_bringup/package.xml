@@ -6,7 +6,7 @@
   <maintainer email="duy@experiment.local">Duy</maintainer>
   <license>MIT</license>
   <buildtool_depend>ament_cmake</buildtool_depend>
-  <exec_depend>kinect_bridge</exec_depend>
+  <exec_depend>realsense_tracker</exec_depend>
   <exec_depend>trajectory_predictor</exec_depend>
   <exec_depend>predictor_ui</exec_depend>
   <exec_depend>experiment_logger</exec_depend>

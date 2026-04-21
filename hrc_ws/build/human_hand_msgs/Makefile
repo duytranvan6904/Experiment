@@ -405,6 +405,19 @@ human_hand_msgs__py/fast:
 	$(MAKE) $(MAKESILENT) -f human_hand_msgs__py/CMakeFiles/human_hand_msgs__py.dir/build.make human_hand_msgs__py/CMakeFiles/human_hand_msgs__py.dir/build
 .PHONY : human_hand_msgs__py/fast
 
+#=============================================================================
+# Target rules for targets named human_hand_msgs__rs
+
+# Build rule for target.
+human_hand_msgs__rs: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 human_hand_msgs__rs
+.PHONY : human_hand_msgs__rs
+
+# fast build rule for target.
+human_hand_msgs__rs/fast:
+	$(MAKE) $(MAKESILENT) -f human_hand_msgs__rs/CMakeFiles/human_hand_msgs__rs.dir/build.make human_hand_msgs__rs/CMakeFiles/human_hand_msgs__rs.dir/build
+.PHONY : human_hand_msgs__rs/fast
+
 rosidl_generator_c/human_hand_msgs/msg/detail/hand_prediction__functions.o: rosidl_generator_c/human_hand_msgs/msg/detail/hand_prediction__functions.c.o
 .PHONY : rosidl_generator_c/human_hand_msgs/msg/detail/hand_prediction__functions.o
 
@@ -1263,6 +1276,7 @@ help:
 	@echo "... human_hand_msgs"
 	@echo "... human_hand_msgs__cpp"
 	@echo "... human_hand_msgs__py"
+	@echo "... human_hand_msgs__rs"
 	@echo "... human_hand_msgs_uninstall"
 	@echo "... uninstall"
 	@echo "... human_hand_msgs__rosidl_generator_c"
